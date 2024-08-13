@@ -54,7 +54,7 @@ extension SportTV {
    func fetchDataFromNetwork(){
        activityIndicator.startAnimating()
 
-       networkManger.getAllData(sportName:Sports.footBall.rawValue, model: LeagueModelAPI.self) {[weak self] result, error in
+       networkManger.getAllData(sportName:.AllLeagues, model: LeagueModelAPI.self) {[weak self] result, error in
            self?.activityIndicator.stopAnimating()
 
                    if let error = error {

@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		1E28E9B6504C9D42B4834310 /* Pods_SportsAppITITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E58F5C07DD8CD0104BE068D3 /* Pods_SportsAppITITests.framework */; };
+		1EDEAAE62C6B433F00C8B5F7 /* LeaguesDetailsCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDEAAE52C6B433F00C8B5F7 /* LeaguesDetailsCVC.swift */; };
+		1EDEAAE82C6B45B000C8B5F7 /* LeagueDSecHed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDEAAE72C6B45B000C8B5F7 /* LeagueDSecHed.swift */; };
+		1EDEAAEA2C6B49C600C8B5F7 /* TeamsCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDEAAE92C6B49C600C8B5F7 /* TeamsCVC.swift */; };
+		1EDEAAEC2C6B7AE900C8B5F7 /* APIEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDEAAEB2C6B7AE900C8B5F7 /* APIEndPoint.swift */; };
 		665620A51CB2004775AE1FBD /* Pods_SportsAppITI_SportsAppITIUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F2694521EC47D44258D41E0 /* Pods_SportsAppITI_SportsAppITIUITests.framework */; };
 		A981F4332C6A6EEB00C7F2CF /* CricketModelAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A981F4322C6A6EEB00C7F2CF /* CricketModelAPI.swift */; };
 		A981F4352C6A6F1200C7F2CF /* EventModelApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = A981F4342C6A6F1200C7F2CF /* EventModelApi.swift */; };
@@ -69,6 +73,10 @@
 		038DF5563CEBCFBC665D821A /* Pods-SportsAppITI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsAppITI.debug.xcconfig"; path = "Target Support Files/Pods-SportsAppITI/Pods-SportsAppITI.debug.xcconfig"; sourceTree = "<group>"; };
 		1AA688AEFD2AE0649D5F2A35 /* Pods-SportsAppITI-SportsAppITIUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsAppITI-SportsAppITIUITests.release.xcconfig"; path = "Target Support Files/Pods-SportsAppITI-SportsAppITIUITests/Pods-SportsAppITI-SportsAppITIUITests.release.xcconfig"; sourceTree = "<group>"; };
 		1EC2949F4A836F6B75483846 /* Pods-SportsAppITI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsAppITI.release.xcconfig"; path = "Target Support Files/Pods-SportsAppITI/Pods-SportsAppITI.release.xcconfig"; sourceTree = "<group>"; };
+		1EDEAAE52C6B433F00C8B5F7 /* LeaguesDetailsCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaguesDetailsCVC.swift; sourceTree = "<group>"; };
+		1EDEAAE72C6B45B000C8B5F7 /* LeagueDSecHed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueDSecHed.swift; sourceTree = "<group>"; };
+		1EDEAAE92C6B49C600C8B5F7 /* TeamsCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsCVC.swift; sourceTree = "<group>"; };
+		1EDEAAEB2C6B7AE900C8B5F7 /* APIEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndPoint.swift; sourceTree = "<group>"; };
 		2F2694521EC47D44258D41E0 /* Pods_SportsAppITI_SportsAppITIUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SportsAppITI_SportsAppITIUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3467CEBBEFA1EFBA1F06F610 /* Pods-SportsAppITITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsAppITITests.release.xcconfig"; path = "Target Support Files/Pods-SportsAppITITests/Pods-SportsAppITITests.release.xcconfig"; sourceTree = "<group>"; };
 		A981F4322C6A6EEB00C7F2CF /* CricketModelAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CricketModelAPI.swift; sourceTree = "<group>"; };
@@ -189,6 +197,9 @@
 			isa = PBXGroup;
 			children = (
 				A981F4392C6A746000C7F2CF /* LeagueDetailsVC.swift */,
+				1EDEAAE72C6B45B000C8B5F7 /* LeagueDSecHed.swift */,
+				1EDEAAE52C6B433F00C8B5F7 /* LeaguesDetailsCVC.swift */,
+				1EDEAAE92C6B49C600C8B5F7 /* TeamsCVC.swift */,
 			);
 			path = LeagueDetail;
 			sourceTree = "<group>";
@@ -352,6 +363,7 @@
 				A9C6A0272C6A5FBA00BE4E44 /* LeagueModelAPI.swift */,
 				A981F4322C6A6EEB00C7F2CF /* CricketModelAPI.swift */,
 				A981F4342C6A6F1200C7F2CF /* EventModelApi.swift */,
+				1EDEAAEB2C6B7AE900C8B5F7 /* APIEndPoint.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -614,11 +626,14 @@
 				A9C69FA02C69009C00BE4E44 /* UICollectionView+Extension.swift in Sources */,
 				A9C69FA92C69249E00BE4E44 /* Color.swift in Sources */,
 				A9C69F9D2C68FEB100BE4E44 /* UIView+Extension.swift in Sources */,
+				1EDEAAEA2C6B49C600C8B5F7 /* TeamsCVC.swift in Sources */,
 				A9C69FB82C69510300BE4E44 /* UIViewController+Extension.swift in Sources */,
 				A9C69FBD2C695C5100BE4E44 /* SportTV.swift in Sources */,
 				A9C69F962C68FBDB00BE4E44 /* AllSportsCell.swift in Sources */,
+				1EDEAAE62C6B433F00C8B5F7 /* LeaguesDetailsCVC.swift in Sources */,
 				A981F43A2C6A746000C7F2CF /* LeagueDetailsVC.swift in Sources */,
 				A9C69F622C68F82600BE4E44 /* AppDelegate.swift in Sources */,
+				1EDEAAE82C6B45B000C8B5F7 /* LeagueDSecHed.swift in Sources */,
 				A9C69FB62C69428E00BE4E44 /* Api.swift in Sources */,
 				A9C69FB42C69387800BE4E44 /* NetworkManger.swift in Sources */,
 				A9C69FC42C697BC400BE4E44 /* SportTvCell.swift in Sources */,
@@ -631,6 +646,7 @@
 				A9C6A0282C6A5FBA00BE4E44 /* LeagueModelAPI.swift in Sources */,
 				A981F4352C6A6F1200C7F2CF /* EventModelApi.swift in Sources */,
 				A9C6A02C2C6A689A00BE4E44 /* CustomImgView.swift in Sources */,
+				1EDEAAEC2C6B7AE900C8B5F7 /* APIEndPoint.swift in Sources */,
 				A9C6A0252C6A5E4B00BE4E44 /* Sports.swift in Sources */,
 				A9C69FC72C697C3C00BE4E44 /* UITablView+Extension.swift in Sources */,
 			);
@@ -815,6 +831,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7Y8K9RT53K;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SportsAppITI/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -843,6 +860,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7Y8K9RT53K;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SportsAppITI/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
