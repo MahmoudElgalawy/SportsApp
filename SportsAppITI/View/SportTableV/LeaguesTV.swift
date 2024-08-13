@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SportTV: UIViewController {
+class LeaguesTV: UIViewController {
 
     let activityIndicator = UIActivityIndicatorView(style: .large)
     var sportsName:String?
@@ -23,7 +23,7 @@ class SportTV: UIViewController {
         getAllLeagues()
     }
 }
-extension SportTV {
+extension LeaguesTV {
    func getAllLeagues(){
        activityIndicator.startAnimating()
        networkManger.getAllData(sportName:.AllLeagues, model: LeagueModelAPI.self) {[weak self] result, error in
@@ -41,7 +41,7 @@ extension SportTV {
                }
     }
 }
-extension SportTV:UITableViewDataSource {
+extension LeaguesTV:UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return footballLeagues.count
     }
@@ -53,7 +53,7 @@ extension SportTV:UITableViewDataSource {
     }
 }
 
-extension SportTV:UITableViewDelegate {
+extension LeaguesTV:UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
            let vc = self.storyboard?.instantiateViewController(withIdentifier: "LeagueDetailsVC") as! LeagueDetailsVC

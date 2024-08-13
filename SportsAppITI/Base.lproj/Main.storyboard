@@ -57,13 +57,13 @@
                         <barButtonItem key="rightBarButtonItem" image="square.grid.2x2" catalog="system" id="egp-rY-ktF">
                             <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
-                                <action selector="sortingButtonPressed:" destination="lu5-nW-guY" id="fro-Re-m0k"/>
+                                <action selector="sortingBtnPressed:" destination="lu5-nW-guY" id="Xf5-1g-vBl"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="orthogonalLayoutButton" destination="egp-rY-ktF" id="EI3-Qb-7F1"/>
-                        <outlet property="sportsCollectionView" destination="Wqo-KQ-hNz" id="3GM-lZ-hy6"/>
+                        <outlet property="btnOrthogonal" destination="egp-rY-ktF" id="uoG-VE-mS1"/>
+                        <outlet property="sportsCV" destination="Wqo-KQ-hNz" id="6el-NG-cx0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q49-IQ-yUf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -315,10 +315,10 @@
             </objects>
             <point key="canvasLocation" x="-1185.981308411215" y="178.83369330453564"/>
         </scene>
-        <!--SportTV-->
+        <!--LeaguesTV-->
         <scene sceneID="WJ7-Wn-6cv">
             <objects>
-                <viewController storyboardIdentifier="SportTV" id="Eab-DK-h0e" customClass="SportTV" customModule="SportsAppITI" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SportTV" id="Eab-DK-h0e" customClass="LeaguesTV" customModule="SportsAppITI" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dBZ-7M-clY">
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
