@@ -98,7 +98,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="418" height="186"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lastVS" translatesAutoresizingMaskIntoConstraints="NO" id="d0F-Wd-FQS">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gold" translatesAutoresizingMaskIntoConstraints="NO" id="d0F-Wd-FQS">
                                                     <rect key="frame" x="0.0" y="0.0" width="418" height="186"/>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="21" translatesAutoresizingMaskIntoConstraints="NO" id="9XC-dY-DSi">
@@ -231,6 +231,7 @@
                                                 <constraint firstItem="0GN-YJ-Fbw" firstAttribute="top" secondItem="EtJ-ih-fVc" secondAttribute="bottom" constant="25" id="xAj-YT-Qgv"/>
                                             </constraints>
                                         </collectionViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <size key="customSize" width="328" height="259"/>
                                         <connections>
                                             <outlet property="imgTeams" destination="EtJ-ih-fVc" id="lwy-lH-dKr"/>
@@ -426,9 +427,9 @@
         <image name="arrowshape.turn.up.backward" catalog="system" width="128" height="104"/>
         <image name="basketball1" width="2000" height="1332"/>
         <image name="figure.american.football" catalog="system" width="128" height="120"/>
+        <image name="gold" width="626" height="358"/>
         <image name="heart" catalog="system" width="128" height="107"/>
         <image name="heart.fill" catalog="system" width="128" height="107"/>
-        <image name="lastVS" width="1284" height="318"/>
         <image name="nodatatodisplay" width="1380" height="1380"/>
         <image name="sport" width="450" height="450"/>
         <image name="square.grid.2x2" catalog="system" width="128" height="114"/>

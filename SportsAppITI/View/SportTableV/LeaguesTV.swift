@@ -58,6 +58,7 @@ extension LeaguesTV:UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
            let vc = self.storyboard?.instantiateViewController(withIdentifier: "LeagueDetailsVC") as! LeagueDetailsVC
            //vc.leagueID = footballLeagues[indexPath.row].leagueKey
+        
            self.navigationController?.pushViewController(vc, animated: true)
        }
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
