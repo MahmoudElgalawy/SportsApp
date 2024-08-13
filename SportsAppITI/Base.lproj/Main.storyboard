@@ -56,13 +56,13 @@
                         <barButtonItem key="rightBarButtonItem" image="square.grid.2x2" catalog="system" id="egp-rY-ktF">
                             <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
-                                <action selector="sortingBtnPressed:" destination="lu5-nW-guY" id="ZiJ-1T-Mi3"/>
+                                <action selector="sortingButtonPressed:" destination="lu5-nW-guY" id="fro-Re-m0k"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="btnOrthogonal" destination="egp-rY-ktF" id="EI3-Qb-7F1"/>
-                        <outlet property="sportsCV" destination="Wqo-KQ-hNz" id="3GM-lZ-hy6"/>
+                        <outlet property="orthogonalLayoutButton" destination="egp-rY-ktF" id="EI3-Qb-7F1"/>
+                        <outlet property="sportsCollectionView" destination="Wqo-KQ-hNz" id="3GM-lZ-hy6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q49-IQ-yUf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

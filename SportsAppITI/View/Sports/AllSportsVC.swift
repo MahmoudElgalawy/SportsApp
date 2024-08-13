@@ -1,96 +1,99 @@
 import UIKit
 
 class AllSportsVC: UIViewController {
-    let networkManger = NWService.shared
 
-    @IBOutlet var btnOrthogonal: UIBarButtonItem!
-    @IBOutlet var sportsCV: UICollectionView!
+    // MARK: - Properties
+    private var viewModel: AllSportsViewModel?
+    private var isOrthogonal: Bool = true
+    var initialSportsItems: [SportsItemModel] = []
 
-    var isorthogonal = true
-    let sportsItems = [
-        SportsItemModel(imgName: "football", titleName: "Football"),
-        SportsItemModel(imgName: "basketball", titleName: "Basketball"),
-        SportsItemModel(imgName: "cricket", titleName: "Cricket"),
-        SportsItemModel(imgName: "tennis", titleName: "Tennis")
-    ]
+    @IBOutlet private var orthogonalLayoutButton: UIBarButtonItem!
+    @IBOutlet private var sportsCollectionView: UICollectionView!
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
-        navigationItem.backBarButtonItem?.title = ""
+        setupViewModel()
+        updateLayoutButtonImage()
     }
 
     // MARK: - Setup Methods
     private func setupCollectionView() {
-        sportsCV.register(UINib(nibName: "AllSportsCell", bundle: nil), forCellWithReuseIdentifier: "AllSportsCell")
-        sportsCV.delegate = self
-        sportsCV.dataSource = self
+        sportsCollectionView.delegate = self
+        sportsCollectionView.dataSource = self
+        sportsCollectionView.register(UINib(nibName: CellId.AllSportsCell, bundle: nil), forCellWithReuseIdentifier: CellId.AllSportsCell)
     }
 
+    private func setupViewModel() {
+         initialSportsItems = [
+            SportsItemModel(imgName: "football", titleName: "Football"),
+            SportsItemModel(imgName: "basketball", titleName: "Basketball"),
+            SportsItemModel(imgName: "cricket", titleName: "Cricket"),
+            SportsItemModel(imgName: "tennis", titleName: "Tennis")
+        ]
+        viewModel = AllSportsViewModel(sportsItems: initialSportsItems)
+    }
 
-    @IBAction func sortingBtnPressed(_ sender: UIBarButtonItem) {
-        isorthogonal.toggle()
-        btnOrthogonal.image = UIImage(systemName: isorthogonal ? ("square.grid.2x2"):("list.bullet"))
-        sportsCV.reloadData()
+    private func updateLayoutButtonImage() {
+        let imageName = isOrthogonal ? "square.grid.2x2" : "list.bullet"
+        orthogonalLayoutButton.image = UIImage(systemName: imageName)
+    }
+
+    // MARK: - Actions
+    @IBAction private func sortingButtonPressed(_ sender: UIBarButtonItem) {
+        isOrthogonal.toggle()
+        updateLayoutButtonImage()
+        sportsCollectionView.reloadData()
     }
 }
 
 // MARK: - UICollectionViewDataSource
 extension AllSportsVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return sportsItems.count
+        return viewModel?.sportsItems.count ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AllSportsCell", for: indexPath) as? AllSportsCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellId.AllSportsCell, for: indexPath) as? AllSportsCell else {
             return UICollectionViewCell()
         }
-        cell.initCell(with: sportsItems[indexPath.row])
+        if let model = viewModel?.sportsItems[indexPath.row] {
+            cell.configure(with: model)
+        }
         return cell
     }
-
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
 extension AllSportsVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if isorthogonal {
+        if isOrthogonal {
             let numberOfCellsInRow: CGFloat = 2
             let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
-
             flowLayout.minimumLineSpacing = 10
             flowLayout.minimumInteritemSpacing = 10
 
             let collectionViewWidth = collectionView.bounds.width
-
             let spacingBetweenCells = flowLayout.minimumInteritemSpacing * (numberOfCellsInRow - 1)
-
             let adjustedWidth = collectionViewWidth - spacingBetweenCells
             let width = adjustedWidth / numberOfCellsInRow
+
             return CGSize(width: width - 10, height: width)
-        } else{
-            let collectionView = collectionView.bounds
-
-            return CGSize(width: collectionView.width, height: collectionView.height/2)
-
+        } else {
+            return CGSize(width: collectionView.bounds.width-20, height: collectionView.bounds.height / 4)
         }
-    }}
-
-
-// MARK: - UICollectionViewDelegate
-extension AllSportsVC: UICollectionViewDelegate {
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
-        print("Cell selected at index: \(indexPath.row)")
-
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "SportTV") as! SportTV
-       self.navigationController?.pushViewController(vc, animated: true)
-
-//
     }
 }
 
-
-
+// MARK: - UICollectionViewDelegate
+extension AllSportsVC: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath.row)
+        let sportsName = initialSportsItems[indexPath.row].titleName
+        guard let vc = storyboard?.instantiateViewController(withIdentifier: "SportTV") as? SportTV else { return }
+        vc.sportsName = sportsName.lowercased()
+        vc.title = sportsName
+        navigationController?.pushViewController(vc, animated: true)
+    }
+}

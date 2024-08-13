@@ -6,9 +6,10 @@
 //
 
 import Foundation
-enum Sports:String {
+enum SportsName:String {
     case footBall = "football"
-    var rawValueInsideEnum: String {
-            return self.rawValue
-        }
+    case basketball = "basketball"
+    case cricket = "cricket"
+    case tennis = "tennis"
+
 }
