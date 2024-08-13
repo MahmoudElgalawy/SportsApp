@@ -8,6 +8,7 @@ target 'SportsAppITI' do
   # Pods for SportsAppITI
 pod 'Alamofire'
 pod 'Kingfisher'
+pod 'Kingfisher', '~> 7.0'
 
   target 'SportsAppITITests' do
     inherit! :search_paths

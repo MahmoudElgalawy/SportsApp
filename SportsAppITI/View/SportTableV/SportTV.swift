@@ -26,7 +26,7 @@ class SportTV: UIViewController {
 extension SportTV {
    func getAllLeagues(){
        activityIndicator.startAnimating()
-       networkManger.getAllData(api:.getAllLeagues(sportsName: sportsName!), model: LeagueModelAPI.self) {[weak self] result, error in
+       networkManger.getAllData(sportName:.AllLeagues, model: LeagueModelAPI.self) {[weak self] result, error in
            self?.activityIndicator.stopAnimating()
                    if let error = error {
                        print("Error fetching leagues: \(error)")
