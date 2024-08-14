@@ -117,14 +117,14 @@
             <objects>
                 <viewController storyboardIdentifier="LeagueDetailsVC" id="vXE-OG-0pj" customClass="LeagueDetailsVC" customModule="SportsAppITI" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gMf-fD-jkW">
-                        <rect key="frame" x="0.0" y="0.0" width="428" height="916"/>
+                        <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hUV-hk-B7x">
-                                <rect key="frame" x="0.0" y="0.0" width="428" height="916"/>
+                                <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                             </imageView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="e0J-uz-Bgj">
-                                <rect key="frame" x="0.0" y="45" width="428" height="871"/>
+                                <rect key="frame" x="0.0" y="45" width="428" height="881"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="pdZ-7d-qSd">
                                     <size key="itemSize" width="418" height="186"/>
@@ -310,7 +310,7 @@
                                     <outlet property="delegate" destination="vXE-OG-0pj" id="DdQ-PS-ave"/>
                                 </connections>
                             </collectionView>
-                            <toolbar hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p6n-0z-yhU">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p6n-0z-yhU">
                                 <rect key="frame" x="0.0" y="0.0" width="428" height="44"/>
                                 <items>
                                     <barButtonItem image="arrowshape.turn.up.backward" catalog="system" id="4sN-iZ-dsh">
@@ -328,7 +328,7 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qJP-tJ-7ec">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qJP-tJ-7ec">
                                 <rect key="frame" x="92.666666666666686" y="0.0" width="243" height="44"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
                                 <nil key="textColor"/>
@@ -360,6 +360,7 @@
                         <outlet property="btnAddToFav" destination="xSa-Fk-fKF" id="RCz-A7-YDM"/>
                         <outlet property="collectionLeagueDet" destination="e0J-uz-Bgj" id="VGe-6z-uZ6"/>
                         <outlet property="imgNoData" destination="hUV-hk-B7x" id="GBY-Da-sDK"/>
+                        <outlet property="titleLbl" destination="qJP-tJ-7ec" id="eZh-uk-Ej7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="etv-cM-SWq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -464,7 +465,7 @@
                     </view>
                     <connections>
                         <outlet property="leagueTableView" destination="bvq-un-iI3" id="KgS-cU-WYR"/>
-                        <segue destination="vXE-OG-0pj" kind="show" identifier="goToDetails" id="xLu-E1-57Y"/>
+                        <segue destination="vXE-OG-0pj" kind="presentation" identifier="goToDetails" modalPresentationStyle="fullScreen" id="xLu-E1-57Y"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l5a-Fy-j6E" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

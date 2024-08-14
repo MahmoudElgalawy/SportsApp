@@ -10,6 +10,7 @@ import UIKit
 
 class LeagueDetailsVC: UIViewController {
     @IBOutlet var imgNoData: UIImageView!
+    @IBOutlet var titleLbl: UILabel!
     @IBOutlet var collectionLeagueDet: UICollectionView!
     @IBOutlet var btnAddToFav: UIBarButtonItem!
 
@@ -28,7 +29,7 @@ class LeagueDetailsVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = leagueTitle.first!.uppercased() + leagueTitle.dropFirst().lowercased()
+        titleLbl.text = leagueTitle.first!.uppercased() + leagueTitle.dropFirst().lowercased()
         configureCollectionView()
         setUpIndicator()
         LoadUpcomingEvents()
@@ -53,16 +54,6 @@ class LeagueDetailsVC: UIViewController {
             if errorCount == 2 {
                 imgNoData.image = UIImage(named: "404")
             }
-        }
-    }
-    var isFav = false {
-        didSet {
-            if isFav {
-                imgVa = "heart.fill"
-            } else {
-                imgVa = "heart"
-            }
-            setupBarButton()
         }
     }
 
@@ -132,27 +123,6 @@ class LeagueDetailsVC: UIViewController {
                 self.collectionLeagueDet.reloadData()
             }
         }
-    }
-    func setupBarButton() {
-        let button1 = UIBarButtonItem(image: UIImage(systemName: imgVa), style: .plain, target: self, action: #selector(action))
-        self.navigationItem.rightBarButtonItem = button1
-    }
-
-    @objc func action() {
-        isFav.toggle()
-        if isFav {
-            saveMovie()
-        }  else {
-            let alert = UIAlertController(title: "Delete", message: "New will be removed", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { UIAlertAction in
-                self.isFav.toggle()
-            }))
-            alert.addAction(UIAlertAction(title: "Remove", style: .destructive, handler: { UIAlertAction in
-                self.deleteMovie()
-            }))
-            self.present(alert, animated: true)
-        }
-        setupBarButton()
     }
 
     @IBAction func addToFav(_ sender: Any) {
