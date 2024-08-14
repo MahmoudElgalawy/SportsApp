@@ -17,21 +17,17 @@ class LeaguesTV: UIViewController {
 
     // MARK: - Outlets
     @IBOutlet private var leagueTableView: UITableView!
+    @IBOutlet var noDataImg: UIImageView!
+
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTableView()
         setupActivityIndicator()
         fetchAllLeagues()
     }
 
     // MARK: - Setup Methods
-    private func setupTableView() {
-        leagueTableView.register(UINib(nibName: "SportTvCell", bundle: nil), forCellReuseIdentifier: "SportTvCell")
-        leagueTableView.delegate = self
-        leagueTableView.dataSource = self
-    }
 
     private func setupActivityIndicator() {
         activityIndicator.center = view.center
@@ -54,6 +50,7 @@ class LeaguesTV: UIViewController {
             }
         }
     }
+
 }
 
 // MARK: - UITableViewDataSource
@@ -63,7 +60,7 @@ extension LeaguesTV: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "SportTvCell") as? SportTvCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as? SportTvCell else {
             return UITableViewCell()
         }
         cell.configure(with: footballLeagues[indexPath.row])
@@ -74,29 +71,33 @@ extension LeaguesTV: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension LeaguesTV: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        navigateToLeagueDetailsVC(for: footballLeagues[indexPath.row])
+        performSegue(withIdentifier: "goToDetails", sender:indexPath.row)
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToDetails"{
+            if let detailsVC = segue.destination as? LeagueDetailsVC {
+                detailsVC.leagueID = footballLeagues[sender as! Int].leagueKey
+                detailsVC.leagueTitle = footballLeagues[sender as! Int].leagueName
+
+            }
+
+        }
     }
 
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 95
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        animateCellAppearance(cell)
-    }
-
-    private func navigateToLeagueDetailsVC(for league: LeagueModel) {
-        guard let detailsVC = storyboard?.instantiateViewController(withIdentifier: "LeagueDetailsVC") as? LeagueDetailsVC else { return }
-        // detailsVC.leagueID = league.leagueKey
-        navigationController?.pushViewController(detailsVC, animated: true)
-    }
-
-    private func animateCellAppearance(_ cell: UITableViewCell) {
         cell.transform = CGAffineTransform(translationX: 0, y: 30)
         cell.alpha = 0
         UIView.animate(withDuration: 0.6, delay: 0.1, options: [.curveEaseIn], animations: {
             cell.transform = .identity
             cell.alpha = 1
         }, completion: nil)
-    }
+    }   
 }
+
+
+

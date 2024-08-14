@@ -11,7 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="AllSportsCell" customModule="SportsAppITI" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX">
             <rect key="frame" x="0.0" y="0.0" width="688" height="593"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -52,11 +52,6 @@
                 <constraint firstAttribute="bottom" secondItem="Ike-GH-Mv8" secondAttribute="bottom" id="osP-TM-lkx"/>
             </constraints>
             <size key="customSize" width="688" height="593"/>
-            <connections>
-                <outlet property="mainView" destination="Ike-GH-Mv8" id="sQA-tv-b2p"/>
-                <outlet property="sportImageView" destination="c2J-8G-eZC" id="Yog-4W-pza"/>
-                <outlet property="titleLabel" destination="AXU-aP-akg" id="WuB-JF-nFZ"/>
-            </connections>
             <point key="canvasLocation" x="-634" y="-16"/>
         </collectionViewCell>
     </objects>

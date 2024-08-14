@@ -10,9 +10,9 @@ import Foundation
 
 enum SportsAPI {
 
-    case getAllLeagues(sportsName: String)
-    case getUpcomingEvents(leagueId: String, fromDate: String, toDate: String)
-    case getLatestResults(leagueId: String, fromDate: String, toDate: String)
+    case getAllLeagues(sportsName: String )
+    case getUpcomingEvents(leagueId: Int, fromDate:DataRange, toDate: DataRange)
+    case getLatestResults(leagueId: Int,fromDate:DataRange, toDate: DataRange)
     case getAllTeamsInLeague(leagueId: String)
     case getTeamDetails(teamId: String)
 
@@ -23,16 +23,20 @@ enum SportsAPI {
         return "https://apiv2.allsportsapi.com"
     }
 
-    func url() -> String {
+    func url() -> String?{
         switch self {
         case .getAllLeagues(let sportsName):
             return "\(baseURL)/\(sportsName)/?met=Leagues&APIkey=\(apiKey)"
 
         case .getUpcomingEvents(let leagueId, let fromDate, let toDate):
-            return "\(baseURL)/football?met=Fixtures&leagueId=\(leagueId)&from=\(fromDate)&to=\(toDate)&APIkey=\(apiKey)"
+            let leagueIdString = String(leagueId)
+            return "\(baseURL)/football?met=Fixtures&leagueId=\(leagueIdString)&from=\(fromDate.year)&to=\(toDate.year)&APIkey=\(apiKey)"
 
         case .getLatestResults(let leagueId, let fromDate, let toDate):
-            return "\(baseURL)/football?met=Fixtures&leagueId=\(leagueId)&from=\(fromDate)&to=\(toDate)&APIkey=\(apiKey)"
+            let leagueIdString = String(leagueId)
+
+            return
+            "\(baseURL)/football?met=Fixtures&leagueId=\(leagueIdString)&from=\(fromDate.year)&to=\(toDate.year)&APIkey=\(apiKey)"
 
         case .getAllTeamsInLeague(let leagueId):
             return "\(baseURL)/football/?met=Teams&leagueId=\(leagueId)&APIkey=\(apiKey)"

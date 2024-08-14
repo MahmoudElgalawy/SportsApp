@@ -21,6 +21,11 @@ class SportTvCell: UITableViewCell {
         super.awakeFromNib()
         configureUI()
     }
+    override var isSelected: Bool {
+            didSet {
+                contentView.backgroundColor = isSelected ? UIColor.systemBackground : UIColor.systemBackground
+            }
+        }
 
     // MARK: - UI Configuration
     private func configureUI() {
@@ -34,6 +39,7 @@ class SportTvCell: UITableViewCell {
 
         img.animateImageView()
     }
+
 
     // MARK: - Configuration
     func configure(with cell: LeagueModel) {

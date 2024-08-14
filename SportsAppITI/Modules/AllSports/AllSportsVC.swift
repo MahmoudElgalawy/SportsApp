@@ -6,11 +6,11 @@
 //
 
 import UIKit
+import Network
 
 class AllSportsVC: UIViewController {
 
     // MARK: - Properties
-    private let networkManager = NWService.shared
     private var isOrthogonalLayout = true
     private var sportsItems:[SportsItemModel] = []
 
@@ -21,16 +21,10 @@ class AllSportsVC: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupCollectionView()
         setupSportsItems()
     }
 
     // MARK: - Setup Methods
-    private func setupCollectionView() {
-        sportsCollectionView.register(UINib(nibName: "AllSportsCell", bundle: nil), forCellWithReuseIdentifier: "AllSportsCell")
-        sportsCollectionView.delegate = self
-        sportsCollectionView.dataSource = self
-    }
     private func setupSportsItems() {
         sportsItems = [
             SportsItemModel(imgName: "football", titleName: "Football"),
@@ -39,6 +33,17 @@ class AllSportsVC: UIViewController {
             SportsItemModel(imgName: "tennis", titleName: "Tennis")
         ]
     }
+    func checkInternetConnection(completion: @escaping (Bool) -> Void) {
+            let monitor = NWPathMonitor()
+            monitor.pathUpdateHandler = { path in
+                DispatchQueue.main.async {
+                    completion(path.status == .satisfied)
+                    monitor.cancel()
+                }
+            }
+            monitor.start(queue: .main)
+        }
+
 
     // MARK: - Actions
     @IBAction private func layoutToggleButtonPressed(_ sender: UIBarButtonItem) {
@@ -55,7 +60,7 @@ extension AllSportsVC: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AllSportsCell", for: indexPath) as? AllSportsCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as? AllSportsCell else {
             return UICollectionViewCell()
         }
         cell.configure(with: sportsItems[indexPath.row])
@@ -92,10 +97,19 @@ extension AllSportsVC: UICollectionViewDelegateFlowLayout {
 // MARK: - UICollectionViewDelegate
 extension AllSportsVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let leaguesVC = storyboard?.instantiateViewController(withIdentifier: "LeaguesTV") as? LeaguesTV else { return }
-        let title = sportsItems[indexPath.row].titleName
-        leaguesVC.sportName = title.lowercased()
-        leaguesVC.title = title
-        navigationController?.pushViewController(leaguesVC, animated: true)    }
-
+        checkInternetConnection { [weak self] isConnected in
+            if isConnected {
+                guard let leaguesVC = self?.storyboard?.instantiateViewController(withIdentifier: "LeaguesTV") as? LeaguesTV else { return }
+                let title = self!.sportsItems[indexPath.row].titleName
+                leaguesVC.sportName = title.lowercased()
+                leaguesVC.title = title
+                self?.navigationController?.pushViewController(leaguesVC, animated: true)
+            } else {
+                let alert = UIAlertController(title: "No internet available!", message: "check connection and try again", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "ok", style: .default))
+                self?.present(alert, animated: true)
+            }
+        }
+    }
 }
+
