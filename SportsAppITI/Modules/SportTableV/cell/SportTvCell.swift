@@ -7,6 +7,11 @@
 
 import UIKit
 import Kingfisher
+import WebKit
+
+protocol SportTvCellDelegate: AnyObject {
+    func didPressYouTubeButton(with urlString: String)
+}
 
 class SportTvCell: UITableViewCell {
 
@@ -15,31 +20,37 @@ class SportTvCell: UITableViewCell {
     @IBOutlet private var lbl: UILabel!
     @IBOutlet private var img: UIImageView!
     @IBOutlet private var backImg: UIImageView!
+    weak var delegate: SportTvCellDelegate?
 
     // MARK: - Lifecycle
     override func awakeFromNib() {
         super.awakeFromNib()
         configureUI()
     }
+
     override var isSelected: Bool {
-            didSet {
-                contentView.backgroundColor = isSelected ? UIColor.systemBackground : UIColor.systemBackground
-            }
+        didSet {
+            contentView.backgroundColor = isSelected ? UIColor.systemBackground : UIColor.systemBackground
         }
+    }
 
     // MARK: - UI Configuration
     private func configureUI() {
-        mainView.layer.cornerRadius = 16
-        img.layer.cornerRadius = 20
-        img.layer.borderColor = UIColor(named:Color.C121212.rawValue)?.cgColor
-        img.layer.borderWidth = 0.5
-        mainView.layer.borderColor = UIColor(named:Color.C121212.rawValue)?.cgColor
-        mainView.layer.borderWidth = 0.5
-        backImg.layer.cornerRadius = 20
+        img.layer.cornerRadius = img.frame.height / 2
+           img.clipsToBounds = true
+           img.layer.borderColor = UIColor(named: Color.C121212.rawValue)?.cgColor
+           img.layer.borderWidth = 0.5
 
-        img.animateImageView()
+           // Apply rounded corners to other views
+           mainView.layer.cornerRadius = 16
+           mainView.layer.borderColor = UIColor(named: Color.C121212.rawValue)?.cgColor
+           mainView.layer.borderWidth = 0.5
+           mainView.clipsToBounds = true
+
+           backImg.layer.cornerRadius = mainView.frame.width / 2
+
+            img.animateImageView()
     }
-
 
     // MARK: - Configuration
     func configure(with cell: LeagueModel) {
@@ -47,14 +58,18 @@ class SportTvCell: UITableViewCell {
         let imageUrl = URL(string: cell.leagueLogo ?? "")
         img.kf.setImage(with: imageUrl, placeholder: UIImage(named: "no_img"))
     }
-}
-private extension UIImageView {
-    func animateImageView() {
-        UIView.animate(withDuration: 1.0) {
-            self.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+
+    // MARK: - YouTube Actions
+    @IBAction func youtubeBtnPressed(_ sender: Any) {
+        // Create a search URL based on the league name
+        if let leagueName = lbl.text, let searchURL = createYouTubeSearchURL(for: leagueName) {
+            delegate?.didPressYouTubeButton(with: searchURL.absoluteString)
         }
-        UIView.animate(withDuration: 1.0) {
-            self.transform = CGAffineTransform.identity
-        }
+    }
+
+    private func createYouTubeSearchURL(for query: String) -> URL? {
+        let formattedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        let urlString = "https://www.youtube.com/results?search_query=\(formattedQuery)/channel"
+        return URL(string: urlString)
     }
 }

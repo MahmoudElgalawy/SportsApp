@@ -24,7 +24,7 @@
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lge-a3-awQ">
                             <rect key="frame" x="50" y="0.0" width="651" height="274"/>
-                            <color key="backgroundColor" red="0.89375096559524536" green="0.970561683177948" blue="0.90124481916427612" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </imageView>
                     </subviews>
                     <constraints>

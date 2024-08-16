@@ -19,8 +19,6 @@ struct LeagueModel: Codable {
     let leagueLogo : String?
     let countryLogo: String?
     let leagueYear:String?
-    //delte it just for test
-    let eventKey:Int?
 
     enum CodingKeys: String, CodingKey {
         case leagueKey = "league_key"
@@ -30,9 +28,6 @@ struct LeagueModel: Codable {
         case leagueLogo = "league_logo"
         case countryLogo = "country_logo"
         case leagueYear = "league_year"
-        //delte it just for test
-
-        case eventKey = "event_key"
-
+     
     }
 }

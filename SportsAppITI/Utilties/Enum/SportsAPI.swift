@@ -14,7 +14,7 @@ enum SportsAPI {
     case getUpcomingEvents(leagueId: Int, fromDate:DataRange, toDate: DataRange)
     case getLatestResults(leagueId: Int,fromDate:DataRange, toDate: DataRange)
     case getAllTeamsInLeague(leagueId: String)
-    case getTeamDetails(teamId: String)
+    case getTeamDetails(teamId: Int)
 
     private var apiKey: String {
         return "f388c6b66cb3de08a66bad91a62079ed4b733ed8a6719ad9010b2391ad9a90e2"

@@ -9,6 +9,8 @@ import UIKit
 import Kingfisher
 
 class LeaguesDetailsCVC: UICollectionViewCell {
+
+    // MARK: - IBOutlets
     @IBOutlet var backImage: UIImageView!
     @IBOutlet var logoTeam1: UIImageView!
     @IBOutlet var nameTeam1: UILabel!
@@ -17,14 +19,19 @@ class LeaguesDetailsCVC: UICollectionViewCell {
     @IBOutlet var lblDate: UILabel!
     @IBOutlet var lblTime: UILabel!
     @IBOutlet var lblResult: UILabel!
+
+    // MARK: - Lifecycle
     override func awakeFromNib() {
         super.awakeFromNib()
-        backImage.layer.cornerRadius = 16
+        configureUI()
     }
-
-
-    func confinge(with cell:EventModel){
-
+    // MARK: - UI Configuration
+    private func configureUI() {
+            backImage.layer.cornerRadius = 16
+        }
+    
+    // MARK: - Configuration
+    func confinge(with cell:EventModel) {
         let url1 = URL(string: cell.homeTeamLogo ?? "")
         let url2 = URL(string: cell.awayTeamLogo ?? "")
         self.logoTeam1.kf.setImage(with: url1,placeholder: UIImage(named: "6"))
@@ -33,13 +40,10 @@ class LeaguesDetailsCVC: UICollectionViewCell {
         self.nameTeam2.text = cell.eventAwayTeam
         self.lblDate.text = cell.eventDate
         self.lblTime.text = cell.eventTime
-        if cell.eventFinalResult == "-" {
-            self.lblResult.isHidden = true
+        lblResult.isHidden = cell.eventFinalResult == "-"
+        lblResult.text = cell.eventFinalResult
 
-        } else {
-            self.lblResult.isHidden = false
-            self.lblResult.text = cell.eventFinalResult
-        }
+
     }
 
 }

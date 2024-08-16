@@ -22,12 +22,12 @@ class AllSportsCell: UICollectionViewCell {
 
     // MARK: - Setup Methods
     private func setupUI() {
-        sportImageView.layer.cornerRadius = 10
+        sportImageView.layer.cornerRadius = 16
         sportImageView.layer.masksToBounds = true
-        sportImageView.layer.borderWidth = 1
-        sportImageView.layer.borderColor = UIColor(named: "CC328B9")?.cgColor
+        sportImageView.layer.borderWidth = 2
+        sportImageView.layer.borderColor = UIColor(named: "#97C256")?.cgColor
 
-        animateImageView()
+        animateImgView()
         aimationlabel()
     }
 
@@ -35,7 +35,7 @@ class AllSportsCell: UICollectionViewCell {
         titleLabel.moveLabel(label: titleLabel)
     }
 
-    private func animateImageView() {
+    private func animateImgView() {
         animateImageView(imageView: sportImageView)
     }
 

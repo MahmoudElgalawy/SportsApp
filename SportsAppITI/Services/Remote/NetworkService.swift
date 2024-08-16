@@ -6,22 +6,27 @@
 //
 import Foundation
 import Alamofire
+import Network
 
+
+
+// Protocol for fetching data
+protocol NetworkRequestable {
+    func fetchData<T: Codable>(from url: SportsAPI, model: T.Type, completion: @escaping (T?, Error?) -> Void)
+}
 
 // MARK: - Network Manager
-class NWService {
-    static let shared = NWService()
-    private init() {}
+class NetworkService:NetworkRequestable{
 
-    func getAllData<T: Codable>(sportName: SportsAPI, model: T.Type, completion: @escaping (T?, Error?) -> Void) {
-        guard let urlString = sportName.url(), let url = URL(string: urlString) else {
+    static let shared = NetworkService()
+    private init() {}
+    
+    func fetchData<T: Codable>(from url : SportsAPI, model: T.Type, completion: @escaping (T?, Error?) -> Void) {
+        guard let urlString = url.url(), let url = URL(string: urlString) else {
             completion(nil, NSError(domain: "Invalid URL", code: -1, userInfo: nil))
             return
         }
-        NSLog("")
-
-        NSLog("Requesting data from URL: %@", url.absoluteString)
-
+       
         AF.request(url).responseDecodable(of:model) { response in
             switch response.result {
             case .success(let json):

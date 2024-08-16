@@ -5,29 +5,42 @@
 //  Created by Engy on 8/11/24.
 //
 
-import UIKit
+//
+//  LeagueVC.swift
+//  SportsAppITI
+//
+//  Created by Engy on 8/11/24.
+//
 
-class LeaguesTV: UIViewController {
+import UIKit
+import WebKit
+
+class LeaguesTV: UIViewController, WKNavigationDelegate {
 
     // MARK: - Properties
     private let activityIndicator = UIActivityIndicatorView(style: .large)
-    private let networkManager = NWService.shared
-    private var footballLeagues: [LeagueModel] = []
+    private let networkManager = NetworkService.shared
+    private var footballLeagues = [LeagueModel]()
+    private var webView: WKWebView?
     var sportName: String?
 
     // MARK: - Outlets
     @IBOutlet private var leagueTableView: UITableView!
-    @IBOutlet var noDataImg: UIImageView!
-
+    @IBOutlet private var noDataImg: UIImageView!
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupActivityIndicator()
+        setupUI()
         fetchAllLeagues()
     }
 
     // MARK: - Setup Methods
+    private func setupUI() {
+        setupActivityIndicator()
+        leagueTableView.dataSource = self
+        leagueTableView.delegate = self
+    }
 
     private func setupActivityIndicator() {
         activityIndicator.center = view.center
@@ -36,21 +49,50 @@ class LeaguesTV: UIViewController {
 
     // MARK: - Network Call
     private func fetchAllLeagues() {
+        guard let sportName = sportName else { return }
         activityIndicator.startAnimating()
-        networkManager.getAllData(sportName: .getAllLeagues(sportsName: sportName!), model: LeagueModelAPI.self) { [weak self] result, error in
+        networkManager.fetchData(from: .getAllLeagues(sportsName: sportName), model: LeagueModelAPI.self) { [weak self] result, error in
             DispatchQueue.main.async {
                 self?.activityIndicator.stopAnimating()
                 if let error = error {
                     print("Error fetching leagues: \(error.localizedDescription)")
                     return
                 }
-                guard let leagues = result?.result else { return }
-                self?.footballLeagues = leagues
+                self?.footballLeagues = result?.result ?? []
                 self?.leagueTableView.reloadData()
             }
         }
     }
 
+    // MARK: - Actions
+    @objc private func dismissWebViewController() {
+        dismiss(animated: true)
+    }
+
+    private func showYouTubeVideo(urlString: String) {
+        let webViewController = UIViewController()
+        webViewController.view.backgroundColor = .white
+
+        // Initialize the WKWebView
+        webView = WKWebView(frame: webViewController.view.bounds)
+        webView?.navigationDelegate = self
+        webViewController.view.addSubview(webView!)
+
+        // Load the YouTube URL
+        if let url = URL(string: urlString) {
+            let request = URLRequest(url: url)
+            webView?.load(request)
+        }
+
+        // Add a back button
+        let backButton = UIButton(frame: CGRect(x: 15, y: 40, width: 100, height: 40))
+        backButton.setTitle("Back", for: .normal)
+        backButton.setTitleColor(.blue, for: .normal)
+        backButton.addTarget(self, action: #selector(dismissWebViewController), for: .touchUpInside)
+        webViewController.view.addSubview(backButton)
+
+        present(webViewController, animated: true)
+    }
 }
 
 // MARK: - UITableViewDataSource
@@ -63,6 +105,7 @@ extension LeaguesTV: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as? SportTvCell else {
             return UITableViewCell()
         }
+        cell.delegate = self
         cell.configure(with: footballLeagues[indexPath.row])
         return cell
     }
@@ -70,34 +113,31 @@ extension LeaguesTV: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 extension LeaguesTV: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "goToDetails", sender:indexPath.row)
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 83
     }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "goToDetails", sender: indexPath.row)
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "goToDetails"{
-            if let detailsVC = segue.destination as? LeagueDetailsVC {
-                detailsVC.leagueID = footballLeagues[sender as! Int].leagueKey
-                detailsVC.leagueTitle = footballLeagues[sender as! Int].leagueName
-
-            }
-
+        if segue.identifier == "goToDetails",
+           let detailsVC = segue.destination as? LeagueDetailsVC,
+           let row = sender as? Int {
+            detailsVC.leagueID = footballLeagues[row].leagueKey
+            detailsVC.leagueTitle = footballLeagues[row].leagueName
         }
     }
 
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 95
-    }
-
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.transform = CGAffineTransform(translationX: 0, y: 30)
-        cell.alpha = 0
-        UIView.animate(withDuration: 0.6, delay: 0.1, options: [.curveEaseIn], animations: {
-            cell.transform = .identity
-            cell.alpha = 1
-        }, completion: nil)
-    }   
+        cell.animateSlideAndFadeIn()
+    }
 }
 
-
-
+// MARK: - SportTvCellDelegate
+extension LeaguesTV: SportTvCellDelegate {
+    func didPressYouTubeButton(with urlString: String) {
+        showYouTubeVideo(urlString: urlString)
+    }
+}

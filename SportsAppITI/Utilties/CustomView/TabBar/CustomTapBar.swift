@@ -32,7 +32,7 @@ class CustomTapBar: UITabBar {
         imgView.animateImageView(imageView: imgView)
         imgView.addRadiusView(20)
        // imgView.alpha = 0.3
-        imgView.addBorderView(color: Color.C8E8E93, width: 2)
+        imgView.addBorderView(color: Color.C8E8E93, width: 1.5)
     }
 
     private func loadNib() {
