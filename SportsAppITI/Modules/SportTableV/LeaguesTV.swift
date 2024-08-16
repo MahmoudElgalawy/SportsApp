@@ -127,6 +127,7 @@ extension LeaguesTV: UITableViewDelegate {
            let row = sender as? Int {
             detailsVC.leagueID = footballLeagues[row].leagueKey
             detailsVC.leagueTitle = footballLeagues[row].leagueName
+            detailsVC.league = self.footballLeagues[row]
         }
     }
 

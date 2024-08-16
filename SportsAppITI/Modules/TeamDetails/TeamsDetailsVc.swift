@@ -6,51 +6,84 @@
 //
 
 import UIKit
-class TeamsDetailsVc:UIViewController{
+import Kingfisher
 
 
-    var teamKey:Int?
-    var teamArray:[TeamModel] = []
-    private var networkManger = NetworkService.shared
+class TeamsDetailsVc:UIViewController,UITableViewDelegate,UITableViewDataSource{
 
+    @IBOutlet weak var teamsLogo: UIImageView!
+    
+    @IBOutlet weak var playersTable: UITableView!
+    @IBOutlet weak var teamsName: UILabel!
+    var team:TeamModel!
+   var teamPlayers = [Player]()
+   var teamCoaches = [Coach]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchTeamData()
-
-
+        
+        guard let teamLogo = team.teamLogo else{return}
+         let url = URL(string: teamLogo)
+        teamsLogo.kf.setImage(with: url,placeholder: UIImage(named: "No_image.svg"))
+        teamsName.text = team.teamName
+        
+        playersTable.delegate = self
+        playersTable.dataSource = self
+        configureTableView()
+        
+        playersTable.reloadData()
     }
-    // MARK: - Network Call
-    private func fetchTeamData() {
-        guard let teamKey = teamKey else { return }
-        networkManger.fetchData(from: .getTeamDetails(teamId: teamKey), model: TeamModelApi.self) { [weak self] result, error in
-            DispatchQueue.main.async {
-                if let error = error {
-                    print("Error fetching leagues: \(error.localizedDescription)")
-                    return
-                }
-                self?.teamArray = result?.result ?? []
-                //for testing
-                self!.reloadDataAfterCallingNw()
+    
+    func uploadPlayersandCoaches() {
+       
+//        guard let players = team.players else{
+//            print("No players found!")
+//            return}
+//        teamPlayers = players
+//        guard let coaches = team.coaches else{
+//            print("No coaches found!")
+//            return}
+//        teamCoaches = coaches
+//        
+//        print(" players \(teamPlayers)")
+//        print(" coaches \(teamCoaches)")
+        
+    }
+
+    
+    func configureTableView() {
+        playersTable.register(UINib(nibName: String(describing: TeamsTVC.self), bundle: nil), forCellReuseIdentifier: String(describing: TeamsTVC.self))
+        playersTable.register(UINib(nibName: String(describing: coachCell.self), bundle: nil), forCellReuseIdentifier: String(describing: coachCell.self))
+    }
+    
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return  teamPlayers.count + teamCoaches.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.row < teamCoaches.count {
+                print("Configuring coach cell for row \(indexPath.row)")
+                let cell = playersTable.dequeueReusableCell(withIdentifier: String(describing: coachCell.self)) as! coachCell
+                cell.configure(coach: teamCoaches[indexPath.row])
+                return cell
+            } else {
+                print("Configuring player cell for row \(indexPath.row)")
+                let cell = playersTable.dequeueReusableCell(withIdentifier: String(describing: TeamsTVC.self)) as! TeamsTVC
+                let player = teamPlayers[indexPath.row - teamCoaches.count]
+                cell.configureCell(data: player)
+                return cell
             }
-        }
+            }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
     }
-
-//for testing
-    func reloadDataAfterCallingNw(){
-        let allPlayers = teamArray.compactMap { $0.players }.flatMap { $0 }
-        for player in allPlayers.prefix(5) {
-            print(player.playerName)
-            print(player.playerAge)
-            print(player.playerBirthdate)
-            print(player.playerCountry)
-
-        }
-
-
-
+    
+    
+    @IBAction func backButton(_ sender: Any) {
+        dismiss(animated: true)
     }
-
-
-
 }
+
+

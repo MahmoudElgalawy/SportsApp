@@ -19,7 +19,7 @@ class LeagueDetailsVC: UIViewController {
     // MARK: - Properties
     var leagueID: Int!
     var leagueTitle: String = " "
-
+    var league :LeagueModel!
     private var errorCount = 0
     private var networkManger = NetworkService.shared
     private let activityIndicator = UIActivityIndicatorView(style: .large)
@@ -161,7 +161,11 @@ extension LeagueDetailsVC:UICollectionViewDelegate {
         if segue.identifier == "goToTeamVC",
            let teamsDetailsVc = segue.destination as? TeamsDetailsVc,
            let row = sender as? Int {
-            teamsDetailsVc.teamKey = teams[row].teamKey
+            teamsDetailsVc.team = teams[row]
+            guard let players = teams[row].players else{return}
+            teamsDetailsVc.teamPlayers = players
+            guard let coaches = teams[row].coaches else{return}
+            teamsDetailsVc.teamCoaches = coaches
         }
     }
 }
