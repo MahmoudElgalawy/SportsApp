@@ -277,6 +277,7 @@
                                                 <constraint firstItem="CBt-EP-W2w" firstAttribute="leading" secondItem="na4-zC-o5g" secondAttribute="leading" constant="3" id="nkV-iF-eCQ"/>
                                             </constraints>
                                         </collectionViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <size key="customSize" width="328" height="259"/>
                                         <connections>
                                             <outlet property="imgTeams" destination="CBt-EP-W2w" id="75C-ao-pbP"/>
@@ -592,16 +593,16 @@
     </scenes>
     <resources>
         <image name="appstore" width="1024" height="1024"/>
-        <image name="arrowshape.turn.up.backward" catalog="system" width="128" height="104"/>
+        <image name="arrowshape.turn.up.backward" catalog="system" width="32" height="32"/>
         <image name="ball2" width="736" height="736"/>
         <image name="basketball" width="1071" height="1500"/>
         <image name="basketball1" width="2000" height="1332"/>
-        <image name="figure.american.football" catalog="system" width="128" height="120"/>
-        <image name="heart" catalog="system" width="128" height="107"/>
-        <image name="heart.fill" catalog="system" width="128" height="107"/>
+        <image name="figure.american.football" catalog="system" width="32" height="32"/>
+        <image name="heart" catalog="system" width="32" height="32"/>
+        <image name="heart.fill" catalog="system" width="32" height="32"/>
         <image name="lastVS" width="1284" height="318"/>
         <image name="sport" width="450" height="450"/>
-        <image name="square.grid.2x2" catalog="system" width="128" height="114"/>
+        <image name="square.grid.2x2" catalog="system" width="32" height="32"/>
         <image name="youtube" width="170.66667175292969" height="170.66667175292969"/>
         <namedColor name="#FF2D55">
             <color red="1" green="0.17599999904632568" blue="0.33300000429153442" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -613,7 +614,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
