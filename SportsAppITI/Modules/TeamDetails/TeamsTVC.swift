@@ -30,14 +30,29 @@ class TeamsTVC: UITableViewCell {
     }
 
     
-    func configureCell(data:Player){
+    
+    func configureCell(data: Player) {
         self.numPlayer.text = data.playerNumber
         self.namePlayer.text = data.playerName
         self.agePlayer.text = data.playerAge
-        guard let country = data.playerCountry else{return}
-        self.countryPlayer.text = country
-        guard let image = data.playerImage else{return}
-        let url = URL(string: image)
-       photoPlayer.kf.setImage(with: url,placeholder: UIImage(systemName: "person"))
+        self.countryPlayer.text = data.playerCountry ?? "Unknown"
+        
+        if let image = data.playerImage {
+            guard let url = URL(string: image) else {
+                print("Invalid image URL: \(image)")
+                return
+            }
+            print("Loading image from URL: \(url)")
+            photoPlayer.kf.setImage(with: url, placeholder: UIImage(systemName: "person"), options: nil, completionHandler: { result in
+                switch result {
+                case .success(let value):
+                    print("Successfully loaded image: \(value.image)")
+                case .failure(let error):
+                    print("Failed to load image: \(error.localizedDescription)")
+                }
+            })
+        } else {
+            photoPlayer.image = UIImage(systemName: "person")
+        }
     }
 }

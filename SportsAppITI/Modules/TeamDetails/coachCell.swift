@@ -25,7 +25,8 @@ class coachCell: UITableViewCell {
     
     func configure(coach:Coach){
         self.name.text = coach.coachName
-        self.country.text = coach.coachCountry
+        guard let country = coach.coachCountry else{return}
+        self.country.text = country
         guard let age = coach.coachAge else{return}
         self.age.text = String(age)
     }

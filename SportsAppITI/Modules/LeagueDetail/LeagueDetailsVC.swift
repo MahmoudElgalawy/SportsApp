@@ -2,7 +2,7 @@
 //  LeagueDetailsVC.swift
 //  SportsAppITI
 //
-//  Created by Engy on 8/12/24.
+//  Created by Mahmoud on 8/12/24.
 //
 
 
@@ -20,6 +20,7 @@ class LeagueDetailsVC: UIViewController {
     var leagueID: Int!
     var leagueTitle: String = " "
     var league :LeagueModel!
+    var isFavorite = true
     private var errorCount = 0
     private var networkManger = NetworkService.shared
     private let activityIndicator = UIActivityIndicatorView(style: .large)
@@ -37,6 +38,8 @@ class LeagueDetailsVC: UIViewController {
         setupUI()
         loadLatestEvents()
         loadUpcomingEvents()
+        checkIfFavorite()
+        updateFavoriteButton()
     }
     
     // MARK: - Setup Methods
@@ -61,6 +64,7 @@ class LeagueDetailsVC: UIViewController {
                              coaches: [])
                }
         collectionLeagueDet.reloadData()
+        
     }
 
     private func handleErrors() {
@@ -142,7 +146,21 @@ class LeagueDetailsVC: UIViewController {
 
     // MARK: - Actions
     @IBAction func addToFav(_ sender: Any) {
-        // Add to favorites functionality
+        if isFavorite {
+            let alert = UIAlertController(title: "note!", message:"you will delete the league", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "ok", style: .destructive, handler :{action in
+                LocalServices.deleteleague(self.league)
+                }))
+            
+            present(alert, animated:true)
+            
+        } else {
+            LocalServices.storeLeague(league)
+        }
+       isFavorite.toggle()
+        updateFavoriteButton()
+       // updateFavoriteVC()
     }
 
     @IBAction func btnBack(_ sender: Any) {
@@ -161,11 +179,7 @@ extension LeagueDetailsVC:UICollectionViewDelegate {
         if segue.identifier == "goToTeamVC",
            let teamsDetailsVc = segue.destination as? TeamsDetailsVc,
            let row = sender as? Int {
-            teamsDetailsVc.team = teams[row]
-            guard let players = teams[row].players else{return}
-            teamsDetailsVc.teamPlayers = players
-            guard let coaches = teams[row].coaches else{return}
-            teamsDetailsVc.teamCoaches = coaches
+            teamsDetailsVc.teamKey = teams[row].teamKey
         }
     }
 }
@@ -252,7 +266,15 @@ extension LeagueDetailsVC: UICollectionViewDataSource, UICollectionViewDelegateF
         cell.animateCellAppearance()
     }
 
+    func checkIfFavorite() {
+        let favorites = LocalServices.getLeagues()
+        isFavorite = favorites.contains(where: { $0.leagueKey == league.leagueKey })
+    }
+    
+    func updateFavoriteButton() {
+        btnAddToFav.image = UIImage(systemName: isFavorite ? "heart.fill" : "heart")
+    }
 
 }
-//titleLbl.text = leagueTitle.first!.uppercased() + leagueTitle.dropFirst().lowercased()
+
 

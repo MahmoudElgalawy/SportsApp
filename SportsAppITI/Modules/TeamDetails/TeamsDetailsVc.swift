@@ -2,7 +2,7 @@
 //  TeamsDetailsVc.swift
 //  SportsAppITI
 //
-//  Created by Engy on 8/16/24.
+//  Created by Mahmoud on 8/16/24.
 //
 
 import UIKit
@@ -15,75 +15,86 @@ class TeamsDetailsVc:UIViewController,UITableViewDelegate,UITableViewDataSource{
     
     @IBOutlet weak var playersTable: UITableView!
     @IBOutlet weak var teamsName: UILabel!
-    var team:TeamModel!
-   var teamPlayers = [Player]()
-   var teamCoaches = [Coach]()
+    
+    var teamArray: [TeamModel] = []
+        var allPlayers = [Player]()
+        var teamCoaches = [Coach]()
+        var teamKey: Int?
+        private var networkManager = NetworkService.shared
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        guard let teamLogo = team.teamLogo else{return}
-         let url = URL(string: teamLogo)
-        teamsLogo.kf.setImage(with: url,placeholder: UIImage(named: "No_image.svg"))
-        teamsName.text = team.teamName
-        
-        playersTable.delegate = self
-        playersTable.dataSource = self
-        configureTableView()
-        
-        playersTable.reloadData()
-    }
-    
-    func uploadPlayersandCoaches() {
-       
-//        guard let players = team.players else{
-//            print("No players found!")
-//            return}
-//        teamPlayers = players
-//        guard let coaches = team.coaches else{
-//            print("No coaches found!")
-//            return}
-//        teamCoaches = coaches
-//        
-//        print(" players \(teamPlayers)")
-//        print(" coaches \(teamCoaches)")
-        
-    }
+        override func viewDidLoad() {
+            super.viewDidLoad()
 
-    
-    func configureTableView() {
-        playersTable.register(UINib(nibName: String(describing: TeamsTVC.self), bundle: nil), forCellReuseIdentifier: String(describing: TeamsTVC.self))
-        playersTable.register(UINib(nibName: String(describing: coachCell.self), bundle: nil), forCellReuseIdentifier: String(describing: coachCell.self))
-    }
-    
+            playersTable.delegate = self
+            playersTable.dataSource = self
+            configureTableView()
+            fetchTeamData()
+        }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return  teamPlayers.count + teamCoaches.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row < teamCoaches.count {
-                print("Configuring coach cell for row \(indexPath.row)")
-                let cell = playersTable.dequeueReusableCell(withIdentifier: String(describing: coachCell.self)) as! coachCell
-                cell.configure(coach: teamCoaches[indexPath.row])
+        private func fetchTeamData() {
+            guard let teamKey = teamKey else { return }
+
+            networkManager.fetchData(from: .getTeamDetails(teamId: teamKey), model: TeamModelApi.self) { [weak self] result, error in
+                DispatchQueue.main.async {
+                    if let error = error {
+                        print("Error fetching teams: \(error.localizedDescription)")
+                        return
+                    }
+
+                    guard let self = self, let result = result else { return }
+                    self.teamArray = result.result 
+
+                    // Extract players and coaches
+                    self.allPlayers = self.teamArray.flatMap { $0.players ?? [] }
+                    self.teamCoaches = self.teamArray.flatMap { $0.coaches ?? [] }
+
+                    // Update UI
+                    self.updateUI()
+                }
+            }
+        }
+
+        private func updateUI() {
+            if let team = teamArray.first {
+                if let teamLogo = team.teamLogo, let url = URL(string: teamLogo) {
+                    teamsLogo.kf.setImage(with: url, placeholder: UIImage(named: "No_image.svg"))
+                }
+                teamsName.text = team.teamName
+            }
+
+            playersTable.reloadData()
+        }
+
+        func configureTableView() {
+            playersTable.register(UINib(nibName: String(describing: TeamsTVC.self), bundle: nil), forCellReuseIdentifier: String(describing: TeamsTVC.self))
+            playersTable.register(UINib(nibName: String(describing: coachCell.self), bundle: nil), forCellReuseIdentifier: String(describing: coachCell.self))
+        }
+
+        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            return allPlayers.count + teamCoaches.count
+        }
+
+        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+            if indexPath.row < teamCoaches.count {
+                let cell = playersTable.dequeueReusableCell(withIdentifier: String(describing: coachCell.self), for: indexPath) as! coachCell
+                let coach = teamCoaches[indexPath.row]
+                cell.configure(coach: coach)
                 return cell
             } else {
-                print("Configuring player cell for row \(indexPath.row)")
-                let cell = playersTable.dequeueReusableCell(withIdentifier: String(describing: TeamsTVC.self)) as! TeamsTVC
-                let player = teamPlayers[indexPath.row - teamCoaches.count]
+                let cell = playersTable.dequeueReusableCell(withIdentifier: String(describing: TeamsTVC.self), for: indexPath) as! TeamsTVC
+                let player = allPlayers[indexPath.row - teamCoaches.count]
                 cell.configureCell(data: player)
                 return cell
             }
-            }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        }
+
+        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+            return 100
+        }
+
+        @IBAction func backButton(_ sender: Any) {
+            dismiss(animated: true, completion: nil)
+        }
     }
-    
-    
-    @IBAction func backButton(_ sender: Any) {
-        dismiss(animated: true)
-    }
-}
 
 

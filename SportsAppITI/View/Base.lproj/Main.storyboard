@@ -253,12 +253,12 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="basketball1" translatesAutoresizingMaskIntoConstraints="NO" id="CBt-EP-W2w">
-                                                    <rect key="frame" x="3" y="3" width="322" height="201"/>
+                                                    <rect key="frame" x="3" y="3" width="322" height="191"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Real Madrid" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nNf-Wk-Zej">
-                                                    <rect key="frame" x="116.33333333333334" y="219" width="95.333333333333343" height="25"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Real Madrid" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nNf-Wk-Zej">
+                                                    <rect key="frame" x="3" y="209" width="322" height="35"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="25" id="QfP-XZ-idK"/>
+                                                        <constraint firstAttribute="height" constant="35" id="QfP-XZ-idK"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                     <nil key="textColor"/>
@@ -268,6 +268,7 @@
                                             <color key="backgroundColor" red="0.97487670183181763" green="0.98974686861038208" blue="0.98305052518844604" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstItem="nNf-Wk-Zej" firstAttribute="centerX" secondItem="na4-zC-o5g" secondAttribute="centerX" id="0NG-aj-d1t"/>
+                                                <constraint firstItem="nNf-Wk-Zej" firstAttribute="width" secondItem="na4-zC-o5g" secondAttribute="width" multiplier="0.981707" id="LqK-PC-cDe"/>
                                                 <constraint firstAttribute="trailing" secondItem="CBt-EP-W2w" secondAttribute="trailing" constant="3" id="PbK-Gy-4eW"/>
                                                 <constraint firstItem="CBt-EP-W2w" firstAttribute="top" secondItem="na4-zC-o5g" secondAttribute="top" constant="3" id="Znx-nu-l1U"/>
                                                 <constraint firstItem="nNf-Wk-Zej" firstAttribute="top" secondItem="CBt-EP-W2w" secondAttribute="bottom" constant="15" id="bQb-X4-cAj"/>
@@ -290,9 +291,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="428" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hfJ-aA-M9x">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hfJ-aA-M9x">
                                             <rect key="frame" x="8" y="0.0" width="420" height="50"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -377,7 +378,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="etv-cM-SWq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-273.36448598130841" y="-1328.29373650108"/>
+            <point key="canvasLocation" x="-259.34579439252337" y="-1337.3650107991361"/>
         </scene>
         <!--Teams Details Vc-->
         <scene sceneID="0KG-fA-bKB">
@@ -387,10 +388,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RealMadrid" translatesAutoresizingMaskIntoConstraints="NO" id="YY2-SD-mtL" userLabel="imgTeam">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="no_img" translatesAutoresizingMaskIntoConstraints="NO" id="YY2-SD-mtL" userLabel="imgTeam">
                                 <rect key="frame" x="10" y="89" width="408" height="169"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gy0-Hm-tya" userLabel=" teamName">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gy0-Hm-tya" userLabel=" teamName">
                                 <rect key="frame" x="10" y="266" width="408" height="36.333333333333314"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <nil key="textColor"/>
@@ -410,6 +411,12 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Team Details" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qpb-Wu-otc">
+                                <rect key="frame" x="96" y="56.666666666666657" width="270" height="21"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="KhK-MF-2zp"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -422,14 +429,18 @@
                             <constraint firstItem="6Yk-Aj-NGv" firstAttribute="top" secondItem="gy0-Hm-tya" secondAttribute="bottom" constant="2" id="NL4-yk-ReO"/>
                             <constraint firstItem="YY2-SD-mtL" firstAttribute="height" secondItem="fdE-Jo-SBe" secondAttribute="height" multiplier="3.84091" id="RUs-FN-w4I"/>
                             <constraint firstItem="YY2-SD-mtL" firstAttribute="top" secondItem="fdE-Jo-SBe" secondAttribute="bottom" id="Tp3-2v-2Jd"/>
+                            <constraint firstItem="qpb-Wu-otc" firstAttribute="leading" secondItem="fdE-Jo-SBe" secondAttribute="trailing" constant="-332" id="W9U-cY-6Ld"/>
                             <constraint firstItem="YY2-SD-mtL" firstAttribute="centerX" secondItem="aP2-Bc-0WX" secondAttribute="centerX" id="Y4d-zg-QLM"/>
                             <constraint firstItem="gy0-Hm-tya" firstAttribute="width" secondItem="YY2-SD-mtL" secondAttribute="width" id="aHn-dh-ZoQ"/>
                             <constraint firstItem="fdE-Jo-SBe" firstAttribute="height" secondItem="aP2-Bc-0WX" secondAttribute="height" multiplier="0.0475162" id="fp7-tc-Qe6"/>
                             <constraint firstItem="fdE-Jo-SBe" firstAttribute="leading" secondItem="KhK-MF-2zp" secondAttribute="leading" id="mJ7-P4-2BK"/>
+                            <constraint firstItem="qpb-Wu-otc" firstAttribute="centerY" secondItem="fdE-Jo-SBe" secondAttribute="centerY" id="p4n-9e-C18"/>
                             <constraint firstItem="fdE-Jo-SBe" firstAttribute="top" secondItem="KhK-MF-2zp" secondAttribute="top" constant="45" id="qC8-x3-35j"/>
                             <constraint firstItem="KhK-MF-2zp" firstAttribute="trailing" secondItem="6Yk-Aj-NGv" secondAttribute="trailing" id="qUs-Zt-Mdc"/>
                             <constraint firstItem="KhK-MF-2zp" firstAttribute="bottom" secondItem="6Yk-Aj-NGv" secondAttribute="bottom" id="uyr-Hr-fon"/>
+                            <constraint firstItem="qpb-Wu-otc" firstAttribute="height" secondItem="fdE-Jo-SBe" secondAttribute="height" multiplier="0.477273" id="vr3-Jm-Wgb"/>
                             <constraint firstItem="gy0-Hm-tya" firstAttribute="top" secondItem="YY2-SD-mtL" secondAttribute="bottom" constant="8" symbolic="YES" id="wGN-VC-j7f"/>
+                            <constraint firstItem="qpb-Wu-otc" firstAttribute="width" secondItem="fdE-Jo-SBe" secondAttribute="width" multiplier="0.630841" id="wrc-nt-SBx"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="j1V-kd-G7S"/>
@@ -441,7 +452,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7sh-8B-Gbj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="487.85046728971957" y="-1333.477321814255"/>
+            <point key="canvasLocation" x="529.90654205607473" y="-1337.3650107991361"/>
         </scene>
         <!--LeaguesTV-->
         <scene sceneID="WJ7-Wn-6cv">
@@ -566,7 +577,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l5a-Fy-j6E" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1000.9345794392523" y="-1328.29373650108"/>
+            <point key="canvasLocation" x="-977" y="-1337"/>
         </scene>
         <!--Favorties-->
         <scene sceneID="4YZ-j3-Us4">
@@ -585,13 +596,31 @@
                                 <color key="textColor" red="0.20392158630000001" green="0.47058826679999999" blue="0.96862745289999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="HIz-ge-PL8">
+                                <rect key="frame" x="0.0" y="82" width="428" height="761"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Vfw-nD-iY1">
+                                        <rect key="frame" x="0.0" y="50" width="428" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Vfw-nD-iY1" id="ABu-bK-GuZ">
+                                            <rect key="frame" x="0.0" y="0.0" width="428" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="GzG-5C-dM0"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="GzG-5C-dM0" firstAttribute="trailing" secondItem="HIz-ge-PL8" secondAttribute="trailing" id="CGK-qU-aj1"/>
+                            <constraint firstItem="HIz-ge-PL8" firstAttribute="leading" secondItem="GzG-5C-dM0" secondAttribute="leading" id="Hge-Mu-vdN"/>
+                            <constraint firstItem="HIz-ge-PL8" firstAttribute="top" secondItem="kWo-VV-fUT" secondAttribute="bottom" id="Ija-iN-TZk"/>
                             <constraint firstItem="kWo-VV-fUT" firstAttribute="top" secondItem="GzG-5C-dM0" secondAttribute="top" id="eX1-kM-CeH"/>
                             <constraint firstItem="GzG-5C-dM0" firstAttribute="trailing" secondItem="kWo-VV-fUT" secondAttribute="trailing" constant="20" id="f5Y-2A-mWt"/>
                             <constraint firstItem="kWo-VV-fUT" firstAttribute="leading" secondItem="d74-i1-q8N" secondAttribute="leading" constant="20" id="fcF-H9-jfE"/>
+                            <constraint firstItem="GzG-5C-dM0" firstAttribute="bottom" secondItem="HIz-ge-PL8" secondAttribute="bottom" id="v4l-8Z-4bf"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Favorties" image="heart.fill" catalog="system" id="jjq-KH-0gq"/>
@@ -640,7 +669,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="RealMadrid" width="900" height="900"/>
         <image name="appstore" width="1024" height="1024"/>
         <image name="arrowshape.turn.up.backward" catalog="system" width="32" height="32"/>
         <image name="ball2" width="736" height="736"/>
@@ -650,6 +678,7 @@
         <image name="heart" catalog="system" width="32" height="32"/>
         <image name="heart.fill" catalog="system" width="32" height="32"/>
         <image name="lastVS" width="1284" height="318"/>
+        <image name="no_img" width="2000" height="2000"/>
         <image name="sport" width="450" height="450"/>
         <image name="square.grid.2x2" catalog="system" width="32" height="32"/>
         <image name="youtube" width="170.66667175292969" height="170.66667175292969"/>

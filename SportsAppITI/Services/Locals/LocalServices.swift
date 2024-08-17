@@ -11,7 +11,7 @@ import UIKit
 
 
 class LocalServices {
-    static func storeNews(_ league: LeagueModel) {
+    static func storeLeague(_ league: LeagueModel) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
 
@@ -47,7 +47,7 @@ class LocalServices {
         }
     }
     
-    static func getNews() -> [LeagueModel] {
+    static func getLeagues() -> [LeagueModel] {
         var leaguesArr = [LeagueModel]()
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return [] }
         let context = appDelegate.persistentContainer.viewContext
@@ -74,7 +74,7 @@ class LocalServices {
         return leaguesArr
     }
     
-    static func deleteNews(_  league: LeagueModel) {
+    static func deleteleague(_  league: LeagueModel) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let context = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavLeagues")
