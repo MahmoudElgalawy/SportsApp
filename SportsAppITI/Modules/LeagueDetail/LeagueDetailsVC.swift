@@ -177,7 +177,7 @@ extension LeagueDetailsVC:UICollectionViewDelegate {
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToTeamVC",
-           let teamsDetailsVc = segue.destination as? TeamsDetailsVc,
+           let teamsDetailsVc = segue.destination as? TeamsDetailsVC,
            let row = sender as? Int {
             teamsDetailsVc.teamKey = teams[row].teamKey
         }

@@ -69,7 +69,7 @@ class SportTvCell: UITableViewCell {
 
     private func createYouTubeSearchURL(for query: String) -> URL? {
         let formattedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        let urlString = "https://www.youtube.com/results?search_query=\(formattedQuery)/channel"
+        let urlString = "https://www.youtube.com/results?search_query=\(formattedQuery)&sp=EgIQAg%253D%253D"
         return URL(string: urlString)
     }
 }

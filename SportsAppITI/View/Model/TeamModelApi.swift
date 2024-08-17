@@ -44,6 +44,7 @@ struct Coach: Codable {
 
 // MARK: - Player
 struct Player: Codable {
+    let playerType:String?
     let playerKey: Int
     let playerImage: String?
     let playerName, playerNumber: String
@@ -66,7 +67,7 @@ struct Player: Codable {
         case playerName = "player_name"
         case playerNumber = "player_number"
         case playerCountry = "player_country"
-        //case playerType = "player_type"
+        case playerType = "player_type"
         case playerAge = "player_age"
         case playerMatchPlayed = "player_match_played"
         case playerGoals = "player_goals"
