@@ -207,7 +207,7 @@ extension LeagueDetailsVC: UICollectionViewDelegate {
 // MARK: - UICollectionView DataSource
 extension LeagueDetailsVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     private func createUpcomingSection() -> NSCollectionLayoutSection {
-        return createSectionLayout(groupHeight: .absolute(UIScreen.main.bounds.height / 5), orthogonalScrollingBehavior: .continuous, headerEnabled: !upcomingEvents.isEmpty)
+        return createSectionLayout(groupHeight: .absolute(UIScreen.main.bounds.height / 5), groupWidth: .fractionalWidth(0.85), orthogonalScrollingBehavior: .groupPagingCentered, headerEnabled: !upcomingEvents.isEmpty)
     }
 
     private func createLatestSection() -> NSCollectionLayoutSection {
@@ -215,7 +215,7 @@ extension LeagueDetailsVC: UICollectionViewDataSource, UICollectionViewDelegateF
     }
 
     private func createTeamsSection() -> NSCollectionLayoutSection {
-        return createSectionLayout(groupHeight: .absolute(150), groupWidth: .absolute(150), orthogonalScrollingBehavior: .continuous, headerEnabled: !teams.isEmpty)
+        return createSectionLayout(groupHeight: .absolute(200), groupWidth: .absolute(150), orthogonalScrollingBehavior: .continuous, headerEnabled: !teams.isEmpty)
     }
 
     private func createSectionLayout(groupHeight: NSCollectionLayoutDimension, groupWidth: NSCollectionLayoutDimension = .fractionalWidth(1), orthogonalScrollingBehavior: UICollectionLayoutSectionOrthogonalScrollingBehavior, headerEnabled: Bool) -> NSCollectionLayoutSection {
@@ -223,11 +223,11 @@ extension LeagueDetailsVC: UICollectionViewDataSource, UICollectionViewDelegateF
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         let groupSize = NSCollectionLayoutSize(widthDimension: groupWidth, heightDimension: groupHeight)
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 32)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 5, bottom: 12, trailing: 5)
 
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = orthogonalScrollingBehavior
-        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 16, bottom: 16, trailing: 0)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 5, bottom: 16, trailing: 5)
 
         section.visibleItemsInvalidationHandler = { items, offset, environment in
             items.forEach { item in

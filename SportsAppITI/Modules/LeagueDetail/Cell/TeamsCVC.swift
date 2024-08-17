@@ -24,7 +24,6 @@ class TeamsCVC: UICollectionViewCell {
     // MARK: - UI Configuration
     private func configureUI() {
         mainView.layer.cornerRadius = 16
-        mainView.alpha = 0.8
 
          mainView.layer.borderColor = UIColor(named: Color.CD9D9D9.rawValue)?.cgColor
         mainView.layer.borderWidth = 1
