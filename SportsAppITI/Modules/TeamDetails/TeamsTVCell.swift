@@ -18,7 +18,11 @@ class TeamsTVCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         configureUI()
+        animateImgView()
+    }
 
+    private func animateImgView() {
+        photoPlayer.animateSlideAndFadeIn()
     }
 
     func configureUI() {
@@ -26,6 +30,7 @@ class TeamsTVCell: UITableViewCell {
         mainView.layer.cornerRadius = 20
         mainView.layer.borderColor = UIColor(named: Color.C121212.rawValue)?.cgColor
         mainView.layer.borderWidth = 0.5
+
     }
     func configure(with cell: Player) {
         self.numPlayerLbl.text = cell.playerNumber
