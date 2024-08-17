@@ -23,15 +23,17 @@ class TeamsCVC: UICollectionViewCell {
     }
     // MARK: - UI Configuration
     private func configureUI() {
-        mainView.layer.cornerRadius = 20
+        mainView.layer.cornerRadius = 16
+        mainView.alpha = 0.8
+
          mainView.layer.borderColor = UIColor(named: Color.CD9D9D9.rawValue)?.cgColor
         mainView.layer.borderWidth = 1
-            imgTeams.layer.cornerRadius = 20
+        imgTeams.layer.cornerRadius = 10
         mainView.clipsToBounds = true
         }
     
     // MARK: - Configuration
-    func confinge(with Cell:TeamModel){
+    func configure(with Cell:TeamModel){
         let url = URL(string: Cell.teamLogo ?? "")
         imgTeams.kf.setImage(with: url)
         lblTeamsName.text = Cell.teamName

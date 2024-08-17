@@ -15,16 +15,16 @@
 import UIKit
 import WebKit
 
-
-
 class LeaguesTV: UIViewController, WKNavigationDelegate {
 
     // MARK: - Properties
     private let activityIndicator = UIActivityIndicatorView(style: .large)
     private let networkManager = NetworkService.shared
+    let coreDataManager = CoreDataManager.shared
     private var footballLeagues = [LeagueModel]()
     private var webView: WKWebView?
     var sportName: String?
+    var isFavorite: Bool = true
 
     // MARK: - Outlets
     @IBOutlet private var leagueTableView: UITableView!
@@ -34,10 +34,18 @@ class LeaguesTV: UIViewController, WKNavigationDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        fetchAllLeagues()
+        checkFavorite()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        checkFavorite()
     }
 
     // MARK: - Setup Methods
+    private func handeError(){
+            let empty = footballLeagues.isEmpty
+            noDataImg.isHidden = !empty
+            leagueTableView.isHidden = empty
+    }
     private func setupUI() {
         setupActivityIndicator()
         leagueTableView.dataSource = self
@@ -49,7 +57,28 @@ class LeaguesTV: UIViewController, WKNavigationDelegate {
         view.addSubview(activityIndicator)
     }
 
-    // MARK: - Network Call
+    // Call data from Core Data
+
+    func checkFavorite() {
+
+        if isFavorite {
+            fetchFavoriteLeagues()
+            handeError()
+        } else {
+            fetchAllLeagues()
+        }
+
+    }
+
+    private func fetchFavoriteLeagues() {
+        if coreDataManager.fetchLeagues().isEmpty {
+            handeError()
+        } else {
+            self.footballLeagues = coreDataManager.fetchLeagues()
+            leagueTableView.reloadData()
+        }
+    }
+
     private func fetchAllLeagues() {
         guard let sportName = sportName else { return }
         activityIndicator.startAnimating()
@@ -74,19 +103,15 @@ class LeaguesTV: UIViewController, WKNavigationDelegate {
     private func showYouTubeVideo(urlString: String) {
         let webViewController = UIViewController()
         webViewController.view.backgroundColor = .white
-
-        // Initialize the WKWebView
         webView = WKWebView(frame: webViewController.view.bounds)
         webView?.navigationDelegate = self
         webViewController.view.addSubview(webView!)
 
-        // Load the YouTube URL
         if let url = URL(string: urlString) {
             let request = URLRequest(url: url)
             webView?.load(request)
         }
 
-        // Add a back button
         let backButton = UIButton(frame: CGRect(x: 15, y: 40, width: 100, height: 40))
         backButton.setTitle("Back", for: .normal)
         backButton.setTitleColor(.blue, for: .normal)
@@ -135,6 +160,20 @@ extension LeaguesTV: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.animateSlideAndFadeIn()
+    }
+
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+       return isFavorite
+    }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+
+        if editingStyle == .delete {
+            let leagueToDelete = footballLeagues[indexPath.row]
+            footballLeagues.remove(at: indexPath.row)
+            coreDataManager.deleteLeague(leagueKey: leagueToDelete.leagueKey)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            handeError()
+        }
     }
 }
 

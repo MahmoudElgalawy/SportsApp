@@ -12,6 +12,7 @@ class AllSportsVC: UIViewController {
 
     // MARK: - Properties
     private var isOrthogonalLayout = true
+    private var isFavorite = true
     private var sportsItems:[SportsItemModel] = []
     private var networkManger = NetworkService.shared
     private var connectivityChecking = ConnectivityService.shared
@@ -136,10 +137,12 @@ extension AllSportsVC: UICollectionViewDelegate {
     }
 
     private func navigateToLeaguesVC(forItemAt indexPath: IndexPath) {
+         isFavorite  = false
         guard let leaguesVC = storyboard?.instantiateViewController(withIdentifier: "LeaguesTV") as? LeaguesTV else { return }
         let title = sportsItems[indexPath.row].titleName
         leaguesVC.sportName = title.lowercased()
         leaguesVC.title = title
+        leaguesVC.isFavorite =  isFavorite
         navigationController?.pushViewController(leaguesVC, animated: true)
     }
 

@@ -5,7 +5,6 @@
 //  Created by Mahmoud on 8/12/24.
 //
 
-
 import UIKit
 
 class LeagueDetailsVC: UIViewController {
@@ -19,10 +18,11 @@ class LeagueDetailsVC: UIViewController {
     // MARK: - Properties
     var leagueID: Int!
     var leagueTitle: String = " "
-    var league :LeagueModel!
+    var league: LeagueModel!
     var isFavorite = true
     private var errorCount = 0
-    private var networkManger = NetworkService.shared
+    private var networkManager = NetworkService.shared
+    private var coreDataManager = CoreDataManager.shared
     private let activityIndicator = UIActivityIndicatorView(style: .large)
 
     private var upcomingEvents = [EventModel]()
@@ -41,14 +41,14 @@ class LeagueDetailsVC: UIViewController {
         checkIfFavorite()
         updateFavoriteButton()
     }
-    
+
     // MARK: - Setup Methods
     private func setupUI() {
         titleLbl.text = leagueTitle.capitalized
         configureCollectionView()
         setupActivityIndicator()
     }
-    private func setupActivityIndicator (){
+    private func setupActivityIndicator() {
         activityIndicator.center = view.center
         activityIndicator.startAnimating()
         view.addSubview(activityIndicator)
@@ -57,14 +57,13 @@ class LeagueDetailsVC: UIViewController {
     // MARK: - UI Update Methods
     private func updateTeams() {
         teams = latestEvents.map { event in
-                   TeamModel(teamKey: event.homeTeamKey,
-                             teamName: event.eventHomeTeam,
-                             teamLogo: event.homeTeamLogo,
-                             players: [],
-                             coaches: [])
-               }
+            TeamModel(teamKey: event.homeTeamKey,
+                      teamName: event.eventHomeTeam,
+                      teamLogo: event.homeTeamLogo,
+                      players: [],
+                      coaches: [])
+        }
         collectionLeagueDet.reloadData()
-        
     }
 
     private func handleErrors() {
@@ -74,9 +73,8 @@ class LeagueDetailsVC: UIViewController {
             imgNoData.isHidden = !hasErrors
             collectionLeagueDet.isHidden = hasErrors
             if hasErrors {
-                imgNoData.image = UIImage(named: "404")
+                imgNoData.image = UIImage(named: "bak")
                 collectionLeagueDet.isHidden = true
-
             }
         }
     }
@@ -93,97 +91,120 @@ class LeagueDetailsVC: UIViewController {
             }
         }
         collectionLeagueDet.setCollectionViewLayout(layout, animated: true)
-
     }
 
     // MARK: - Data Loading Methods
-    private func loadEvents(endpoint: SportsAPI, completion: @escaping ([EventModel]?,Error?) -> Void) {
-            networkManger.fetchData(from: endpoint, model: EventModelAPIResponse.self) { [weak self] results, error in
-                guard let self = self else { return }
-                self.activityIndicator.stopAnimating()
-                if let error = error {
-                    print("Error fetching events: \(error)")
-                    completion(nil,error)
-                    return
+    private func loadEvents(endpoint: SportsAPI, completion: @escaping ([EventModel]?, Error?) -> Void) {
+        networkManager.fetchData(from: endpoint, model: EventModelAPIResponse.self) { [weak self] results, error in
+            guard let self = self else { return }
+            self.activityIndicator.stopAnimating()
+            if let error = error {
+                print("Error fetching events: \(error)")
+                completion(nil, error)
+                return
+            }
+            guard let results = results else {
+                print("No data received")
+                completion(nil, error)
+                return
+            }
+            DispatchQueue.main.async {
+                let events = results.result
+                if !events.isEmpty {
+                    completion(events, nil)
+                } else {
+                    completion(nil, error)
+                    print("No events found.")
                 }
-                guard let results = results else {
-                    print("No data received")
-                    completion(nil,error)
-                    return
-                }
-                DispatchQueue.main.async {
-                    let events = results.result
-                    if !events.isEmpty {
-                        completion(events,nil)
-                    } else {
-                        completion(nil,error)
-                        print("No events found.")
-                    }
-                    self.collectionLeagueDet.reloadData()
-                }
+                self.collectionLeagueDet.reloadData()
             }
         }
+    }
 
-        private func loadUpcomingEvents() {
-            loadEvents(endpoint: .getUpcomingEvents(leagueId: leagueID, fromDate: .now, toDate: .upcoming)) { events,error  in
-                if  error != nil {
-                    self.handleErrors()
-                    return
-                }
-                self.upcomingEvents = events!
+    private func loadUpcomingEvents() {
+        loadEvents(endpoint: .getUpcomingEvents(leagueId: leagueID, fromDate: .now, toDate: .upcoming)) { events, error in
+            if error != nil {
+                self.handleErrors()
+                return
             }
+            self.upcomingEvents = events!
         }
+    }
 
-        private func loadLatestEvents() {
-            loadEvents(endpoint: .getLatestResults(leagueId: leagueID, fromDate: .passed, toDate: .now)) { events,error in
-                if error != nil {
-                    self.handleErrors()
-                    return
-                }
-                self.latestEvents = events!
+    private func loadLatestEvents() {
+        loadEvents(endpoint: .getLatestResults(leagueId: leagueID, fromDate: .passed, toDate: .now)) { events, error in
+            if error != nil {
+                self.handleErrors()
+                return
             }
+            self.latestEvents = events!
         }
+    }
 
     // MARK: - Actions
     @IBAction func addToFav(_ sender: Any) {
-        if isFavorite {
-            let alert = UIAlertController(title: "note!", message:"you will delete the league", preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "cancel", style: .cancel, handler: nil))
-            alert.addAction(UIAlertAction(title: "ok", style: .destructive, handler :{action in
-                LocalServices.deleteleague(self.league)
-                }))
-            
-            present(alert, animated:true)
-            
-        } else {
-            LocalServices.storeLeague(league)
-        }
-       isFavorite.toggle()
+        isFavorite.toggle()
         updateFavoriteButton()
-       // updateFavoriteVC()
+        if isFavorite {
+            saveMovie()
+        } else {
+            let alert = UIAlertController(title: "Delete", message: "This league will be removed from favorites.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
+                self.isFavorite.toggle()
+            }))
+            alert.addAction(UIAlertAction(title: "Remove", style: .destructive, handler: { _ in
+                self.deleteMovie()
+            }))
+            self.present(alert, animated: true)
+        }
     }
 
     @IBAction func btnBack(_ sender: Any) {
         dismiss(animated: true)
     }
+
+    func saveMovie() {
+        print("Saving league...")
+        coreDataManager.storeLeague(league)
+        print("League saved successfully.")
+    }
+
+    func deleteMovie() {
+        print("Deleting league...")
+        coreDataManager.deleteLeague(league)
+        print("League deleted successfully.")
+    }
+
+    func checkIfFavorite() {
+        guard let league = league else { return }
+        let fetchedLeague = coreDataManager.fetchLeague(byKey: league.leagueKey)
+        isFavorite = fetchedLeague != nil
+        updateFavoriteButton()
+    }
+
+    func updateFavoriteButton() {
+        btnAddToFav.image = UIImage(systemName: isFavorite ? "heart.fill" : "heart")
+    }
 }
 
 // MARK: - UICollectionView Delegate
-extension LeagueDetailsVC:UICollectionViewDelegate {
+extension LeagueDetailsVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView.cellForItem(at: indexPath)?.reuseIdentifier == "TeamsCVC" {
             performSegue(withIdentifier: "goToTeamVC", sender: indexPath.row)
         }
     }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToTeamVC",
-           let teamsDetailsVc = segue.destination as? TeamsDetailsVC,
+           let teamsDetailsVC = segue.destination as? TeamsDetailsVC,
            let row = sender as? Int {
-            teamsDetailsVc.teamKey = teams[row].teamKey
+            teamsDetailsVC.teamKey = teams[row].teamKey
         }
     }
 }
-// MARK: - UICollectionView  DataSource
+
+// MARK: - UICollectionView DataSource
 extension LeagueDetailsVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     private func createUpcomingSection() -> NSCollectionLayoutSection {
         return createSectionLayout(groupHeight: .absolute(UIScreen.main.bounds.height / 5), orthogonalScrollingBehavior: .continuous, headerEnabled: !upcomingEvents.isEmpty)
@@ -238,43 +259,34 @@ extension LeagueDetailsVC: UICollectionViewDataSource, UICollectionViewDelegateF
             return teams.count
         }
     }
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: UICollectionViewCell
         switch indexPath.section {
         case 0:
-             cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LeaguesDetailsCVC", for: indexPath) as! LeaguesDetailsCVC
-            (cell as! LeaguesDetailsCVC).confinge(with: upcomingEvents[indexPath.row])
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LeaguesDetailsCVC", for: indexPath) as! LeaguesDetailsCVC
+            (cell as! LeaguesDetailsCVC).configure(with: upcomingEvents[indexPath.row])
         case 1:
-             cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LeaguesDetailsCVC", for: indexPath) as! LeaguesDetailsCVC
-            (cell as! LeaguesDetailsCVC).confinge(with: latestEvents[indexPath.row])
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LeaguesDetailsCVC", for: indexPath) as! LeaguesDetailsCVC
+            (cell as! LeaguesDetailsCVC).configure(with: latestEvents[indexPath.row])
         default:
-             cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TeamsCVC", for: indexPath) as! TeamsCVC
-            (cell as! TeamsCVC).confinge(with: teams[indexPath.row])
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TeamsCVC", for: indexPath) as! TeamsCVC
+            (cell as! TeamsCVC).configure(with: teams[indexPath.row])
         }
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-//        guard kind == UICollectionView.elementKindSectionHeader else {
-//            return UICollectionReusableView()
-//        }
+        guard kind == UICollectionView.elementKindSectionHeader else {
+            return UICollectionReusableView()
+        }
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "LeagueDSecHed", for: indexPath) as! LeagueDSecHed
         header.lblSectionHeader.text = ["Upcoming Events", "Latest Results", "Teams"][indexPath.section]
         return header
     }
+
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         cell.animateCellAppearance()
     }
-
-    func checkIfFavorite() {
-        let favorites = LocalServices.getLeagues()
-        isFavorite = favorites.contains(where: { $0.leagueKey == league.leagueKey })
-    }
     
-    func updateFavoriteButton() {
-        btnAddToFav.image = UIImage(systemName: isFavorite ? "heart.fill" : "heart")
-    }
-
 }
-
-

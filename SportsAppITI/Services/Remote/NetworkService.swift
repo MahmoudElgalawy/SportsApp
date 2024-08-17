@@ -30,17 +30,13 @@ class NetworkService:NetworkRequestable{
         AF.request(url).responseDecodable(of:model) { response in
             switch response.result {
             case .success(let json):
-                print("JSON Response: \(json)")
                 do {
                     let decodedData = try JSONDecoder().decode(model, from: response.data!)
-                    print("Data received: \(decodedData)")
                     completion(decodedData, nil)
                 } catch let decodeError {
-                    print("Decoding error: \(decodeError)")
                     completion(nil, decodeError)
                 }
             case .failure(let error):
-                print("Error occurred: \(error.localizedDescription)")
                 completion(nil, error)
             }
         }

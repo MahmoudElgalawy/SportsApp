@@ -31,7 +31,7 @@ class LeaguesDetailsCVC: UICollectionViewCell {
         }
     
     // MARK: - Configuration
-    func confinge(with cell:EventModel) {
+    func configure(with cell:EventModel) {
         let url1 = URL(string: cell.homeTeamLogo ?? "")
         let url2 = URL(string: cell.awayTeamLogo ?? "")
         self.logoTeam1.kf.setImage(with: url1,placeholder: UIImage(named: "6"))
