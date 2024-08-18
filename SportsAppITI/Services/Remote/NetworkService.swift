@@ -22,9 +22,9 @@ class NetworkService:NetworkRequestable{
     private init() {}
     
     func fetchData<T: Codable>(from url : SportsAPI, model: T.Type, completion: @escaping (T?, Error?) -> Void) {
-        guard let urlString = url.url(), let url = URL(string: urlString) else {return}
-       
-        AF.request(url).responseDecodable(of:model) { response in
+        guard let urlString = url.url()else{return}
+
+        AF.request(urlString).responseDecodable(of:model) { response in
             switch response.result {
             case .success(let json):
                 do {

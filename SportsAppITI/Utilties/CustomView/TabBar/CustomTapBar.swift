@@ -28,20 +28,18 @@ class CustomTapBar: UITabBar {
 
     private func commonInit() {
         loadNib()
-        //customView.addRadiusView(30)
         imgView.animateImageView(imageView: imgView)
         imgView.addRadiusView(20)
-       // imgView.alpha = 0.3
         imgView.addBorderView(color: Color.C8E8E93, width: 1.5)
     }
 
     private func loadNib() {
-        Bundle.main.loadNibNamed("CustomTapBar", owner: self, options: nil)
-        if let mainView = mainView {
+            guard let nib = Bundle.main.loadNibNamed("CustomTapBar", owner: self, options: nil),
+                  let mainView = nib.first as? UIView else {return}
+            self.mainView = mainView
             addSubview(mainView)
             mainView.frame = self.bounds
             mainView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             sendSubviewToBack(mainView)
         }
-    }
 }

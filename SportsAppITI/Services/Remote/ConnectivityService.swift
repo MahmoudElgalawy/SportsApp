@@ -14,9 +14,6 @@ protocol ConnectivityChecking {
 class ConnectivityService: ConnectivityChecking {
     static let shared = ConnectivityService()
     private init() {}
-
-
-     
     func checkInternetConnection(completion: @escaping (Bool) -> Void) {
         let monitor = NWPathMonitor()
         monitor.pathUpdateHandler = { path in
