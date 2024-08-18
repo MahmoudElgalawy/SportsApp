@@ -9,36 +9,25 @@ import UIKit
 import Kingfisher
 
 class TeamsDetailsVC: UIViewController {
+    let viewModel = TeamViewModel()
 
     @IBOutlet weak var teamsLogo: UIImageView!
     @IBOutlet weak var playersTable: UITableView!
     @IBOutlet weak var teamsName: UILabel!
 
-    var viewModel:TeamViewModel!
-    var teamKey: Int?
-
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        guard let teamKey = teamKey else{return}
-        viewModel = TeamViewModel(teamKey: teamKey)
-        viewModel.bindTeamsDetailsVC = {[weak self] in
-            self?.updateUI()
-        }
         viewModel.fetchTeamData()
+        viewModel.bindTeamsDetailsVC = {
+            self.updateUI()
+        }
     }
 
-    
-
     private func updateUI() {
-        
         guard let team = viewModel.teamArray.first else { return }
-
         if let teamLogo = team.teamLogo, let url = URL(string: teamLogo) {
-            teamsLogo.kf.setImage(with: url, placeholder: UIImage(named: "no_img"))
+            teamsLogo.kf.setImage(with: url, placeholder: UIImage(named: "No_image.svg"))
         }
-
         teamsName.text = team.teamName
         playersTable.reloadData()
     }
@@ -52,7 +41,7 @@ class TeamsDetailsVC: UIViewController {
 extension TeamsDetailsVC: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.allPlayers.count
+        return  viewModel.allPlayers.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -62,9 +51,9 @@ extension TeamsDetailsVC: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 105
+        return 95
     }
-    
+
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.animateSlideAndFadeIn()
     }

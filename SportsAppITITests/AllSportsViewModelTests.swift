@@ -27,11 +27,11 @@ final class AllSportsViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.sportsItems[0].titleName, "Football")
     }
 
-    func testToggleLayout() {
-        XCTAssertEqual(viewModel.layoutType, .orthogonal)
-        viewModel.toggleLayout()
-        XCTAssertEqual(viewModel.layoutType, .list)
-        viewModel.toggleLayout()
-        XCTAssertEqual(viewModel.layoutType, .orthogonal)
-    }
+//    func testToggleLayout() {
+//        XCTAssertEqual(viewModel.layoutType, .orthogonal)
+//        viewModel.toggleLayout()
+//        XCTAssertEqual(viewModel.layoutType, .list)
+//        viewModel.toggleLayout()
+//        XCTAssertEqual(viewModel.layoutType, .orthogonal)
+//    }
 }

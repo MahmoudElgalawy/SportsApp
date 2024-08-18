@@ -23,8 +23,7 @@ struct EventModel: Codable {
     let eventTime: String?
     let homeTeamKey: Int
     let awayTeamKey: Int
-    //
-
+    
     enum CodingKeys: String, CodingKey {
         case homeTeamLogo = "home_team_logo"
         case eventHomeTeam = "event_home_team"

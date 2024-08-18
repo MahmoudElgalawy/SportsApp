@@ -60,8 +60,8 @@ class LeagueDetailsVC: UIViewController {
             TeamModel(teamKey: event.homeTeamKey,
                       teamName: event.eventHomeTeam,
                       teamLogo: event.homeTeamLogo,
-                      players: [],
-                      coaches: [])
+                      players: []
+                     )
         }
         collectionLeagueDet.reloadData()
     }
@@ -199,7 +199,7 @@ extension LeagueDetailsVC: UICollectionViewDelegate {
         if segue.identifier == "goToTeamVC",
            let teamsDetailsVC = segue.destination as? TeamsDetailsVC,
            let row = sender as? Int {
-            teamsDetailsVC.teamKey = teams[row].teamKey
+            teamsDetailsVC.viewModel.teamKey = teams[row].teamKey
         }
     }
 }

@@ -7,7 +7,6 @@
 
 import UIKit
 import Kingfisher
-import WebKit
 
 protocol SportTvCellDelegate: AnyObject {
     func didPressYouTubeButton(with urlString: String)
@@ -17,9 +16,11 @@ class SportTvCell: UITableViewCell {
 
     // MARK: - IBOutlets
     @IBOutlet private var mainView: UIView!
-    @IBOutlet private var lbl: UILabel!
-    @IBOutlet private var img: UIImageView!
-    @IBOutlet private var backImg: UIImageView!
+    @IBOutlet private var leagueNameLabel: UILabel!
+    @IBOutlet private var leagueImageView: UIImageView!
+    @IBOutlet private var backgroundImageView: UIImageView!
+
+    // MARK: - Properties
     weak var delegate: SportTvCellDelegate?
 
     // MARK: - Lifecycle
@@ -36,33 +37,34 @@ class SportTvCell: UITableViewCell {
 
     // MARK: - UI Configuration
     private func configureUI() {
-        img.layer.cornerRadius = img.frame.height / 2
-           img.clipsToBounds = true
-           img.layer.borderColor = UIColor(named: Color.C121212.rawValue)?.cgColor
-           img.layer.borderWidth = 0.5
+        leagueImageView.layer.cornerRadius = leagueImageView.frame.height / 2
+        leagueImageView.clipsToBounds = true
+        leagueImageView.layer.borderColor = UIColor(named: Color.C121212.rawValue)?.cgColor
+        leagueImageView.layer.borderWidth = 0.5
 
-           // Apply rounded corners to other views
-           mainView.layer.cornerRadius = 16
-           mainView.layer.borderColor = UIColor(named: Color.C121212.rawValue)?.cgColor
-           mainView.layer.borderWidth = 0.5
-           mainView.clipsToBounds = true
+        mainView.layer.cornerRadius = 16
+        mainView.layer.borderColor = UIColor(named: Color.C121212.rawValue)?.cgColor
+        mainView.layer.borderWidth = 0.5
+        mainView.clipsToBounds = true
 
-           backImg.layer.cornerRadius = mainView.frame.width / 2
+        backgroundImageView.layer.cornerRadius = mainView.frame.width / 2
 
-            img.animateImageView()
+        leagueImageView.animateImageView()
     }
 
     // MARK: - Configuration
-    func configure(with cell: LeagueModel) {
-        lbl.text = cell.leagueName
-        let imageUrl = URL(string: cell.leagueLogo ?? "")
-        img.kf.setImage(with: imageUrl, placeholder: UIImage(named: "no_img"))
+    func configure(with league: LeagueModel) {
+        leagueNameLabel.text = league.leagueName
+        if let imageUrl = URL(string: league.leagueLogo ?? "") {
+            leagueImageView.kf.setImage(with: imageUrl, placeholder: UIImage(named: "no_img"))
+        } else {
+            leagueImageView.image = UIImage(named: "no_img")
+        }
     }
 
     // MARK: - YouTube Actions
-    @IBAction func youtubeBtnPressed(_ sender: Any) {
-        // Create a search URL based on the league name
-        if let leagueName = lbl.text, let searchURL = createYouTubeSearchURL(for: leagueName) {
+    @IBAction private func youtubeButtonPressed(_ sender: UIButton) {
+        if let leagueName = leagueNameLabel.text, let searchURL = createYouTubeSearchURL(for: leagueName) {
             delegate?.didPressYouTubeButton(with: searchURL.absoluteString)
         }
     }

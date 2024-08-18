@@ -10,7 +10,6 @@ import CoreData
 import UIKit
 
 class CoreDataManager {
-
     static let shared = CoreDataManager()
     private let managedContext: NSManagedObjectContext
 
@@ -33,7 +32,6 @@ class CoreDataManager {
         }
     }
 
-    // Create a new league and save it
     func storeLeague(_ league: LeagueModel) {
         let fetchRequest: NSFetchRequest<FavLeagues> = FavLeagues.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "leagueKey == %d", league.leagueKey)
@@ -60,7 +58,6 @@ class CoreDataManager {
         }
     }
 
-    // Fetch all leagues
     func fetchLeagues() -> [LeagueModel] {
         let fetchRequest: NSFetchRequest<FavLeagues> = FavLeagues.fetchRequest()
         var leaguesArr = [LeagueModel]()

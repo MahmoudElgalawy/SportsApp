@@ -7,25 +7,19 @@
 
 import Foundation
 import Network
-
 protocol ConnectivityChecking {
     func checkInternetConnection(completion: @escaping (Bool) -> Void)
 }
 
 class ConnectivityService: ConnectivityChecking {
     static let shared = ConnectivityService()
-
-    private var monitor: NWPathMonitor
-
-    init(monitor: NWPathMonitor = NWPathMonitor()) {
-        self.monitor = monitor
-    }
-
+    private init() {}
     func checkInternetConnection(completion: @escaping (Bool) -> Void) {
+        let monitor = NWPathMonitor()
         monitor.pathUpdateHandler = { path in
             DispatchQueue.main.async {
                 completion(path.status == .satisfied)
-                self.monitor.cancel()
+                monitor.cancel()
             }
         }
         monitor.start(queue: .main)

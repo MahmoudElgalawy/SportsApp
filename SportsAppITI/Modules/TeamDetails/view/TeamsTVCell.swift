@@ -10,14 +10,10 @@ import Kingfisher
 
 class TeamsTVCell: UITableViewCell {
 
-    @IBOutlet weak var position: UILabel!
-    
-    @IBOutlet weak var Assits: UILabel!
-    @IBOutlet weak var goals: UILabel!
     @IBOutlet var mainView: UIView!
-    @IBOutlet var NamePlayer: UILabel!
-    @IBOutlet weak var Age: UILabel!
-    @IBOutlet weak var NumPlayer: UILabel!
+    @IBOutlet var numPlayerLbl: UILabel!
+    @IBOutlet weak var rolePlayerLbl: UILabel!
+    @IBOutlet weak var namePlayerLbl: UILabel!
     @IBOutlet weak var photoPlayer: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -42,13 +38,11 @@ class TeamsTVCell: UITableViewCell {
 
     }
     func configure(with cell: Player) {
-        self.NamePlayer.text = cell.playerName
-        self.NumPlayer.text = cell.playerNumber ?? " ! "
-        self.Age.text = "Age: \(cell.playerAge ?? "unknowen")"
-        self.goals.text = "Goals: \(cell.playerGoals ?? "0")"
-        self.Assits.text =  "Assits: \(cell.playerAssists ?? "0")"
-        self.position.text = "Position: \(cell.playerType ?? "unknown")"
-        photoPlayer.kf.setImage(with:URL(string: cell.playerImage ?? ""),placeholder: UIImage(named: "person"))
+        self.numPlayerLbl.text = "Captain: \(cell.playerIsCaptain)"
+        self.namePlayerLbl.text = "Name: \(cell.playerName)"
+        self.rolePlayerLbl.text = "Type: \(cell.playerType ?? "0")"
+
+        photoPlayer.kf.setImage(with:URL(string: cell.playerImage ?? ""),placeholder: UIImage(named: "no_img"))
 
 
     }

@@ -26,7 +26,7 @@ class NetworkService:NetworkRequestable{
 
         AF.request(urlString).responseDecodable(of:model) { response in
             switch response.result {
-            case .success(let json):
+            case .success(_):
                 do {
                     let decodedData = try JSONDecoder().decode(model, from: response.data!)
                     completion(decodedData, nil)

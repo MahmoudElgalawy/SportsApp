@@ -5,20 +5,23 @@
 //  Created by Engy on 8/18/24.
 //
 
+// AllSportsViewModel.swift
 import Foundation
 
 class AllSportsViewModel {
 
     // MARK: - Properties
     private(set) var sportsItems: [SportsItemModel] = []
-    private var isOrthogonalLayout: Bool = true
+    var isOrthogonalLayout = true
+    var isFavorite = true
 
-    // MARK: - Initialization
+    // Closure for navigation
+    var onNavigateToLeagues: ((SportsItemModel) -> Void)?
+
     init() {
         setupSportsItems()
     }
 
-    // MARK: - Setup Methods
     private func setupSportsItems() {
         sportsItems = [
             SportsItemModel(imgName: "football", titleName: "Football"),
@@ -32,14 +35,17 @@ class AllSportsViewModel {
         isOrthogonalLayout.toggle()
     }
 
-    var layoutType: LayoutType {
-        return isOrthogonalLayout ? .orthogonal : .list
+    func getImageNameForLayoutButton() -> String {
+        return isOrthogonalLayout ? "square.grid.2x2" : "list.bullet"
     }
 
-    // MARK: - Layout Handling
-    enum LayoutType {
-        case orthogonal
-        case list
+    func handleItemSelection(at indexPath: IndexPath, completion: @escaping (Bool, SportsItemModel) -> Void) {
+        let selectedItem = sportsItems[indexPath.row]
+        ConnectivityService.shared.checkInternetConnection { isConnected in
+            completion(isConnected, selectedItem)
+        }
     }
+    func navigateToLeagues(for selectedItem: SportsItemModel) {
+            onNavigateToLeagues?(selectedItem)
+        }
 }
-
