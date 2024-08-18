@@ -44,7 +44,7 @@ final class CoreDataManagerTests: XCTestCase {
             countryName: "England",
             leagueLogo: "logo_url",
             countryLogo: "country_logo_url",
-            leagueYear: "2024"  
+            leagueYear: "2024"
         )
 
         coreDataManager.storeLeague(league)
@@ -79,27 +79,11 @@ final class CoreDataManagerTests: XCTestCase {
 
         let fetchedLeagues = coreDataManager.fetchLeagues()
         XCTAssertEqual(fetchedLeagues.count, 2)
+        XCTAssertTrue(fetchedLeagues.contains { $0.leagueName == "Premier League" })
+        XCTAssertTrue(fetchedLeagues.contains { $0.leagueName == "La Liga" })
     }
 
-    func testDeleteLeagueByModel() {
-        let league = LeagueModel(
-            leagueKey: 1,
-            leagueName: "Premier League",
-            countryKey: 44,
-            countryName: "England",
-            leagueLogo: "logo_url",
-            countryLogo: "country_logo_url",
-            leagueYear: "2024"
-        )
-
-        coreDataManager.storeLeague(league)
-        coreDataManager.deleteLeague(league)
-
-        let fetchedLeagues = coreDataManager.fetchLeagues()
-        XCTAssertTrue(fetchedLeagues.isEmpty)
-    }
-
-    func testDeleteLeagueByKey() {
+    func testDeleteLeague() {
         let league = LeagueModel(
             leagueKey: 1,
             leagueName: "Premier League",

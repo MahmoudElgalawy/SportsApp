@@ -12,12 +12,15 @@ import UIKit
 class CoreDataManager {
 
     static let shared = CoreDataManager()
-    private var managedContext: NSManagedObjectContext
+    private let managedContext: NSManagedObjectContext
 
     private init() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         self.managedContext = appDelegate.persistentContainer.viewContext
     }
+    init(persistentContainer: NSPersistentContainer) {
+            self.managedContext = persistentContainer.viewContext
+        }
 
     func saveContext() {
         if managedContext.hasChanges {
@@ -30,6 +33,7 @@ class CoreDataManager {
         }
     }
 
+    // Create a new league and save it
     func storeLeague(_ league: LeagueModel) {
         let fetchRequest: NSFetchRequest<FavLeagues> = FavLeagues.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "leagueKey == %d", league.leagueKey)
@@ -56,6 +60,7 @@ class CoreDataManager {
         }
     }
 
+    // Fetch all leagues
     func fetchLeagues() -> [LeagueModel] {
         let fetchRequest: NSFetchRequest<FavLeagues> = FavLeagues.fetchRequest()
         var leaguesArr = [LeagueModel]()
@@ -112,6 +117,7 @@ class CoreDataManager {
         }
     }
 
+    // Fetch a specific league by key
     func fetchLeague(byKey leagueKey: Int) -> LeagueModel? {
         let fetchRequest: NSFetchRequest<FavLeagues> = FavLeagues.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "leagueKey == %d", leagueKey)
@@ -132,12 +138,6 @@ class CoreDataManager {
             print("Error fetching league: \(error)")
         }
         return nil
-    }
-}
-extension CoreDataManager {
-    convenience init(persistentContainer: NSPersistentContainer) {
-        self.init()
-        self.managedContext = persistentContainer.viewContext
     }
 }
 

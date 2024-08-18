@@ -10,7 +10,6 @@ import Network
 protocol ConnectivityChecking {
     func checkInternetConnection(completion: @escaping (Bool) -> Void)
 }
-
 class ConnectivityService: ConnectivityChecking {
     static let shared = ConnectivityService()
     private init() {}

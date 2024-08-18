@@ -11,76 +11,59 @@ import Network
 class AllSportsVC: UIViewController {
 
     // MARK: - Properties
-    private var isOrthogonalLayout = true
-    private var isFavorite = true
-    private var sportsItems:[SportsItemModel] = []
-    private var networkManger = NetworkService.shared
+    private let viewModel = AllSportsViewModel()
+    private var networkManager = NetworkService.shared
     private var connectivityChecking = ConnectivityService.shared
-
 
     // MARK: - Outlets
     @IBOutlet private var layoutToggleButton: UIBarButtonItem!
     @IBOutlet private var sportsCollectionView: UICollectionView!
 
-    // MARK: - Initialization
-
-
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupSportsItems()
         configureCollectionView()
+        updateLayoutButtonImage()
     }
+
     // MARK: - Setup Methods
-    private func setupSportsItems() {
-        sportsItems = [
-            SportsItemModel(imgName: "football", titleName: "Football"),
-            SportsItemModel(imgName: "basket", titleName: "Basketball"),
-            SportsItemModel(imgName: "cricket", titleName: "Cricket"),
-            SportsItemModel(imgName: "tennisBalls", titleName: "Tennis")
-        ]
-    }
     private func configureCollectionView() {
         sportsCollectionView.dataSource = self
         sportsCollectionView.delegate = self
     }
 
     private func updateLayoutButtonImage() {
-        let imageName = isOrthogonalLayout ? "square.grid.2x2" : "list.bullet"
+        let imageName = viewModel.layoutType == .orthogonal ? "square.grid.2x2" : "list.bullet"
         layoutToggleButton.image = UIImage(systemName: imageName)
     }
 
-
     // MARK: - Actions
     @IBAction private func layoutToggleButtonPressed(_ sender: UIBarButtonItem) {
-        isOrthogonalLayout.toggle()
+        viewModel.toggleLayout()
         updateLayoutButtonImage()
         animateLayoutTransition()
     }
+
     private func animateLayoutTransition() {
         UIView.animate(withDuration: 0.4) {
-
             self.sportsCollectionView.animateCellsSlide()
             self.sportsCollectionView.reloadData()
             self.sportsCollectionView.layoutIfNeeded()
         }
-
     }
-
-
 }
 
 // MARK: - UICollectionViewDataSource
 extension AllSportsVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return sportsItems.count
+        return viewModel.sportsItems.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as? AllSportsCell else {
             return UICollectionViewCell()
         }
-        cell.configure(with: sportsItems[indexPath.row])
+        cell.configure(with: viewModel.sportsItems[indexPath.row])
         return cell
     }
 }
@@ -93,8 +76,14 @@ extension AllSportsVC: UICollectionViewDelegateFlowLayout {
         static let listItemHeightRatio: CGFloat = 4
         static let itemPadding: CGFloat = 10
     }
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return isOrthogonalLayout ? orthogonalLayoutSize(for: collectionView) : listLayoutSize(for: collectionView)
+        switch viewModel.layoutType {
+        case .orthogonal:
+            return orthogonalLayoutSize(for: collectionView)
+        case .list:
+            return listLayoutSize(for: collectionView)
+        }
     }
 
     private func orthogonalLayoutSize(for collectionView: UICollectionView) -> CGSize {
@@ -107,7 +96,7 @@ extension AllSportsVC: UICollectionViewDelegateFlowLayout {
         let availableWidth = collectionView.bounds.width - totalSpacing
         let width = availableWidth / numberOfCellsInRow
 
-        return CGSize(width: width - LayoutConstants.itemPadding, height: width+50)
+        return CGSize(width: width - LayoutConstants.itemPadding, height: width + 50)
     }
 
     private func listLayoutSize(for collectionView: UICollectionView) -> CGSize {
@@ -115,7 +104,7 @@ extension AllSportsVC: UICollectionViewDelegateFlowLayout {
         let collectionViewHeight = collectionView.bounds.height
         let itemHeight = collectionViewHeight / LayoutConstants.listItemHeightRatio - LayoutConstants.itemSpacing
 
-        return CGSize(width: collectionViewWidth - LayoutConstants.itemPadding-10, height: itemHeight)
+        return CGSize(width: collectionViewWidth - LayoutConstants.itemPadding - 10, height: itemHeight)
     }
 }
 
@@ -137,12 +126,11 @@ extension AllSportsVC: UICollectionViewDelegate {
     }
 
     private func navigateToLeaguesVC(forItemAt indexPath: IndexPath) {
-         isFavorite  = false
         guard let leaguesVC = storyboard?.instantiateViewController(withIdentifier: "LeaguesTV") as? LeaguesTV else { return }
-        let title = sportsItems[indexPath.row].titleName
+        let title = viewModel.sportsItems[indexPath.row].titleName
         leaguesVC.sportName = title.lowercased()
         leaguesVC.title = title
-        leaguesVC.isFavorite =  isFavorite
+        leaguesVC.isFavorite = false
         navigationController?.pushViewController(leaguesVC, animated: true)
     }
 
@@ -152,5 +140,3 @@ extension AllSportsVC: UICollectionViewDelegate {
         present(alert, animated: true)
     }
 }
-
-
