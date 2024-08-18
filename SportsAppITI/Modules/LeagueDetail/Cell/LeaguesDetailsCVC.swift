@@ -29,21 +29,20 @@ class LeaguesDetailsCVC: UICollectionViewCell {
     private func configureUI() {
             backImage.layer.cornerRadius = 16
         }
-    
+
     // MARK: - Configuration
     func configure(with cell:EventModel) {
         let url1 = URL(string: cell.homeTeamLogo ?? "")
         let url2 = URL(string: cell.awayTeamLogo ?? "")
-        self.logoTeam1.kf.setImage(with: url1,placeholder: UIImage(named: "6"))
-        self.nameTeam1.text = cell.eventHomeTeam
-        self.logoTeam2.kf.setImage(with: url2,placeholder: UIImage(named: "6"))
-        self.nameTeam2.text = cell.eventAwayTeam
-        self.lblDate.text = cell.eventDate
-        self.lblTime.text = cell.eventTime
+
+        logoTeam1.kf.setImage(with: url1,placeholder: UIImage(named: "6"))
+        nameTeam1.text = cell.eventHomeTeam
+        logoTeam2.kf.setImage(with: url2,placeholder: UIImage(named: "6"))
+        nameTeam2.text = cell.eventAwayTeam
+        lblDate.text = cell.eventDate
+        lblTime.text = cell.eventTime
         lblResult.isHidden = cell.eventFinalResult == "-"
         lblResult.text = cell.eventFinalResult
-
-
     }
 
 }

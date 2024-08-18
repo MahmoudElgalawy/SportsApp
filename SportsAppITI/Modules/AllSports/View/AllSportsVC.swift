@@ -133,7 +133,6 @@ extension AllSportsVC: UICollectionViewDelegate {
         leaguesVC.isFavorite = false
         navigationController?.pushViewController(leaguesVC, animated: true)
     }
-
     private func presentNoInternetAlert() {
         let alert = UIAlertController(title: "No internet available!", message: "Check connection and try again", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
