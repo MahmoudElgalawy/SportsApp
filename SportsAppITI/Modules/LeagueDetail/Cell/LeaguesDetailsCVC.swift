@@ -28,6 +28,7 @@ class LeaguesDetailsCVC: UICollectionViewCell {
     // MARK: - UI Configuration
     private func configureUI() {
             backImage.layer.cornerRadius = 16
+        
         }
 
     // MARK: - Configuration

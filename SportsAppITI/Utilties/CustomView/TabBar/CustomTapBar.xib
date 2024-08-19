@@ -3,6 +3,7 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,34 +21,35 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ejf-4v-edX">
-                    <rect key="frame" x="0.0" y="59" width="751" height="294"/>
+                    <rect key="frame" x="0.0" y="59" width="751" height="260"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lge-a3-awQ">
-                            <rect key="frame" x="50" y="0.0" width="651" height="274"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <rect key="frame" x="75" y="0.0" width="601" height="260"/>
+                            <color key="backgroundColor" name="#FFFFFF"/>
                         </imageView>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="lge-a3-awQ" firstAttribute="leading" secondItem="Ejf-4v-edX" secondAttribute="leading" constant="50" id="6EU-vd-0dx"/>
-                        <constraint firstAttribute="bottom" secondItem="lge-a3-awQ" secondAttribute="bottom" constant="20" id="RqD-Jp-sbG"/>
-                        <constraint firstAttribute="trailing" secondItem="lge-a3-awQ" secondAttribute="trailing" constant="50" id="do5-RJ-QiV"/>
-                        <constraint firstItem="lge-a3-awQ" firstAttribute="top" secondItem="Ejf-4v-edX" secondAttribute="top" id="hjh-B4-wAT"/>
+                        <constraint firstItem="lge-a3-awQ" firstAttribute="width" secondItem="Ejf-4v-edX" secondAttribute="width" multiplier="0.8" id="1Yf-6a-mJw"/>
+                        <constraint firstItem="lge-a3-awQ" firstAttribute="centerY" secondItem="Ejf-4v-edX" secondAttribute="centerY" id="b4h-Ln-WJ6"/>
+                        <constraint firstItem="lge-a3-awQ" firstAttribute="height" secondItem="Ejf-4v-edX" secondAttribute="height" id="ig5-wg-pAu"/>
+                        <constraint firstItem="lge-a3-awQ" firstAttribute="centerX" secondItem="Ejf-4v-edX" secondAttribute="centerX" id="jZV-83-Dxb"/>
                     </constraints>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <constraints>
-                <constraint firstItem="Ejf-4v-edX" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="38V-Wk-6Hs"/>
-                <constraint firstItem="Ejf-4v-edX" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="5JI-Yf-Qs1"/>
-                <constraint firstItem="Ejf-4v-edX" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="HJb-w1-XBc"/>
-                <constraint firstItem="Ejf-4v-edX" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="JzL-W7-C4u"/>
-                <constraint firstItem="Ejf-4v-edX" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="W8C-uE-Hr8"/>
-                <constraint firstAttribute="bottom" secondItem="Ejf-4v-edX" secondAttribute="bottom" id="c7B-fk-vuB"/>
-                <constraint firstAttribute="bottom" secondItem="Ejf-4v-edX" secondAttribute="bottom" id="eCe-1G-b4W"/>
-                <constraint firstItem="Ejf-4v-edX" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="wE4-AT-nOF"/>
+                <constraint firstItem="Ejf-4v-edX" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="AoK-9P-IIN"/>
+                <constraint firstItem="Ejf-4v-edX" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="CWc-Wv-0Wb"/>
+                <constraint firstItem="Ejf-4v-edX" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="ZRx-5j-Qh3"/>
+                <constraint firstItem="Ejf-4v-edX" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="xvs-zl-9M8"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="-773.28244274809163" y="-402.46478873239437"/>
         </view>
     </objects>
+    <resources>
+        <namedColor name="#FFFFFF">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
 </document>

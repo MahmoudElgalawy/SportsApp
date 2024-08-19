@@ -10,40 +10,42 @@ import Kingfisher
 
 class TeamsTVCell: UITableViewCell {
 
-    @IBOutlet var mainView: UIView!
-    @IBOutlet var numPlayerLbl: UILabel!
-    @IBOutlet weak var rolePlayerLbl: UILabel!
-    @IBOutlet weak var namePlayerLbl: UILabel!
-    @IBOutlet weak var photoPlayer: UIImageView!
+    @IBOutlet weak var mainView: UIView!
+    @IBOutlet weak var playerNumberLabel: UILabel!
+    @IBOutlet weak var playerRoleLabel: UILabel!
+    @IBOutlet weak var playerNameLabel: UILabel!
+    @IBOutlet weak var playerPhotoImageView: UIImageView!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         configureUI()
-        animateImgView()
+        animateImage()
     }
 
+    private func animateImage() {
+        playerPhotoImageView.animateSlideAndFadeIn()
+    }
     private func animateImgView() {
-        photoPlayer.animateSlideAndFadeIn()
+        playerPhotoImageView.animateImageView()
     }
 
-    func configureUI() {
+    private func configureUI() {
+        mainView.layer.cornerRadius = 16
+        mainView.layer.borderColor = UIColor(named: Color.C121212.rawValue)?.cgColor
+        mainView.layer.borderWidth = 0.5
 
-        mainView.layer.cornerRadius = 10
-        mainView.layer.borderColor = UIColor(named:Color.C121212.rawValue)?.cgColor
-        mainView.layer.borderWidth = 0.2
-        photoPlayer.layer.cornerRadius = 10
-        photoPlayer.layer.borderColor = UIColor(named: Color.C121212.rawValue)?.cgColor
-        photoPlayer.layer.borderWidth = 0.5
-
-
-
+        playerPhotoImageView.layer.cornerRadius = 16
+        playerPhotoImageView.layer.borderColor = UIColor(named: Color.C121212.rawValue)?.cgColor
+        playerPhotoImageView.layer.borderWidth = 0.2
     }
-    func configure(with cell: Player) {
-        self.numPlayerLbl.text = "Captain: \(cell.playerIsCaptain)"
-        self.namePlayerLbl.text = "Name: \(cell.playerName)"
-        self.rolePlayerLbl.text = "Type: \(cell.playerType ?? "0")"
 
-        photoPlayer.kf.setImage(with:URL(string: cell.playerImage ?? ""),placeholder: UIImage(named: "no_img"))
+    func configure(with player: Player) {
+        playerNumberLabel.text = "Captain: \(player.playerIsCaptain ?? "0")"
+        playerNameLabel.text = "Name: \(player.playerName)"
+        playerRoleLabel.text = "Type: \(player.playerType ?? "0")"
 
-
+        if let imageUrl = player.playerImage {
+            playerPhotoImageView.kf.setImage(with: URL(string: imageUrl), placeholder: UIImage(named: "no_img"))
+        }
     }
 }

@@ -16,9 +16,9 @@ extension UIView {
     }
 
     func animateImageView(imageView: UIImageView) {
-        UIView.animate(withDuration: 0.8,animations: {
+        UIView.animate(withDuration: 1.0,animations: {
             imageView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)})
-        UIView.animate(withDuration: 0.4, animations:{
+        UIView.animate(withDuration: 1.0, animations:{
             imageView.transform = CGAffineTransform.identity
         })
     }

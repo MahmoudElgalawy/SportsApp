@@ -230,8 +230,8 @@
 		A981F4382C6A744700C7F2CF /* LeagueDetail */ = {
 			isa = PBXGroup;
 			children = (
-				A9823C872C72C31D001313B2 /* ViewModel */,
 				A9823C862C72C314001313B2 /* View */,
+				A9823C872C72C31D001313B2 /* ViewModel */,
 				A9C187482C6BEAE4007CC609 /* Cell */,
 			);
 			path = LeagueDetail;
@@ -335,13 +335,6 @@
 			path = Utilties;
 			sourceTree = "<group>";
 		};
-		A9C1874A2C6BEB5A007CC609 /* ModelView */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ModelView;
-			sourceTree = "<group>";
-		};
 		A9C1874C2C6BEBBE007CC609 /* Remote */ = {
 			isa = PBXGroup;
 			children = (
@@ -387,7 +380,6 @@
 				A9C6A0262C6A5F5C00BE4E44 /* Model */,
 				A9C1874D2C6BEBE6007CC609 /* View */,
 				A9C6A0232C6A5A4E00BE4E44 /* Services */,
-				A9C1874A2C6BEB5A007CC609 /* ModelView */,
 				A981F4362C6A700200C7F2CF /* Modules */,
 				A9C187492C6BEB0A007CC609 /* Utilties */,
 				A9C69F722C68F82700BE4E44 /* Info.plist */,

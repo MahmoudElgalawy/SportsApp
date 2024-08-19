@@ -44,7 +44,7 @@ class LeaguesViewModel {
                     return
                 }
                 self?.footballLeagues = result?.result ?? []
-                completion(!self!.footballLeagues.isEmpty)
+                completion(!(self?.footballLeagues.isEmpty ?? false))
             }
         }
     }

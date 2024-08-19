@@ -27,6 +27,7 @@ class SportTvCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         configureUI()
+        animateImgView()
     }
 
     override var isSelected: Bool {
@@ -40,15 +41,19 @@ class SportTvCell: UITableViewCell {
         leagueImageView.layer.cornerRadius = leagueImageView.frame.height / 2
         leagueImageView.clipsToBounds = true
         leagueImageView.layer.borderColor = UIColor(named: Color.C121212.rawValue)?.cgColor
-        leagueImageView.layer.borderWidth = 0.5
+        leagueImageView.layer.borderWidth = 0.25
 
         mainView.layer.cornerRadius = 16
         mainView.layer.borderColor = UIColor(named: Color.C121212.rawValue)?.cgColor
-        mainView.layer.borderWidth = 0.5
+        mainView.layer.borderWidth = 0.25
         mainView.clipsToBounds = true
 
         backgroundImageView.layer.cornerRadius = mainView.frame.width / 2
 
+
+    }
+    private func animateImgView() {
+        leagueImageView.animateImageView(imageView: leagueImageView)
         leagueImageView.animateImageView()
     }
 

@@ -3,10 +3,17 @@
 //  SportsAppITI
 //
 //  Created by Engy on 8/19/24.
-//
+//imgName: "football"
 
 import Foundation
 class LeagueDetailsModel {
+    let staticArray = [
+        EventModel(homeTeamLogo: "football", eventHomeTeam: "football", awayTeamLogo: "football", eventAwayTeam: "football", leagueLogo: "football", eventFinalResult: "football", eventDate: "football", eventTime: "football", homeTeamKey: 10, awayTeamKey: 19),
+        EventModel(homeTeamLogo: "football", eventHomeTeam: "football", awayTeamLogo: "football", eventAwayTeam: "football", leagueLogo: "football", eventFinalResult: "football", eventDate: "football", eventTime: "football", homeTeamKey: 10, awayTeamKey: 19),
+        
+
+    ]
+
     var leagueID: Int!
     var leagueTitle: String = " "
     var league: LeagueModel!
@@ -44,8 +51,6 @@ class LeagueDetailsModel {
         if errorCount == 2 {
             let hasErrors = upcomingEvents.isEmpty && latestEvents.isEmpty
             showBackImage(hasErrors)
-
-
 
         }
     }

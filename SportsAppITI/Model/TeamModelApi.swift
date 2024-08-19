@@ -35,7 +35,7 @@ struct Player: Codable {
     let playerKey: Int
     let playerImage: String?
     let playerName, playerNumber: String
-    let playerIsCaptain : String
+    let playerIsCaptain : String?
 
     enum CodingKeys: String, CodingKey {
         case playerKey = "player_key"
