@@ -44,6 +44,7 @@ class LeaguesViewModel {
                     return
                 }
                 self?.footballLeagues = result?.result ?? []
+                print(self?.footballLeagues.first )
                 completion(!(self?.footballLeagues.isEmpty ?? false))
             }
         }
