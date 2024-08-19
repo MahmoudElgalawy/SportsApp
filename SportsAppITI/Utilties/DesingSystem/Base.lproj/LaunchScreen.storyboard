@@ -16,17 +16,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash 2" translatesAutoresizingMaskIntoConstraints="NO" id="gQR-gy-t7o">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="FootBall 1" translatesAutoresizingMaskIntoConstraints="NO" id="Ucf-Gx-RcD">
                                 <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <color key="tintColor" systemColor="systemYellowColor"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="gQR-gy-t7o" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="9FJ-xs-4hV"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="gQR-gy-t7o" secondAttribute="trailing" id="ZJr-76-KV2"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="gQR-gy-t7o" secondAttribute="bottom" id="hyh-3M-adp"/>
-                            <constraint firstItem="gQR-gy-t7o" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="n4c-h1-EY2"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Ucf-Gx-RcD" secondAttribute="bottom" id="3eF-tR-KzQ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Ucf-Gx-RcD" secondAttribute="trailing" id="Shh-P4-2qq"/>
+                            <constraint firstItem="Ucf-Gx-RcD" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="WoQ-Mf-7NS"/>
+                            <constraint firstItem="Ucf-Gx-RcD" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ca1-Y4-NRF"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -36,9 +37,12 @@
         </scene>
     </scenes>
     <resources>
-        <image name="splash 2" width="1333.3333740234375" height="2000"/>
+        <image name="FootBall 1" width="1024" height="1024"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

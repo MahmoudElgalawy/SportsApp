@@ -16,35 +16,42 @@ class LeagueDetailsVC: UIViewController {
     @IBOutlet var btnAddToFav: UIBarButtonItem!
 
     // MARK: - Properties
-    var leagueID: Int!
-    var leagueTitle: String = " "
-    var league: LeagueModel!
-    var isFavorite = true
-    private var errorCount = 0
-    private var networkManager = NetworkService.shared
-    private var coreDataManager = CoreDataManager.shared
+
     private let activityIndicator = UIActivityIndicatorView(style: .large)
-
-    private var upcomingEvents = [EventModel]()
-    private var teams = [TeamModel]()
-
-    private var latestEvents = [EventModel]() {
-        didSet { updateTeams() }
-    }
+    let viewModel = LeagueDetailsModel()
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        loadLatestEvents()
-        loadUpcomingEvents()
-        checkIfFavorite()
+        viewModel.loadLatestEvents()
+        viewModel.loadUpcomingEvents()
+        viewModel.checkIfFavorite()
         updateFavoriteButton()
+
+        viewModel.setUpActivityIndicator = {
+            self.activityIndicator.stopAnimating()
+        }
+        viewModel.updateFavoriteButton = {
+            self.updateFavoriteButton()
+        }
+        viewModel.reloadCollectionView = {
+            self.collectionLeagueDet.reloadData()
+        }
+        viewModel.showBackImage = { hasErrors in
+            self.imgNoData.isHidden = !hasErrors
+            self.collectionLeagueDet.isHidden = hasErrors
+            if hasErrors {
+                self.imgNoData.image = UIImage(named: "bak")
+                self.collectionLeagueDet.isHidden = true
+            }
+
+        }
     }
 
     // MARK: - Setup Methods
     private func setupUI() {
-        titleLbl.text = leagueTitle.capitalized
+        titleLbl.text = viewModel.leagueTitle.capitalized
         configureCollectionView()
         setupActivityIndicator()
     }
@@ -55,29 +62,6 @@ class LeagueDetailsVC: UIViewController {
     }
 
     // MARK: - UI Update Methods
-    private func updateTeams() {
-        teams = latestEvents.map { event in
-            TeamModel(teamKey: event.homeTeamKey,
-                      teamName: event.eventHomeTeam,
-                      teamLogo: event.homeTeamLogo,
-                      players: []
-                     )
-        }
-        collectionLeagueDet.reloadData()
-    }
-
-    private func handleErrors() {
-        errorCount += 1
-        if errorCount == 2 {
-            let hasErrors = upcomingEvents.isEmpty && latestEvents.isEmpty
-            imgNoData.isHidden = !hasErrors
-            collectionLeagueDet.isHidden = hasErrors
-            if hasErrors {
-                imgNoData.image = UIImage(named: "bak")
-                collectionLeagueDet.isHidden = true
-            }
-        }
-    }
 
     private func configureCollectionView() {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, environment in
@@ -93,67 +77,19 @@ class LeagueDetailsVC: UIViewController {
         collectionLeagueDet.setCollectionViewLayout(layout, animated: true)
     }
 
-    // MARK: - Data Loading Methods
-    private func loadEvents(endpoint: SportsAPI, completion: @escaping ([EventModel]?, Error?) -> Void) {
-        networkManager.fetchData(from: endpoint, model: EventModelAPIResponse.self) { [weak self] results, error in
-            guard let self = self else { return }
-            self.activityIndicator.stopAnimating()
-            if let error = error {
-                print("Error fetching events: \(error)")
-                completion(nil, error)
-                return
-            }
-            guard let results = results else {
-                print("No data received")
-                completion(nil, error)
-                return
-            }
-            DispatchQueue.main.async {
-                let events = results.result
-                if !events.isEmpty {
-                    completion(events, nil)
-                } else {
-                    completion(nil, error)
-                    print("No events found.")
-                }
-                self.collectionLeagueDet.reloadData()
-            }
-        }
-    }
-
-    private func loadUpcomingEvents() {
-        loadEvents(endpoint: .getUpcomingEvents(leagueId: leagueID, fromDate: .now, toDate: .upcoming)) { events, error in
-            if error != nil {
-                self.handleErrors()
-                return
-            }
-            self.upcomingEvents = events!
-        }
-    }
-
-    private func loadLatestEvents() {
-        loadEvents(endpoint: .getLatestResults(leagueId: leagueID, fromDate: .passed, toDate: .now)) { events, error in
-            if error != nil {
-                self.handleErrors()
-                return
-            }
-            self.latestEvents = events!
-        }
-    }
-
     // MARK: - Actions
     @IBAction func addToFav(_ sender: Any) {
-        isFavorite.toggle()
+        viewModel.isFavorite.toggle()
         updateFavoriteButton()
-        if isFavorite {
-            saveMovie()
+        if viewModel.isFavorite {
+            viewModel.saveMovie()
         } else {
             let alert = UIAlertController(title: "Delete", message: "This league will be removed from favorites.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
-                self.isFavorite.toggle()
+                self.viewModel.isFavorite.toggle()
             }))
             alert.addAction(UIAlertAction(title: "Remove", style: .destructive, handler: { _ in
-                self.deleteMovie()
+                self.viewModel.deleteMovie()
             }))
             self.present(alert, animated: true)
         }
@@ -163,27 +99,8 @@ class LeagueDetailsVC: UIViewController {
         dismiss(animated: true)
     }
 
-    func saveMovie() {
-        print("Saving league...")
-        coreDataManager.storeLeague(league)
-        print("League saved successfully.")
-    }
-
-    func deleteMovie() {
-        print("Deleting league...")
-        coreDataManager.deleteLeague(league)
-        print("League deleted successfully.")
-    }
-
-    func checkIfFavorite() {
-        guard let league = league else { return }
-        let fetchedLeague = coreDataManager.fetchLeague(byKey: league.leagueKey)
-        isFavorite = fetchedLeague != nil
-        updateFavoriteButton()
-    }
-
     func updateFavoriteButton() {
-        btnAddToFav.image = UIImage(systemName: isFavorite ? "heart.fill" : "heart")
+        btnAddToFav.image = UIImage(systemName: viewModel.isFavorite ? "heart.fill" : "heart")
     }
 }
 
@@ -194,12 +111,11 @@ extension LeagueDetailsVC: UICollectionViewDelegate {
             performSegue(withIdentifier: "goToTeamVC", sender: indexPath.row)
         }
     }
-
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToTeamVC",
            let teamsDetailsVC = segue.destination as? TeamsDetailsVC,
            let row = sender as? Int {
-            teamsDetailsVC.viewModel.teamKey = teams[row].teamKey
+            teamsDetailsVC.viewModel.teamKey = viewModel.teams[row].teamKey
         }
     }
 }
@@ -207,15 +123,15 @@ extension LeagueDetailsVC: UICollectionViewDelegate {
 // MARK: - UICollectionView DataSource
 extension LeagueDetailsVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     private func createUpcomingSection() -> NSCollectionLayoutSection {
-        return createSectionLayout(groupHeight: .absolute(UIScreen.main.bounds.height / 5), groupWidth: .fractionalWidth(0.85), orthogonalScrollingBehavior: .groupPagingCentered, headerEnabled: !upcomingEvents.isEmpty)
+        return createSectionLayout(groupHeight: .absolute(UIScreen.main.bounds.height / 5), groupWidth: .fractionalWidth(0.85), orthogonalScrollingBehavior: .groupPagingCentered, headerEnabled: !viewModel.upcomingEvents.isEmpty)
     }
 
     private func createLatestSection() -> NSCollectionLayoutSection {
-        return createSectionLayout(groupHeight: .absolute(UIScreen.main.bounds.height / 5), orthogonalScrollingBehavior: .none, headerEnabled: !latestEvents.isEmpty)
+        return createSectionLayout(groupHeight: .absolute(UIScreen.main.bounds.height / 5), orthogonalScrollingBehavior: .none, headerEnabled: !viewModel.latestEvents.isEmpty)
     }
 
     private func createTeamsSection() -> NSCollectionLayoutSection {
-        return createSectionLayout(groupHeight: .absolute(200), groupWidth: .absolute(150), orthogonalScrollingBehavior: .continuous, headerEnabled: !teams.isEmpty)
+        return createSectionLayout(groupHeight: .absolute(200), groupWidth: .absolute(150), orthogonalScrollingBehavior: .continuous, headerEnabled: !viewModel.teams.isEmpty)
     }
 
     private func createSectionLayout(groupHeight: NSCollectionLayoutDimension, groupWidth: NSCollectionLayoutDimension = .fractionalWidth(1), orthogonalScrollingBehavior: UICollectionLayoutSectionOrthogonalScrollingBehavior, headerEnabled: Bool) -> NSCollectionLayoutSection {
@@ -252,11 +168,11 @@ extension LeagueDetailsVC: UICollectionViewDataSource, UICollectionViewDelegateF
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return upcomingEvents.count
+            return viewModel.upcomingEvents.count
         case 1:
-            return latestEvents.count
+            return viewModel.latestEvents.count
         default:
-            return teams.count
+            return viewModel.teams.count
         }
     }
 
@@ -265,13 +181,13 @@ extension LeagueDetailsVC: UICollectionViewDataSource, UICollectionViewDelegateF
         switch indexPath.section {
         case 0:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LeaguesDetailsCVC", for: indexPath) as! LeaguesDetailsCVC
-            (cell as! LeaguesDetailsCVC).configure(with: upcomingEvents[indexPath.row])
+            (cell as! LeaguesDetailsCVC).configure(with: viewModel.upcomingEvents[indexPath.row])
         case 1:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LeaguesDetailsCVC", for: indexPath) as! LeaguesDetailsCVC
-            (cell as! LeaguesDetailsCVC).configure(with: latestEvents[indexPath.row])
+            (cell as! LeaguesDetailsCVC).configure(with: viewModel.latestEvents[indexPath.row])
         default:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TeamsCVC", for: indexPath) as! TeamsCVC
-            (cell as! TeamsCVC).configure(with: teams[indexPath.row])
+            (cell as! TeamsCVC).configure(with: viewModel.teams[indexPath.row])
         }
         return cell
     }

@@ -30,6 +30,7 @@
 		A9823C7E2C7278DF001313B2 /* LeaguesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9823C7D2C7278DF001313B2 /* LeaguesViewModel.swift */; };
 		A9823C822C729362001313B2 /* TeamsDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9823C812C729362001313B2 /* TeamsDetailsVC.swift */; };
 		A9823C852C72937F001313B2 /* TeamsTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9823C842C72937F001313B2 /* TeamsTVCell.swift */; };
+		A9823C892C72C342001313B2 /* LeagueDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9823C882C72C342001313B2 /* LeagueDetailsModel.swift */; };
 		A9C187502C6BF463007CC609 /* SportsName.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C1874E2C6BF462007CC609 /* SportsName.swift */; };
 		A9C187512C6BF463007CC609 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C1874F2C6BF462007CC609 /* Constant.swift */; };
 		A9C187532C6BF4B0007CC609 /* SportsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C187522C6BF4B0007CC609 /* SportsAPI.swift */; };
@@ -104,6 +105,7 @@
 		A9823C7D2C7278DF001313B2 /* LeaguesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaguesViewModel.swift; sourceTree = "<group>"; };
 		A9823C812C729362001313B2 /* TeamsDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TeamsDetailsVC.swift; path = SportsAppITI/Modules/TeamDetails/view/TeamsDetailsVC.swift; sourceTree = SOURCE_ROOT; };
 		A9823C842C72937F001313B2 /* TeamsTVCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TeamsTVCell.swift; path = SportsAppITI/Modules/TeamDetails/view/TeamsTVCell.swift; sourceTree = SOURCE_ROOT; };
+		A9823C882C72C342001313B2 /* LeagueDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueDetailsModel.swift; sourceTree = "<group>"; };
 		A9C1874E2C6BF462007CC609 /* SportsName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SportsName.swift; sourceTree = "<group>"; };
 		A9C1874F2C6BF462007CC609 /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		A9C187522C6BF4B0007CC609 /* SportsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportsAPI.swift; sourceTree = "<group>"; };
@@ -209,8 +211,8 @@
 		A981F4362C6A700200C7F2CF /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				A9823C642C6F6CF0001313B2 /* TeamDetails */,
 				A981F4382C6A744700C7F2CF /* LeagueDetail */,
+				A9823C642C6F6CF0001313B2 /* TeamDetails */,
 				A9C69F982C68FBE300BE4E44 /* AllSports */,
 				A9C69FBB2C695BA700BE4E44 /* SportTableV */,
 			);
@@ -228,7 +230,8 @@
 		A981F4382C6A744700C7F2CF /* LeagueDetail */ = {
 			isa = PBXGroup;
 			children = (
-				A981F4392C6A746000C7F2CF /* LeagueDetailsVC.swift */,
+				A9823C872C72C31D001313B2 /* ViewModel */,
+				A9823C862C72C314001313B2 /* View */,
 				A9C187482C6BEAE4007CC609 /* Cell */,
 			);
 			path = LeagueDetail;
@@ -292,6 +295,22 @@
 				A9823C842C72937F001313B2 /* TeamsTVCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		A9823C862C72C314001313B2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A981F4392C6A746000C7F2CF /* LeagueDetailsVC.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A9823C872C72C31D001313B2 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				A9823C882C72C342001313B2 /* LeagueDetailsModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		A9C187482C6BEAE4007CC609 /* Cell */ = {
@@ -777,6 +796,7 @@
 				A9C69FA22C6913A500BE4E44 /* UILabel+Extension.swift in Sources */,
 				A9823C822C729362001313B2 /* TeamsDetailsVC.swift in Sources */,
 				A9C187532C6BF4B0007CC609 /* SportsAPI.swift in Sources */,
+				A9823C892C72C342001313B2 /* LeagueDetailsModel.swift in Sources */,
 				A9C6A0282C6A5FBA00BE4E44 /* LeagueModelAPI.swift in Sources */,
 				A981F4352C6A6F1200C7F2CF /* EventModelApi.swift in Sources */,
 			);

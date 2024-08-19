@@ -114,9 +114,9 @@ extension LeaguesTV: UITableViewDelegate {
         if segue.identifier == "goToDetails",
            let detailsVC = segue.destination as? LeagueDetailsVC,
            let row = sender as? Int {
-            detailsVC.leagueID = viewModel.footballLeagues[row].leagueKey
-            detailsVC.leagueTitle = viewModel.footballLeagues[row].leagueName
-            detailsVC.league = viewModel.footballLeagues[row]
+            detailsVC.viewModel.leagueID = viewModel.footballLeagues[row].leagueKey
+            detailsVC.viewModel.leagueTitle = viewModel.footballLeagues[row].leagueName
+            detailsVC.viewModel.league = viewModel.footballLeagues[row]
         }
     }
 
