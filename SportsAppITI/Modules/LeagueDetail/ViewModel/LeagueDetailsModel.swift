@@ -2,7 +2,7 @@
 //  LeagueDetailsModel.swift
 //  SportsAppITI
 //
-//  Created by Engy on 8/19/24.
+//  Created by Mahmoud on 8/19/24.
 //imgName: "football"
 
 import Foundation
