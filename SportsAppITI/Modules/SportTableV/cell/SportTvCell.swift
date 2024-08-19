@@ -27,7 +27,6 @@ class SportTvCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         configureUI()
-        animateImgView()
     }
 
     override var isSelected: Bool {
@@ -35,9 +34,11 @@ class SportTvCell: UITableViewCell {
             contentView.backgroundColor = isSelected ? UIColor.systemBackground : UIColor.systemBackground
         }
     }
+   
 
     // MARK: - UI Configuration
     private func configureUI() {
+
         leagueImageView.layer.cornerRadius = leagueImageView.frame.height / 2
         leagueImageView.clipsToBounds = true
         leagueImageView.layer.borderColor = UIColor(named: Color.C121212.rawValue)?.cgColor
@@ -51,11 +52,10 @@ class SportTvCell: UITableViewCell {
         backgroundImageView.layer.cornerRadius = mainView.frame.width / 2
 
 
+
     }
-    private func animateImgView() {
-        leagueImageView.animateImageView(imageView: leagueImageView)
-        leagueImageView.animateImageView()
-    }
+
+
 
     // MARK: - Configuration
     func configure(with league: LeagueModel) {
@@ -65,6 +65,8 @@ class SportTvCell: UITableViewCell {
         } else {
             leagueImageView.image = UIImage(named: "no_img")
         }
+        leagueImageView.animateImageView(imageView: leagueImageView)
+        leagueImageView.animateImageView()
     }
 
     // MARK: - YouTube Actions

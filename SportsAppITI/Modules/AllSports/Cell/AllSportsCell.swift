@@ -26,7 +26,7 @@ class AllSportsCell: UICollectionViewCell {
         sportImageView.layer.borderWidth = 2
         sportImageView.layer.borderColor = UIColor(named: "#97C256")?.cgColor
 
-       // animateImgView()
+        //animateImgView()
         aimationlabel()
     }
 

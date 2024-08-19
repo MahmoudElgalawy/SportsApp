@@ -103,7 +103,7 @@ extension LeaguesTV: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension LeaguesTV: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 83
+        return 85
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -121,7 +121,8 @@ extension LeaguesTV: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.animateSlideAndFadeIn()
+        //cell.animateSlideAndFadeIn()
+        cell.animateCellsSlide()
     }
 
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
