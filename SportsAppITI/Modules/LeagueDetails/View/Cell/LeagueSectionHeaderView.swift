@@ -1,5 +1,5 @@
 //
-//  LeagueDSecHed.swift
+//  LeagueSectionHeaderView.swift
 //  SportsAppITI
 //
 //  Created by Mahmoud  on 13/08/2024.

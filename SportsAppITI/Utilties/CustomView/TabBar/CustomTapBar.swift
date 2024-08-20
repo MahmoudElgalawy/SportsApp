@@ -14,7 +14,7 @@ class CustomTapBar: UITabBar {
 
     @IBOutlet var mainView: UIView!
 
-    @IBOutlet var imgView: UIImageView!
+    @IBOutlet var imageView: UIImageView!
     @IBOutlet var customView: UIView!
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,9 +28,11 @@ class CustomTapBar: UITabBar {
 
     private func commonInit() {
         loadNib()
-        imgView.animateImageView(imageView: imgView)
-        imgView.addRadiusView(16)
-        imgView.addBorderView(color: Color.C8E8E93, width:0.5)
+        imageView.animateImageView(imageView: imageView)
+        imageView.layer.cornerRadius = 16
+        imageView.layer.borderColor = UIColor(named: "#8E8E93")?.cgColor
+        imageView.layer.borderWidth = 0.5
+
     }
 
     private func loadNib() {

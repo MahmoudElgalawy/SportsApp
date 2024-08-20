@@ -7,7 +7,7 @@
 
 import Foundation
 
-class LeaguesViewModel {
+class AllLeaguesViewModel {
 
     // MARK: - Properties
     private let networkManager = NetworkService.shared

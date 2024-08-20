@@ -9,12 +9,14 @@ import UIKit
 import Kingfisher
 
 class TeamsTVCell: UITableViewCell {
-
+// MARK: - IBOutlets
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var playerNumberLabel: UILabel!
     @IBOutlet weak var playerRoleLabel: UILabel!
     @IBOutlet weak var playerNameLabel: UILabel!
     @IBOutlet weak var playerPhotoImageView: UIImageView!
+  
+    // MARK: - Lifecycle
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,17 +30,19 @@ class TeamsTVCell: UITableViewCell {
     private func animateImgView() {
         playerPhotoImageView.animateImageView()
     }
-
+// MARK: - UI Configuration
     private func configureUI() {
         mainView.layer.cornerRadius = 16
-        mainView.layer.borderColor = UIColor(named: Color.C121212.rawValue)?.cgColor
+        mainView.layer.borderColor = UIColor(named: "#121212")?.cgColor
         mainView.layer.borderWidth = 0.5
 
-        playerPhotoImageView.layer.cornerRadius = 16
-        playerPhotoImageView.layer.borderColor = UIColor(named: Color.C121212.rawValue)?.cgColor
-        playerPhotoImageView.layer.borderWidth = 0.2
-    }
+        playerPhotoImageView.layer.cornerRadius = 20
+        playerPhotoImageView.layer.borderColor = UIColor(named: "#D9D9D9")?.cgColor
+        playerPhotoImageView.layer.borderWidth = 0.5
+        playerPhotoImageView.clipsToBounds = true
 
+    }
+// MARK: - Configuration
     func configure(with player: Player) {
         playerNumberLabel.text = "Captain: \(player.playerIsCaptain ?? "0")"
         playerNameLabel.text = "Name: \(player.playerName)"

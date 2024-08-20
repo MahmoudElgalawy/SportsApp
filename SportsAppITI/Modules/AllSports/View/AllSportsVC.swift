@@ -112,7 +112,7 @@ extension AllSportsVC: UICollectionViewDelegate {
     }
 
     private func navigateToLeaguesVC(for selectedItem: SportsItemModel) {
-        guard let leaguesVC = storyboard?.instantiateViewController(withIdentifier: "LeaguesTV") as? LeaguesTV else { return }
+        guard let leaguesVC = storyboard?.instantiateViewController(withIdentifier: "LeaguesTV") as? AllLeaguesVC else { return }
         let title = selectedItem.titleName
         leaguesVC.title = title
         leaguesVC.viewModel.isFavorite = false

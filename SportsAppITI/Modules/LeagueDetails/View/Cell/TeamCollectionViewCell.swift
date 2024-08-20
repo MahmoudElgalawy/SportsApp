@@ -24,7 +24,7 @@ class TeamCollectionViewCell: UICollectionViewCell {
     // MARK: - UI Configuration
     private func configureUI() {
         mainView.layer.cornerRadius = 16
-        mainView.layer.borderColor = UIColor(named: Color.CD9D9D9.rawValue)?.cgColor
+        mainView.layer.borderColor = UIColor(named: "#D9D9D9")?.cgColor
         mainView.layer.borderWidth = 1
 
         teamsImage.layer.cornerRadius = 10

@@ -5,7 +5,7 @@
 //  Created by Mahmoud  on 18/08/2024.
 //
 import Foundation
-class TeamViewModel {
+class TeamsViewModel {
     private var networkManager = NetworkService.shared
     var teamKey: Int?
     var teamArray: [TeamModel] = []

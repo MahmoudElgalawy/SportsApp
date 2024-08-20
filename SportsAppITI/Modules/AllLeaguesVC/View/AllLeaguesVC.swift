@@ -8,10 +8,10 @@
 import UIKit
 import WebKit
 
-class LeaguesTV: UIViewController, WKNavigationDelegate {
+class AllLeaguesVC: UIViewController, WKNavigationDelegate {
 
     // MARK: - Properties
-    let viewModel = LeaguesViewModel()
+    let viewModel = AllLeaguesViewModel()
     private let activityIndicator = UIActivityIndicatorView(style: .large)
     private var webView: WKWebView?
 
@@ -85,13 +85,13 @@ class LeaguesTV: UIViewController, WKNavigationDelegate {
 }
 
 // MARK: - UITableViewDataSource
-extension LeaguesTV: UITableViewDataSource {
+extension AllLeaguesVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.footballLeagues.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as? LeaguesTvCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as? LeaguesTVCell else {
             return UITableViewCell()
         }
         cell.delegate = self
@@ -101,7 +101,7 @@ extension LeaguesTV: UITableViewDataSource {
 }
 
 // MARK: - UITableViewDelegate
-extension LeaguesTV: UITableViewDelegate {
+extension AllLeaguesVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 85
     }
@@ -118,7 +118,7 @@ extension LeaguesTV: UITableViewDelegate {
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
             if segue.identifier == "goToDetails",
-               let detailsVC = segue.destination as? LeagueDetailsViewController,
+               let detailsVC = segue.destination as? LeagueDetailsVC,
                let row = sender as? Int {
                 detailsVC.viewModel.leagueID = viewModel.footballLeagues[row].leagueKey
                 detailsVC.viewModel.leagueTitle = viewModel.footballLeagues[row].leagueName
@@ -155,7 +155,7 @@ extension LeaguesTV: UITableViewDelegate {
 }
 
 // MARK: - SportTvCellDelegate
-extension LeaguesTV: LeaguesTvCellDelegate {
+extension AllLeaguesVC: LeaguesTvCellDelegate {
     func didPressYouTubeButton(with urlString: String) {
         showYouTubeVideo(urlString: urlString)
     }

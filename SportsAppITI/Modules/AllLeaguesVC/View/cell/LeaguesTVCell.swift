@@ -12,7 +12,7 @@ protocol LeaguesTvCellDelegate: AnyObject {
     func didPressYouTubeButton(with urlString: String)
 }
 
-class LeaguesTvCell: UITableViewCell {
+class LeaguesTVCell: UITableViewCell {
 
     // MARK: - IBOutlets
     @IBOutlet private var mainView: UIView!
@@ -41,11 +41,14 @@ class LeaguesTvCell: UITableViewCell {
 
         leagueImageView.layer.cornerRadius = leagueImageView.frame.height / 2
         leagueImageView.clipsToBounds = true
-        leagueImageView.layer.borderColor = UIColor(named: Color.C121212.rawValue)?.cgColor
+        leagueImageView.layer.borderColor = UIColor(named: "#121212")?.cgColor
+        leagueImageView.layer.borderWidth = 0.5
         leagueImageView.layer.borderWidth = 0.25
+        mainView.clipsToBounds = true
 
-        mainView.layer.cornerRadius = 16
-        mainView.layer.borderColor = UIColor(named: Color.C121212.rawValue)?.cgColor
+
+        mainView.layer.cornerRadius = 5
+        mainView.layer.borderColor = UIColor(named:"121212")?.cgColor
         mainView.layer.borderWidth = 0.25
         mainView.clipsToBounds = true
 

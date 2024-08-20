@@ -1,5 +1,5 @@
 //
-//  TeamsDetailsVc.swift
+//  TeamsDetailsViewController.swift
 //  SportsAppITI
 //
 //  Created by Mahmoud on 8/16/24.
@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-class TeamsDetailsVC: UIViewController {
+class TeamsDetailsViewController: UIViewController {
     let viewModel = TeamViewModel()
 
   @IBOutlet var playerBackImg: UIImageView!
@@ -42,7 +42,7 @@ class TeamsDetailsVC: UIViewController {
 }
 
 // Extension for UITableView Delegate and DataSource
-extension TeamsDetailsVC: UITableViewDelegate, UITableViewDataSource {
+extension TeamsDetailsViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return  viewModel.allPlayers.count

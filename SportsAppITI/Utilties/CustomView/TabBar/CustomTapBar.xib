@@ -11,7 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomTapBar" customModule="SportsAppITI" customModuleProvider="target">
             <connections>
                 <outlet property="customView" destination="Ejf-4v-edX" id="KQ0-TI-Ia0"/>
-                <outlet property="imgView" destination="lge-a3-awQ" id="69e-Qy-IXf"/>
+                <outlet property="imageView" destination="lge-a3-awQ" id="69e-Qy-IXf"/>
                 <outlet property="mainView" destination="iN0-l3-epB" id="cRg-61-dhA"/>
             </connections>
         </placeholder>

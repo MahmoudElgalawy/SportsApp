@@ -7,16 +7,15 @@
 
 import UIKit
 
-class LeagueDetailsViewController: UIViewController {
+class LeagueDetailsVC: UIViewController {
 
     // MARK: - IBOutlets
-    @IBOutlet var imgNoData: UIImageView!
-    @IBOutlet var titleLbl: UILabel!
-    @IBOutlet var collectionLeagueDet: UICollectionView!
-    @IBOutlet var btnAddToFav: UIBarButtonItem!
+    @IBOutlet private var imgNoData: UIImageView!
+    @IBOutlet private var titleLbl: UILabel!
+    @IBOutlet private var collectionLeagueDet: UICollectionView!
+    @IBOutlet private var btnAddToFav: UIBarButtonItem!
 
     // MARK: - Properties
-
     private let activityIndicator = UIActivityIndicatorView(style: .large)
     let viewModel = LeagueDetailsModel()
 
@@ -24,29 +23,11 @@ class LeagueDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        configureViewModel()
         viewModel.loadLatestEvents()
         viewModel.loadUpcomingEvents()
         viewModel.checkIfFavorite()
         updateFavoriteButton()
-
-        viewModel.setUpActivityIndicator = {
-            self.activityIndicator.stopAnimating()
-        }
-        viewModel.updateFavoriteButton = {
-            self.updateFavoriteButton()
-        }
-        viewModel.reloadCollectionView = {
-            self.collectionLeagueDet.reloadData()
-        }
-        viewModel.showBackImage = { hasErrors in
-            self.imgNoData.isHidden = !hasErrors
-            self.collectionLeagueDet.isHidden = hasErrors
-            if hasErrors {
-                self.imgNoData.image = UIImage(named: "noResult")
-                self.collectionLeagueDet.isHidden = true
-            }
-
-        }
     }
 
     // MARK: - Setup Methods
@@ -55,63 +36,85 @@ class LeagueDetailsViewController: UIViewController {
         configureCollectionView()
         setupActivityIndicator()
     }
+
+    private func configureViewModel() {
+        viewModel.setUpActivityIndicator = { [weak self] in
+            self?.activityIndicator.stopAnimating()
+        }
+        viewModel.updateFavoriteButton = { [weak self] in
+            self?.updateFavoriteButton()
+        }
+        viewModel.reloadCollectionView = { [weak self] in
+            self?.collectionLeagueDet.reloadData()
+        }
+        viewModel.showBackImage = { [weak self] hasErrors in
+            self?.imgNoData.isHidden = !hasErrors
+            self?.collectionLeagueDet.isHidden = hasErrors
+            if hasErrors {
+                self?.imgNoData.image = UIImage(named: "noResult")
+            }
+        }
+    }
+
     private func setupActivityIndicator() {
         activityIndicator.center = view.center
         activityIndicator.startAnimating()
         view.addSubview(activityIndicator)
     }
 
-    // MARK: - UI Update Methods
-
     private func configureCollectionView() {
-        let layout = UICollectionViewCompositionalLayout { sectionIndex, environment in
+        let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
+            guard let self = self else { return nil }
             switch sectionIndex {
-            case 0:
-                return self.createUpcomingSection()
-            case 1:
-                return self.createLatestSection()
-            default:
-                return self.createTeamsSection()
+            case 0: return self.createUpcomingSection()
+            case 1: return self.createLatestSection()
+            default: return self.createTeamsSection()
             }
         }
         collectionLeagueDet.setCollectionViewLayout(layout, animated: true)
     }
 
+    // MARK: - UI Update Methods
+    private func updateFavoriteButton() {
+        btnAddToFav.image = UIImage(systemName: viewModel.isFavorite ? "heart.fill" : "heart")
+    }
+
     // MARK: - Actions
-    @IBAction func addToFav(_ sender: Any) {
+    @IBAction private func addToFav(_ sender: Any) {
         viewModel.isFavorite.toggle()
         updateFavoriteButton()
         if viewModel.isFavorite {
             viewModel.saveLeague()
         } else {
-            let alert = UIAlertController(title: "Delete", message: "This league will be removed from favorites.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
-                self.viewModel.isFavorite.toggle()
-                self.updateFavoriteButton()
-            }))
-            alert.addAction(UIAlertAction(title: "Remove", style: .destructive, handler: { _ in
-                self.viewModel.deleteLeague()
-            }))
-            self.present(alert, animated: true)
+            showRemoveFromFavoritesAlert()
         }
     }
 
-    @IBAction func btnBack(_ sender: Any) {
-        dismiss(animated: true)
+    private func showRemoveFromFavoritesAlert() {
+        let alert = UIAlertController(title: "Delete", message: "This league will be removed from favorites.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { [weak self] _ in
+            self?.viewModel.isFavorite.toggle()
+            self?.updateFavoriteButton()
+        }))
+        alert.addAction(UIAlertAction(title: "Remove", style: .destructive, handler: { [weak self] _ in
+            self?.viewModel.deleteLeague()
+        }))
+        present(alert, animated: true)
     }
 
-    func updateFavoriteButton() {
-        btnAddToFav.image = UIImage(systemName: viewModel.isFavorite ? "heart.fill" : "heart")
+    @IBAction private func btnBack(_ sender: Any) {
+        dismiss(animated: true)
     }
 }
 
 // MARK: - UICollectionView Delegate
-extension LeagueDetailsViewController: UICollectionViewDelegate {
+extension LeagueDetailsVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView.cellForItem(at: indexPath)?.reuseIdentifier == "TeamsCVC" {
             performSegue(withIdentifier: "goToTeamVC", sender: indexPath.row)
         }
     }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToTeamVC",
            let teamsDetailsVC = segue.destination as? TeamsDetailsVC,
@@ -122,7 +125,7 @@ extension LeagueDetailsViewController: UICollectionViewDelegate {
 }
 
 // MARK: - UICollectionView DataSource
-extension LeagueDetailsViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension LeagueDetailsVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     private func createUpcomingSection() -> NSCollectionLayoutSection {
         return createSectionLayout(groupHeight: .absolute(UIScreen.main.bounds.height / 5), groupWidth: .fractionalWidth(0.85), orthogonalScrollingBehavior: .groupPagingCentered, headerEnabled: !viewModel.upcomingEvents.isEmpty)
     }
@@ -168,29 +171,24 @@ extension LeagueDetailsViewController: UICollectionViewDataSource, UICollectionV
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
-        case 0:
-            return viewModel.upcomingEvents.count
-        case 1:
-            return viewModel.latestEvents.count
-        default:
-            return viewModel.teams.count
+        case 0: return viewModel.upcomingEvents.count
+        case 1: return viewModel.latestEvents.count
+        default: return viewModel.teams.count
         }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: UICollectionViewCell
         switch indexPath.section {
-        case 0:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LeaguesDetailsCVC", for: indexPath) as! LeaguesDetailsCVC
-            (cell as! LeaguesDetailsCVC).configure(with: viewModel.upcomingEvents[indexPath.row])
-        case 1:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LeaguesDetailsCVC", for: indexPath) as! LeaguesDetailsCVC
-            (cell as! LeaguesDetailsCVC).configure(with: viewModel.latestEvents[indexPath.row])
+        case 0, 1:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LeaguesDetailsCVC", for: indexPath) as! LeaguesDetailsCVC
+            let event = indexPath.section == 0 ? viewModel.upcomingEvents[indexPath.row] : viewModel.latestEvents[indexPath.row]
+            cell.configure(with: event)
+            return cell
         default:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TeamsCVC", for: indexPath) as! TeamCollectionViewCell
-            (cell as! TeamCollectionViewCell).configure(with: viewModel.teams[indexPath.row])
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TeamsCVC", for: indexPath) as! TeamCollectionViewCell
+            cell.configure(with: viewModel.teams[indexPath.row])
+            return cell
         }
-        return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -205,5 +203,4 @@ extension LeagueDetailsViewController: UICollectionViewDataSource, UICollectionV
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         cell.animateCellAppearance()
     }
-    
 }

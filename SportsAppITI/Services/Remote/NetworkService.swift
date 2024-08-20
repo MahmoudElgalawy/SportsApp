@@ -8,11 +8,6 @@ import Foundation
 import Alamofire
 import Network
 
-
-
-import Foundation
-import Alamofire
-
 // Protocol for fetching data
 protocol NetworkRequestable {
     func fetchData<T: Codable>(from url: SportsAPI, model: T.Type, completion: @escaping (Result<T, Error>) -> Void)
@@ -41,12 +36,11 @@ class NetworkService: NetworkRequestable {
     }
 }
 
-// Custom Network Errors
 enum NetworkError: Error {
     case invalidURL
+
 }
 
-// Extension to handle JSON decoding errors
 extension JSONDecoder {
     func decodeResult<T: Codable>(_ type: T.Type, from data: Data?) -> Result<T, Error> {
         guard let data = data else {

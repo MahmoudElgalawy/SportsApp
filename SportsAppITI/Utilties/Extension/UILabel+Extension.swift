@@ -1,9 +1,9 @@
-//
+
 //  UILabel+Extension.swift
 //  SportsAppITI
 //
 //  Created by Engy on 8/11/24.
-//
+
 
 import UIKit
 extension UILabel{

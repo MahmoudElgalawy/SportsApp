@@ -7,13 +7,7 @@
 
 import UIKit
 extension UIView {
-    func addRadiusView(_  radius: CGFloat){
-        self.layer.cornerRadius = radius
-    }
-    func addBorderView(color:Color,width:CGFloat){
-        self.layer.borderColor = UIColor(named:color.rawValue)?.cgColor
-        self.layer.borderWidth = width
-    }
+   
 
     func animateImageView(imageView: UIImageView) {
         UIView.animate(withDuration: 0.6,animations: {
