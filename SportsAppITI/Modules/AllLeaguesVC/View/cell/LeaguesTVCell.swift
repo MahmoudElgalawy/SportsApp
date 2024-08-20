@@ -38,21 +38,20 @@ class LeaguesTVCell: UITableViewCell {
 
     // MARK: - UI Configuration
     private func configureUI() {
+        DispatchQueue.main.async {
+            self.leagueImageView.layer.cornerRadius = self.leagueImageView.frame.height / 2
+            self.backgroundImageView.layer.cornerRadius = self.mainView.frame.width / 2
 
-        leagueImageView.layer.cornerRadius = leagueImageView.frame.height / 2
-        leagueImageView.clipsToBounds = true
+        }
         leagueImageView.layer.borderColor = UIColor(named: "#121212")?.cgColor
         leagueImageView.layer.borderWidth = 0.5
-        leagueImageView.layer.borderWidth = 0.25
-        mainView.clipsToBounds = true
+        leagueImageView.clipsToBounds = true
 
-
-        mainView.layer.cornerRadius = 5
+        mainView.layer.cornerRadius = 8
         mainView.layer.borderColor = UIColor(named:"121212")?.cgColor
         mainView.layer.borderWidth = 0.25
         mainView.clipsToBounds = true
 
-        backgroundImageView.layer.cornerRadius = mainView.frame.width / 2
 
 
 

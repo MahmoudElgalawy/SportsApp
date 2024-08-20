@@ -140,7 +140,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="312" height="184"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="11" translatesAutoresizingMaskIntoConstraints="NO" id="RhH-5O-m92">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="2bakground" translatesAutoresizingMaskIntoConstraints="NO" id="RhH-5O-m92">
                                                     <rect key="frame" x="8" y="5" width="296" height="171"/>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="cXW-5N-tzV">
@@ -714,7 +714,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="11" width="3364" height="902"/>
+        <image name="2bakground" width="3364" height="902"/>
         <image name="FixturesBackground" width="6000" height="3000"/>
         <image name="FootBall 1" width="1024" height="1024"/>
         <image name="arrowshape.turn.up.backward" catalog="system" width="128" height="104"/>
