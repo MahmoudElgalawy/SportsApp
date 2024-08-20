@@ -44,7 +44,13 @@ class TeamsTVCell: UITableViewCell {
     }
     // MARK: - Configuration
     func configure(with player: Player) {
-        playerNumberLabel.text = "Captain: \(player.playerIsCaptain ?? "0")"
+        if let isCaptain = player.playerIsCaptain {
+            playerNumberLabel.text = "Captain: \(isCaptain == "" ? "0" : isCaptain )"
+        } else {
+            playerNumberLabel.text = "Captain: 0"
+        }
+
+
         playerNameLabel.text = "Name: \(player.playerName)"
         playerRoleLabel.text = "Type: \(player.playerType ?? "0")"
 
