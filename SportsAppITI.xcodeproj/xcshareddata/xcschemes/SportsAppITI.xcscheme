@@ -32,12 +32,6 @@
             reference = "container:../SportsAppITI.xctestplan"
             default = "YES">
          </TestPlanReference>
-         <TestPlanReference
-            reference = "container:TestPlan.xctestplan">
-         </TestPlanReference>
-         <TestPlanReference
-            reference = "container:SportsAppITITests/TestPlan.xctestplan">
-         </TestPlanReference>
       </TestPlans>
       <Testables>
          <TestableReference

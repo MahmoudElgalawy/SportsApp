@@ -1,7 +1,7 @@
 {
   "configurations" : [
     {
-      "id" : "574FEED1-AAF3-4E74-8A11-52CF58E1C25D",
+      "id" : "F394C568-069F-4209-8F0E-AC71ECCB2A3F",
       "name" : "Configuration 1",
       "options" : {
 
@@ -12,7 +12,13 @@
     "testTimeoutsEnabled" : true
   },
   "testTargets" : [
-
+    {
+      "target" : {
+        "containerPath" : "container:SportsAppITI.xcodeproj",
+        "identifier" : "A9C69F762C68F82700BE4E44",
+        "name" : "SportsAppITITests"
+      }
+    }
   ],
   "version" : 1
 }

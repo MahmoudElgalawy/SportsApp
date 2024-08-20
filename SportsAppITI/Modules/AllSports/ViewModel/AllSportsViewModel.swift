@@ -26,7 +26,7 @@ class AllSportsViewModel {
             SportsItemModel(imgName: "football", titleName: "Football"),
             SportsItemModel(imgName: "basket", titleName: "Basketball"),
             SportsItemModel(imgName: "cricket", titleName: "Cricket"),
-            SportsItemModel(imgName: "tennisBalls", titleName: "Tennis")
+            SportsItemModel(imgName: "tennis-ball", titleName: "Tennis")
         ]
     }
 

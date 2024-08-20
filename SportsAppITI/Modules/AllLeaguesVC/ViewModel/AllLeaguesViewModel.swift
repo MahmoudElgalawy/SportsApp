@@ -36,23 +36,19 @@ class AllLeaguesViewModel {
             completion(false)
             return
         }
-        networkManager.fetchData(from: .getAllLeagues(sportsName: sportName), model: LeaguesModel.self) { [weak self] result in
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-
-                switch result {
-                case .success(let leaguesModel):
-                    self.footballLeagues = leaguesModel.result
-                    let hasLeagues = !self.footballLeagues.isEmpty
-                    completion(hasLeagues)
-                case .failure(let error):
+        networkManager.fetchData(from: .getAllLeagues(sportsName: sportName), model: LeaguesModel.self) { [weak self] result, error in
+            DispatchQueue.main.async {
+                if let error = error {
                     print("Error fetching leagues: \(error.localizedDescription)")
                     completion(false)
+                    return
                 }
+                self?.footballLeagues = result?.result ?? []
+                completion(!(self?.footballLeagues.isEmpty ?? false))
             }
         }
     }
-    
+
 
     func handleItemSelection(at indexPath: IndexPath, completion: @escaping (Bool, LeagueModel) -> Void) {
         let selectedItem = footballLeagues[indexPath.row]

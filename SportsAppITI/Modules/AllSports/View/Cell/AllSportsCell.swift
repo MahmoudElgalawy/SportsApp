@@ -23,7 +23,7 @@ class AllSportsCell: UICollectionViewCell {
     private func setupUI() {
         sportImageView.layer.cornerRadius = 16
         sportImageView.layer.masksToBounds = true
-        sportImageView.layer.borderWidth = 2
+        sportImageView.layer.borderWidth = 3
         sportImageView.layer.borderColor = UIColor(named: "#97C256")?.cgColor
 
         //animateImgView()

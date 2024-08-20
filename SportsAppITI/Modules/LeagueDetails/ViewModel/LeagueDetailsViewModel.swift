@@ -13,9 +13,9 @@ class LeagueDetailsModel {
     var leagueTitle: String = " "
     var league: LeagueModel!
     var isFavorite = true
-    private var errorCount = 0
-    private let networkManager = NetworkService.shared
-    private let coreDataManager = CoreDataManager.shared
+    var errorCount = 0
+    let networkManager = NetworkService.shared
+    let coreDataManager = CoreDataManager.shared
 
     var upcomingEvents = [EventModel]()
     var teams = [TeamModel]()
@@ -32,7 +32,7 @@ class LeagueDetailsModel {
     var showBackImage: (Bool) -> Void = { _ in }
 
     // MARK: - Update Methods
-    private func updateTeams() {
+    func updateTeams() {
         teams = latestEvents.map {
             TeamModel(teamKey: $0.homeTeamKey,
                       teamName: $0.eventHomeTeam,
@@ -42,7 +42,7 @@ class LeagueDetailsModel {
         reloadCollectionView()
     }
 
-    private func handleErrors() {
+     func handleErrors() {
         errorCount += 1
         if errorCount >= 2 && upcomingEvents.isEmpty && latestEvents.isEmpty {
             showBackImage(true)
@@ -70,49 +70,54 @@ class LeagueDetailsModel {
 
     // MARK: - Data Loading Methods
      func loadEvents(endpoint: SportsAPI, completion: @escaping ([EventModel]?, Error?) -> Void) {
-        networkManager.fetchData(from: endpoint, model: EventsModel.self) { [weak self] result in
+        networkManager.fetchData(from: endpoint, model: EventsModel.self) { [weak self] results, error in
             guard let self = self else { return }
-
-            DispatchQueue.main.async { self.setUpActivityIndicator() }
-
-            switch result {
-            case .success(let eventsModel):
-                let events = eventsModel.result
-                DispatchQueue.main.async {
-                    completion(events.isEmpty ? nil : events, events.isEmpty ? nil : nil)
-                    if events.isEmpty { print("No events found.") }
-                    self.reloadCollectionView()
-                }
-
-            case .failure(let error):
-                print("Error fetching events: \(error.localizedDescription)")
-                DispatchQueue.main.async {
+            self.setUpActivityIndicator()
+            if let error = error {
+                print("Error fetching events: \(error)")
+                completion(nil, error)
+                return
+            }
+            guard let results = results else {
+                print("No data received")
+                completion(nil, error)
+                return
+            }
+            DispatchQueue.main.async {
+                let events = results.result
+                if !events.isEmpty {
+                    completion(events, nil)
+                } else {
                     completion(nil, error)
-                    self.reloadCollectionView()
+                    print("No events found.")
                 }
+                self.reloadCollectionView()
             }
         }
     }
 
      func loadUpcomingEvents() {
-        loadEvents(endpoint: .getUpcomingEvents(leagueId: leagueID, fromDate: .now, toDate: .upcoming)) { [weak self] events, error in
-            guard let self = self else { return }
+        loadEvents(endpoint: .getUpcomingEvents(leagueId: leagueID, fromDate: .now, toDate: .upcoming)) { events, error in
             if error != nil {
                 self.handleErrors()
                 return
             }
-            self.upcomingEvents = events ?? []
+            self.upcomingEvents = events!
         }
     }
 
      func loadLatestEvents() {
-        loadEvents(endpoint: .getLatestResults(leagueId: leagueID, fromDate: .passed, toDate: .now)) { [weak self] events, error in
-            guard let self = self else { return }
+        loadEvents(endpoint: .getLatestResults(leagueId: leagueID, fromDate: .passed, toDate: .now)) { events, error in
             if error != nil {
                 self.handleErrors()
                 return
             }
-            self.latestEvents = events ?? []
+            self.latestEvents = events!
         }
     }
+
+
+
+
+
 }

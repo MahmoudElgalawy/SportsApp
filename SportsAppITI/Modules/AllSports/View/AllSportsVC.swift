@@ -73,7 +73,7 @@ extension AllSportsVC: UICollectionViewDelegateFlowLayout {
 
     private func orthogonalLayoutSize(for collectionView: UICollectionView) -> CGSize {
         let numberOfCellsInRow: CGFloat = 2
-        let itemSpacing: CGFloat = 10
+        let itemSpacing: CGFloat = 5
         let itemPadding: CGFloat = 10
 
         let flowLayout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
@@ -84,7 +84,7 @@ extension AllSportsVC: UICollectionViewDelegateFlowLayout {
         let availableWidth = collectionView.bounds.width - totalSpacing
         let width = availableWidth / numberOfCellsInRow
 
-        return CGSize(width: width - itemPadding, height: width + 50)
+        return CGSize(width: width - itemPadding, height: width + 60)
     }
 
     private func listLayoutSize(for collectionView: UICollectionView) -> CGSize {

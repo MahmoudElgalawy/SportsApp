@@ -53,6 +53,7 @@ class AllLeaguesVC: UIViewController, WKNavigationDelegate {
     }
 
     private func handeError(hasData: Bool) {
+        noDataImg.image = UIImage(named: viewModel.isFavorite ? "bacFav":"loading")
         noDataImg.isHidden = hasData
         leagueTableView.isHidden = !hasData
     }
