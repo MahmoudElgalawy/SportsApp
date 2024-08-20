@@ -42,7 +42,7 @@ class LeagueDetailsVC: UIViewController {
             self.imgNoData.isHidden = !hasErrors
             self.collectionLeagueDet.isHidden = hasErrors
             if hasErrors {
-                self.imgNoData.image = UIImage(named: "bak")
+                self.imgNoData.image = UIImage(named: "noResult")
                 self.collectionLeagueDet.isHidden = true
             }
 
@@ -87,6 +87,7 @@ class LeagueDetailsVC: UIViewController {
             let alert = UIAlertController(title: "Delete", message: "This league will be removed from favorites.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
                 self.viewModel.isFavorite.toggle()
+                self.updateFavoriteButton()
             }))
             alert.addAction(UIAlertAction(title: "Remove", style: .destructive, handler: { _ in
                 self.viewModel.deleteMovie()

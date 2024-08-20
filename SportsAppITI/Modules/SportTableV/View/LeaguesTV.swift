@@ -91,7 +91,7 @@ extension LeaguesTV: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as? SportTvCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as? LeaguesTvCell else {
             return UITableViewCell()
         }
         cell.delegate = self
@@ -107,22 +107,32 @@ extension LeaguesTV: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "goToDetails", sender: indexPath.row)
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "goToDetails",
-           let detailsVC = segue.destination as? LeagueDetailsVC,
-           let row = sender as? Int {
-            detailsVC.viewModel.leagueID = viewModel.footballLeagues[row].leagueKey
-            detailsVC.viewModel.leagueTitle = viewModel.footballLeagues[row].leagueName
-            detailsVC.viewModel.league = viewModel.footballLeagues[row]
+        viewModel.handleItemSelection(at: indexPath) { [weak self] isConnected, selectedItem in
+            guard let self = self else { return }
+            if isConnected {
+                performSegue(withIdentifier: "goToDetails", sender: indexPath.row)
+            } else {
+                self.presentNoInternetAlert()
+            }
         }
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+            if segue.identifier == "goToDetails",
+               let detailsVC = segue.destination as? LeagueDetailsVC,
+               let row = sender as? Int {
+                detailsVC.viewModel.leagueID = viewModel.footballLeagues[row].leagueKey
+                detailsVC.viewModel.leagueTitle = viewModel.footballLeagues[row].leagueName
+                detailsVC.viewModel.league = viewModel.footballLeagues[row]
+            }
+        }
+    private func presentNoInternetAlert() {
+        let alert = UIAlertController(title: "No internet available!", message: "Check connection and try again", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        //cell.animateSlideAndFadeIn()
-        cell.animateCellsSlide()
+        cell.animateSlideAndFadeIn()
     }
 
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -131,15 +141,21 @@ extension LeaguesTV: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            viewModel.deleteLeague(at: indexPath)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-            handeError(hasData: !viewModel.footballLeagues.isEmpty)
+            let alert = UIAlertController(title: "Delete", message: "Are you sure you want to remove this league from favorites?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "Remove", style: .destructive, handler: { _ in
+                self.viewModel.deleteLeague(at: indexPath)
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+                self.handeError(hasData: !self.viewModel.footballLeagues.isEmpty)
+            }))
+            self.present(alert, animated: true, completion: nil)
         }
     }
+
 }
 
 // MARK: - SportTvCellDelegate
-extension LeaguesTV: SportTvCellDelegate {
+extension LeaguesTV: LeaguesTvCellDelegate {
     func didPressYouTubeButton(with urlString: String) {
         showYouTubeVideo(urlString: urlString)
     }

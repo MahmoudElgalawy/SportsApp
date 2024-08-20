@@ -16,17 +16,17 @@ extension UIView {
     }
 
     func animateImageView(imageView: UIImageView) {
-        UIView.animate(withDuration: 1.0,animations: {
+        UIView.animate(withDuration: 0.6,animations: {
             imageView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)})
-        UIView.animate(withDuration: 1.0, animations:{
+        UIView.animate(withDuration: 0.6, animations:{
             imageView.transform = CGAffineTransform.identity
         })
     }
     func animateImageView() {
-        UIView.animate(withDuration: 1.0) {
+        UIView.animate(withDuration: 0.6) {
             self.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
         }
-        UIView.animate(withDuration: 1.0) {
+        UIView.animate(withDuration: 0.6) {
             self.transform = CGAffineTransform.identity
         }
     }

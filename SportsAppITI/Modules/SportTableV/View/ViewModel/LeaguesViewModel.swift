@@ -44,9 +44,15 @@ class LeaguesViewModel {
                     return
                 }
                 self?.footballLeagues = result?.result ?? []
-                print(self?.footballLeagues.first )
                 completion(!(self?.footballLeagues.isEmpty ?? false))
             }
+        }
+    }
+
+    func handleItemSelection(at indexPath: IndexPath, completion: @escaping (Bool, LeagueModel) -> Void) {
+        let selectedItem = footballLeagues[indexPath.row]
+        ConnectivityService.shared.checkInternetConnection { isConnected in
+            completion(isConnected, selectedItem)
         }
     }
 

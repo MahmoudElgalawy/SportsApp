@@ -32,6 +32,12 @@
             reference = "container:../SportsAppITI.xctestplan"
             default = "YES">
          </TestPlanReference>
+         <TestPlanReference
+            reference = "container:TestPlan.xctestplan">
+         </TestPlanReference>
+         <TestPlanReference
+            reference = "container:SportsAppITITests/TestPlan.xctestplan">
+         </TestPlanReference>
       </TestPlans>
       <Testables>
          <TestableReference
@@ -52,6 +58,16 @@
                BlueprintIdentifier = "A9C69F802C68F82700BE4E44"
                BuildableName = "SportsAppITIUITests.xctest"
                BlueprintName = "SportsAppITIUITests"
+               ReferencedContainer = "container:SportsAppITI.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A9C69F762C68F82700BE4E44"
+               BuildableName = "SportsAppITITests.xctest"
+               BlueprintName = "SportsAppITITests"
                ReferencedContainer = "container:SportsAppITI.xcodeproj">
             </BuildableReference>
          </TestableReference>

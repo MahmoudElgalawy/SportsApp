@@ -8,11 +8,11 @@
 import UIKit
 import Kingfisher
 
-protocol SportTvCellDelegate: AnyObject {
+protocol LeaguesTvCellDelegate: AnyObject {
     func didPressYouTubeButton(with urlString: String)
 }
 
-class SportTvCell: UITableViewCell {
+class LeaguesTvCell: UITableViewCell {
 
     // MARK: - IBOutlets
     @IBOutlet private var mainView: UIView!
@@ -21,7 +21,7 @@ class SportTvCell: UITableViewCell {
     @IBOutlet private var backgroundImageView: UIImageView!
 
     // MARK: - Properties
-    weak var delegate: SportTvCellDelegate?
+    weak var delegate: LeaguesTvCellDelegate?
 
     // MARK: - Lifecycle
     override func awakeFromNib() {
@@ -61,11 +61,11 @@ class SportTvCell: UITableViewCell {
     func configure(with league: LeagueModel) {
         leagueNameLabel.text = league.leagueName
         if let imageUrl = URL(string: league.leagueLogo ?? "") {
-            leagueImageView.kf.setImage(with: imageUrl, placeholder: UIImage(named: "no_img"))
+            leagueImageView.kf.setImage(with: imageUrl, placeholder: UIImage(named: "noBall"))
         } else {
-            leagueImageView.image = UIImage(named: "no_img")
+            leagueImageView.image = UIImage(named: "noBall")
         }
-        leagueImageView.animateImageView(imageView: leagueImageView)
+
         leagueImageView.animateImageView()
     }
 

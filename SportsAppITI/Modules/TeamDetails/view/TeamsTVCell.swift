@@ -45,7 +45,7 @@ class TeamsTVCell: UITableViewCell {
         playerRoleLabel.text = "Type: \(player.playerType ?? "0")"
 
         if let imageUrl = player.playerImage {
-            playerPhotoImageView.kf.setImage(with: URL(string: imageUrl), placeholder: UIImage(named: "no_img"))
+            playerPhotoImageView.kf.setImage(with: URL(string: imageUrl), placeholder: UIImage(named: "person"))
         }
     }
 }

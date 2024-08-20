@@ -34,7 +34,7 @@ class TeamsCVC: UICollectionViewCell {
     // MARK: - Configuration
     func configure(with Cell:TeamModel){
         let url = URL(string: Cell.teamLogo ?? "")
-        imgTeams.kf.setImage(with: url)
+        imgTeams.kf.setImage(with:url, placeholder: UIImage(named: "team"))
         lblTeamsName.text = Cell.teamName
     }
 

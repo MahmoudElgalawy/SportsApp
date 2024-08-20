@@ -5,7 +5,6 @@
 //  Created by Engy on 8/18/24.
 //
 
-// AllSportsViewModel.swift
 import Foundation
 
 class AllSportsViewModel {

@@ -11,7 +11,7 @@ import Kingfisher
 class TeamsDetailsVC: UIViewController {
     let viewModel = TeamViewModel()
 
-    @IBOutlet var playerBackImg: UIImageView!
+  @IBOutlet var playerBackImg: UIImageView!
     @IBOutlet weak var teamsLogo: UIImageView!
     @IBOutlet weak var playersTable: UITableView!
     @IBOutlet weak var teamsName: UILabel!
@@ -31,9 +31,7 @@ class TeamsDetailsVC: UIViewController {
         }
         teamsName.text = team.teamName
         teamsLogo.layer.cornerRadius = 8
-        playerBackImg.layer.cornerRadius = 8
-        playerBackImg.layer.borderColor = UIColor(named: Color.C121212.rawValue)?.cgColor
-        playerBackImg.layer.borderWidth = 0.5
+
 
         playersTable.reloadData()
     }
