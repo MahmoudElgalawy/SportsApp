@@ -1,158 +1,52 @@
-////
-////  LeagueDetailsTest.swift
-////  SportsAppITITests
-////
-////  Created by Engy on 8/20/24.
-////
 //
+//  LeagueDetailsTest.swift
+//  SportsAppITITests
 //
-//import XCTest
-//@testable import SportsAppITI
-//import CoreData
+//  Created by Engy on 8/20/24.
 //
-//class LeagueDetailsModelTests: XCTestCase {
-//
-//    var viewModel: LeagueDetailsModel!
-//    var coreDataManager: CoreDataManager!
-//    var mockNetworkService: MockNetworkService!
-//
-//    override func setUp() {
-//        super.setUp()
-//
-//        coreDataManager = CoreDataManager(persistentContainer: createInMemoryPersistentContainer())
-//
-//        mockNetworkService = MockNetworkService()
-//
-//        viewModel = LeagueDetailsModel()
-//    }
-//
-//    func testUpdateTeams() {
-//        viewModel.latestEvents = [
-//            EventModel(homeTeamLogo: "logo1", eventHomeTeam: "team1", awayTeamLogo: "logo2", eventAwayTeam: "team2", leagueLogo: "league", eventFinalResult: "result", eventDate: "date", eventTime: "time", homeTeamKey: 1, awayTeamKey: 2)
-//        ]
-//        viewModel.reloadCollectionView = {
-//            XCTAssertEqual(self.viewModel.teams.count, 1)
-//            XCTAssertEqual(self.viewModel.teams.first?.teamKey, 1)
-//        }
-//        viewModel.updateTeams()
-//    }
-//
-//    func testHandleErrors() {
-//        viewModel.upcomingEvents = []
-//        viewModel.latestEvents = []
-//        viewModel.errorCount = 1
-//
-//        viewModel.showBackImage = { hasErrors in
-//            XCTAssertTrue(hasErrors)
-//        }
-//        viewModel.handleErrors()
-//    }
-//
-////    func testSaveLeague() {
-////        let league = LeagueModel(leagueKey: 4, leagueName: "UEFA Europa League", countryKey: 1, countryName: "eurocups", leagueLogo: "https://apiv2.allsportsapi.com/logo/logo_leagues/", countryLogo: nil, leagueYear: nil)
-////        viewModel.league = league
-////
-////        viewModel.saveLeague()
-////
-////        let fetchedLeague = coreDataManager.fetchLeague(byKey: league.leagueKey)
-////        XCTAssertEqual(fetchedLeague, league)
-////    }
-//
-//    func testDeleteLeague() {
-//        let league = LeagueModel(leagueKey: 4, leagueName: "UEFA Europa League", countryKey: 1, countryName: "eurocups", leagueLogo: "https://apiv2.allsportsapi.com/logo/logo_leagues/", countryLogo: nil, leagueYear: nil)
-//        viewModel.league = league
-//
-//        viewModel.deleteLeague()
-//
-//        let deletedLeague = coreDataManager.fetchLeague(byKey: league.leagueKey)
-//        XCTAssertNil(deletedLeague)
-//    }
-//
-//    func testLoadEventsSuccess() {
-//        let mockResponse = EventsModel(success: 1, result: [
-//            EventModel(homeTeamLogo: "logo1", eventHomeTeam: "team1", awayTeamLogo: "logo2", eventAwayTeam: "team2", leagueLogo: "league", eventFinalResult: "result", eventDate: "date", eventTime: "time", homeTeamKey: 1, awayTeamKey: 2)
-//        ])
-//
-//        mockNetworkService.fetchDataCompletion = { (response: EventsModel?, error: Error?) in
-//            XCTAssertNotNil(response)
-//            XCTAssertEqual(response?.result.count, 1)
-//        }
-//
-//        viewModel.loadEvents(endpoint: .getUpcomingEvents(leagueId: 1, fromDate: .now, toDate: .upcoming)) { events, error in
-//            XCTAssertNotNil(events)
-//            XCTAssertNil(error)
-//        }
-//    }
-//
-//    func testLoadEventsFailure() {
-//        mockNetworkService.fetchDataCompletion = { (response: EventsModel?, error: Error?) in
-//            XCTAssertNil(response)
-//            XCTAssertNotNil(error)
-//        }
-//
-//        viewModel.loadEvents(endpoint: .getUpcomingEvents(leagueId: 1, fromDate: .now, toDate: .upcoming)) { events, error in
-//            XCTAssertNil(events)
-//            XCTAssertNotNil(error)
-//        }
-//    }
-//
-////    func testLoadUpcomingEvents() {
-////        let mockResponse = EventsModel(success: 1, result: [
-////            EventModel(homeTeamLogo: "logo1", eventHomeTeam: "team1", awayTeamLogo: "logo2", eventAwayTeam: "team2", leagueLogo: "league", eventFinalResult: "result", eventDate: "date", eventTime: "time", homeTeamKey: 1, awayTeamKey: 2)
-////        ])
-////
-////        mockNetworkService.fetchDataCompletion = { (response: EventsModel?, error: Error?) in
-////            XCTAssertEqual(response?.result.count, 1)
-////        }
-////
-////        viewModel.loadUpcomingEvents()
-////
-////        XCTAssertEqual(viewModel.upcomingEvents.count, 1)
-////    }
-//
-////    func testLoadLatestEvents() {
-////        let mockResponse = EventsModel(success: 1, result: [
-////            EventModel(homeTeamLogo: "logo1", eventHomeTeam: "team1", awayTeamLogo: "logo2", eventAwayTeam: "team2", leagueLogo: "league", eventFinalResult: "result", eventDate: "date", eventTime: "time", homeTeamKey: 1, awayTeamKey: 2)
-////        ])
-////
-////        mockNetworkService.fetchDataCompletion = { (response: EventsModel?, error: Error?) in
-////            XCTAssertEqual(response?.result.count, 1)
-////        }
-////
-////        viewModel.loadLatestEvents()
-////
-////        XCTAssertEqual(viewModel.latestEvents.count, 1)
-////    }
-//
-//    override func tearDown() {
-//        viewModel = nil
-//        mockNetworkService = nil
-//        coreDataManager = nil
-//        super.tearDown()
-//    }
-//
-//    func createInMemoryPersistentContainer() -> NSPersistentContainer {
-//        let container = NSPersistentContainer(name: "SportsAppITI") // Replace with your Core Data model name
-//        let description = NSPersistentStoreDescription()
-//        description.type = NSInMemoryStoreType
-//        container.persistentStoreDescriptions = [description]
-//        container.loadPersistentStores { description, error in
-//            if let error = error {
-//                fatalError("Failed to load in-memory store: \(error)")
-//            }
-//        }
-//        return container
-//    }
-//}
-//
-//
-//class MockNetworkService: NetworkRequestable {
-//    func fetchData<T>(from url: SportsAppITI.SportsAPI, model: T.Type, completion: @escaping (Result<T, Error>) -> Void) where T : Decodable, T : Encodable {
-//        fetchDataCompletion = { (response, error) in
-//            completion(response as? T as! Result<T, any Error>)
-//        }
-//    }
-//
-//    var fetchDataCompletion: ((EventsModel?, Error?) -> Void)?
-//
-//}
+import XCTest
+@testable import SportsAppITI
+
+final class LeagueDetailsModelTests: XCTestCase {
+
+    var viewModel: LeagueDetailsModel!
+
+    override func setUpWithError() throws {
+        viewModel = LeagueDetailsModel()
+        viewModel.leagueID = 4
+        viewModel.league = LeagueModel(leagueKey: viewModel.leagueID, leagueName: "Test League", countryKey: nil, countryName: nil, leagueLogo: nil, countryLogo: nil, leagueYear: nil)
+    }
+
+    override func tearDownWithError() throws {
+        viewModel = nil
+    }
+
+    func testAddFavorite() {
+        //viewModel.deleteLeague()
+       // viewModel.checkIfFavorite()
+        //XCTAssertFalse(viewModel.isFavorite)
+        viewModel.saveLeague()
+        viewModel.checkIfFavorite()
+        XCTAssertTrue(viewModel.isFavorite)
+    }
+
+    func testLoadUpcomingEvents() {
+        let expectation = XCTestExpectation(description: "Load Upcoming Events")
+        viewModel.reloadCollectionView = {
+            XCTAssertNotEqual(self.viewModel.upcomingEvents.count, 0)
+            expectation.fulfill()
+        }
+        viewModel.loadUpcomingEvents()
+        wait(for: [expectation], timeout: 5)
+    }
+
+    func testLoadLatestEvents() {
+        let expectation = XCTestExpectation(description: "Load latest Events")
+        viewModel.reloadCollectionView = {
+            XCTAssertNotEqual(self.viewModel.latestEvents.count, 0)
+            expectation.fulfill()
+        }
+        viewModel.loadLatestEvents()
+        wait(for: [expectation], timeout: 5)
+    }
+}

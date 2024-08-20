@@ -50,8 +50,8 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="404" height="249"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Football" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Skv-DY-opU">
-                                                            <rect key="frame" x="0.0" y="166.66666666666666" width="404" height="52.333333333333343"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="43"/>
+                                                            <rect key="frame" x="0.0" y="175" width="404" height="44"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                                             <color key="textColor" name="#FFFFFF"/>
                                                             <nil key="highlightedColor"/>
                                                             <color key="shadowColor" systemColor="systemGreenColor"/>
@@ -166,8 +166,7 @@
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="team1" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NN1-Gq-CKx" userLabel="team1">
                                                                     <rect key="frame" x="0.0" y="88.666666666666671" width="86.666666666666671" height="63.333333333333329"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="height" constant="30" id="TYf-O2-qDM"/>
-                                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="zqs-t6-Bfa"/>
+                                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="36" id="zqs-t6-Bfa"/>
                                                                     </constraints>
                                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -175,7 +174,7 @@
                                                                 </label>
                                                             </subviews>
                                                         </stackView>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="43n-Ld-IiO">
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="43n-Ld-IiO">
                                                             <rect key="frame" x="96.666666666666657" y="0.0" width="86.666666666666657" height="152"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="6ou-E2-sIQ">
@@ -212,7 +211,7 @@
                                                                 </label>
                                                             </subviews>
                                                         </stackView>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="RIh-Rm-wgR">
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="RIh-Rm-wgR">
                                                             <rect key="frame" x="193.33333333333334" y="0.0" width="86.666666666666657" height="152"/>
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="FootBall 1" translatesAutoresizingMaskIntoConstraints="NO" id="RbG-Ka-dbg" userLabel="img Team2">
@@ -222,10 +221,9 @@
                                                                     </constraints>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="team2" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hcX-WF-CkP" userLabel=" team2">
-                                                                    <rect key="frame" x="19.999999999999996" y="88.666666666666671" width="46.666666666666657" height="63.333333333333329"/>
+                                                                    <rect key="frame" x="0.0" y="88.666666666666671" width="86.666666666666671" height="63.333333333333329"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="JhX-7Z-TaB"/>
-                                                                        <constraint firstAttribute="height" constant="30" id="WAS-Vl-Fkz"/>
+                                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="36" id="JhX-7Z-TaB"/>
                                                                     </constraints>
                                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
