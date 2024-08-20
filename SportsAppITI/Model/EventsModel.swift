@@ -5,13 +5,13 @@
 //  Created by Engy on 8/12/24.
 //
 import Foundation
-//MARK: - Welcome
-struct EventModelAPIResponse: Codable {
+//MARK: - EventsModel
+struct EventsModel: Codable {
     let success: Int
     let result: [EventModel]
 }
 
-// MARK: - Result
+// MARK: - EventModel
 struct EventModel: Codable {
     let homeTeamLogo: String?
     let eventHomeTeam: String?

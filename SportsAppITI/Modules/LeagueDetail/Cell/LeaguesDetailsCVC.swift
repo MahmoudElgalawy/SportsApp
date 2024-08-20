@@ -11,14 +11,14 @@ import Kingfisher
 class LeaguesDetailsCVC: UICollectionViewCell {
 
     // MARK: - IBOutlets
-    @IBOutlet var backImage: UIImageView!
-    @IBOutlet var logoTeam1: UIImageView!
-    @IBOutlet var nameTeam1: UILabel!
-    @IBOutlet var logoTeam2: UIImageView!
-    @IBOutlet var nameTeam2: UILabel!
-    @IBOutlet var lblDate: UILabel!
-    @IBOutlet var lblTime: UILabel!
-    @IBOutlet var lblResult: UILabel!
+    @IBOutlet var backImageView: UIImageView!
+    @IBOutlet var homeTeamLogo: UIImageView!
+    @IBOutlet var homeTeamNameLabel: UILabel!
+    @IBOutlet var awayTeamLogo: UIImageView!
+    @IBOutlet var awayTeamNameLabel: UILabel!
+    @IBOutlet var dateLabel: UILabel!
+    @IBOutlet var timeLabel: UILabel!
+    @IBOutlet var resultLabel: UILabel!
 
     // MARK: - Lifecycle
     override func awakeFromNib() {
@@ -27,23 +27,25 @@ class LeaguesDetailsCVC: UICollectionViewCell {
     }
     // MARK: - UI Configuration
     private func configureUI() {
-            backImage.layer.cornerRadius = 16
-        
-        }
+        backImageView.layer.cornerRadius = 16
+
+    }
 
     // MARK: - Configuration
-    func configure(with cell:EventModel) {
-        let url1 = URL(string: cell.homeTeamLogo ?? "")
-        let url2 = URL(string: cell.awayTeamLogo ?? "")
+    func configure(with event:EventModel) {
+        if let homeTeamLogoURL = URL(string: event.homeTeamLogo ?? "") {
+            homeTeamLogo.kf.setImage(with: homeTeamLogoURL, placeholder: UIImage(named: "team"))
+        }
+        if let awayTeamLogoURL = URL(string: event.awayTeamLogo ?? "") {
+            awayTeamLogo.kf.setImage(with: awayTeamLogoURL, placeholder: UIImage(named: "team"))
+        }
 
-        logoTeam1.kf.setImage(with: url1,placeholder: UIImage(named: "6"))
-        nameTeam1.text = cell.eventHomeTeam
-        logoTeam2.kf.setImage(with: url2,placeholder: UIImage(named: "6"))
-        nameTeam2.text = cell.eventAwayTeam
-        lblDate.text = cell.eventDate
-        lblTime.text = cell.eventTime
-        lblResult.isHidden = cell.eventFinalResult == "-"
-        lblResult.text = cell.eventFinalResult
+        homeTeamNameLabel.text = event.eventHomeTeam
+        awayTeamNameLabel.text = event.eventAwayTeam
+        dateLabel.text = event.eventDate
+        timeLabel.text = event.eventTime
+        resultLabel.isHidden = event.eventFinalResult == "-"
+        resultLabel.text = event.eventFinalResult
     }
 
 }

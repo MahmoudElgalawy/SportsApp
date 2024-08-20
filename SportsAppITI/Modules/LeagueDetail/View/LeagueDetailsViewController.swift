@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LeagueDetailsVC: UIViewController {
+class LeagueDetailsViewController: UIViewController {
 
     // MARK: - IBOutlets
     @IBOutlet var imgNoData: UIImageView!
@@ -82,7 +82,7 @@ class LeagueDetailsVC: UIViewController {
         viewModel.isFavorite.toggle()
         updateFavoriteButton()
         if viewModel.isFavorite {
-            viewModel.saveMovie()
+            viewModel.saveLeague()
         } else {
             let alert = UIAlertController(title: "Delete", message: "This league will be removed from favorites.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
@@ -90,7 +90,7 @@ class LeagueDetailsVC: UIViewController {
                 self.updateFavoriteButton()
             }))
             alert.addAction(UIAlertAction(title: "Remove", style: .destructive, handler: { _ in
-                self.viewModel.deleteMovie()
+                self.viewModel.deleteLeague()
             }))
             self.present(alert, animated: true)
         }
@@ -106,7 +106,7 @@ class LeagueDetailsVC: UIViewController {
 }
 
 // MARK: - UICollectionView Delegate
-extension LeagueDetailsVC: UICollectionViewDelegate {
+extension LeagueDetailsViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView.cellForItem(at: indexPath)?.reuseIdentifier == "TeamsCVC" {
             performSegue(withIdentifier: "goToTeamVC", sender: indexPath.row)
@@ -122,7 +122,7 @@ extension LeagueDetailsVC: UICollectionViewDelegate {
 }
 
 // MARK: - UICollectionView DataSource
-extension LeagueDetailsVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension LeagueDetailsViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     private func createUpcomingSection() -> NSCollectionLayoutSection {
         return createSectionLayout(groupHeight: .absolute(UIScreen.main.bounds.height / 5), groupWidth: .fractionalWidth(0.85), orthogonalScrollingBehavior: .groupPagingCentered, headerEnabled: !viewModel.upcomingEvents.isEmpty)
     }
@@ -187,8 +187,8 @@ extension LeagueDetailsVC: UICollectionViewDataSource, UICollectionViewDelegateF
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LeaguesDetailsCVC", for: indexPath) as! LeaguesDetailsCVC
             (cell as! LeaguesDetailsCVC).configure(with: viewModel.latestEvents[indexPath.row])
         default:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TeamsCVC", for: indexPath) as! TeamsCVC
-            (cell as! TeamsCVC).configure(with: viewModel.teams[indexPath.row])
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TeamsCVC", for: indexPath) as! TeamCollectionViewCell
+            (cell as! TeamCollectionViewCell).configure(with: viewModel.teams[indexPath.row])
         }
         return cell
     }
@@ -197,8 +197,8 @@ extension LeagueDetailsVC: UICollectionViewDataSource, UICollectionViewDelegateF
         guard kind == UICollectionView.elementKindSectionHeader else {
             return UICollectionReusableView()
         }
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "LeagueDSecHed", for: indexPath) as! LeagueDSecHed
-        header.lblSectionHeader.text = ["Upcoming Events", "Latest Results", "Teams"][indexPath.section]
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "LeagueDSecHed", for: indexPath) as! LeagueSectionHeaderView
+        header.sectionHeaderTitleLabel.text = ["Upcoming Events", "Latest Results", "Teams"][indexPath.section]
         return header
     }
 

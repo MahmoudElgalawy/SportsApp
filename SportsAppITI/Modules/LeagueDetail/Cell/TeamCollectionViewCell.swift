@@ -8,12 +8,12 @@
 import UIKit
 import Kingfisher
 
-class TeamsCVC: UICollectionViewCell {
+class TeamCollectionViewCell: UICollectionViewCell {
 
     // MARK: - IBOutlets
-    @IBOutlet var imgTeams: UIImageView!
+    @IBOutlet var teamsImage: UIImageView!
     @IBOutlet var mainView: UIView!
-    @IBOutlet var lblTeamsName: UILabel!
+    @IBOutlet var teamsNamelbl: UILabel!
 
     // MARK: - Lifecycle
     override  func awakeFromNib() {
@@ -26,16 +26,15 @@ class TeamsCVC: UICollectionViewCell {
         mainView.layer.cornerRadius = 16
         mainView.layer.borderColor = UIColor(named: Color.CD9D9D9.rawValue)?.cgColor
         mainView.layer.borderWidth = 1
-        mainView.clipsToBounds = true
 
-        imgTeams.layer.cornerRadius = 10
+        teamsImage.layer.cornerRadius = 10
         }
     
     // MARK: - Configuration
     func configure(with Cell:TeamModel){
         let url = URL(string: Cell.teamLogo ?? "")
-        imgTeams.kf.setImage(with:url, placeholder: UIImage(named: "team"))
-        lblTeamsName.text = Cell.teamName
+        teamsImage.kf.setImage(with:url, placeholder: UIImage(named: "team"))
+        teamsNamelbl.text = Cell.teamName
     }
 
 }

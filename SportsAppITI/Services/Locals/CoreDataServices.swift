@@ -1,15 +1,15 @@
-//
-//  LocalServices.swift
-//  SportsAppITI
-//
-//  Created by Mahmoud  on 17/08/2024.
-//
-
 import Foundation
 import CoreData
 import UIKit
 
-class CoreDataManager {
+protocol CoreDataManagerProtocol {
+    func storeLeague(_ league: LeagueModel)
+    func deleteLeague(_ league: LeagueModel)
+    func fetchLeague(byKey key: Int) -> LeagueModel?
+}
+
+// MARK: - CoreDataManager
+class CoreDataManager:CoreDataManagerProtocol{
     static let shared = CoreDataManager()
     private let managedContext: NSManagedObjectContext
 
@@ -17,9 +17,10 @@ class CoreDataManager {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         self.managedContext = appDelegate.persistentContainer.viewContext
     }
+
     init(persistentContainer: NSPersistentContainer) {
-            self.managedContext = persistentContainer.viewContext
-        }
+        self.managedContext = persistentContainer.viewContext
+    }
 
     func saveContext() {
         if managedContext.hasChanges {
@@ -33,28 +34,20 @@ class CoreDataManager {
     }
 
     func storeLeague(_ league: LeagueModel) {
-        let fetchRequest: NSFetchRequest<FavLeagues> = FavLeagues.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "leagueKey == %d", league.leagueKey)
+        if !doesLeagueExist(leagueKey: league.leagueKey) {
+            let leagueEntity = FavLeagues(context: managedContext)
+            leagueEntity.leagueKey = Int32(league.leagueKey)
+            leagueEntity.leagueName = league.leagueName
+            leagueEntity.leagueLogo = league.leagueLogo
+            leagueEntity.leagueYear = league.leagueYear
+            leagueEntity.countryKey = Int32(league.countryKey ?? 0)
+            leagueEntity.countryName = league.countryName
+            leagueEntity.countryLogo = league.countryLogo
 
-        do {
-            let results = try managedContext.fetch(fetchRequest)
-            if results.isEmpty {
-                let leagueEntity = FavLeagues(context: managedContext)
-                leagueEntity.leagueKey = Int32(league.leagueKey)
-                leagueEntity.leagueName = league.leagueName
-                leagueEntity.leagueLogo = league.leagueLogo
-                leagueEntity.leagueYear = league.leagueYear
-                leagueEntity.countryKey = Int32(league.countryKey ?? 0)
-                leagueEntity.countryName = league.countryName
-                leagueEntity.countryLogo = league.countryLogo
-
-                saveContext()
-                print("League saved successfully.")
-            } else {
-                print("League already exists.")
-            }
-        } catch {
-            print("Error fetching leagues: \(error)")
+            saveContext()
+            print("League saved successfully.")
+        } else {
+            print("League already exists.")
         }
     }
 
@@ -64,17 +57,16 @@ class CoreDataManager {
 
         do {
             let results = try managedContext.fetch(fetchRequest)
-            for managedLeague in results {
-                let leagueKey = Int(managedLeague.leagueKey)
-                let leagueName = managedLeague.leagueName ?? ""
-                let leagueLogo = managedLeague.leagueLogo
-                let leagueYear = managedLeague.leagueYear
-                let countryKey = Int(managedLeague.countryKey)
-                let countryName = managedLeague.countryName
-                let countryLogo = managedLeague.countryLogo
-
-                let league = LeagueModel(leagueKey: leagueKey, leagueName: leagueName, countryKey: countryKey, countryName: countryName, leagueLogo: leagueLogo, countryLogo: countryLogo, leagueYear: leagueYear)
-                leaguesArr.append(league)
+            leaguesArr = results.map { managedLeague in
+                return LeagueModel(
+                    leagueKey: Int(managedLeague.leagueKey),
+                    leagueName: managedLeague.leagueName ?? "",
+                    countryKey: Int(managedLeague.countryKey),
+                    countryName: managedLeague.countryName,
+                    leagueLogo: managedLeague.leagueLogo,
+                    countryLogo: managedLeague.countryLogo,
+                    leagueYear: managedLeague.leagueYear
+                )
             }
         } catch {
             print("Error fetching leagues: \(error)")
@@ -82,31 +74,17 @@ class CoreDataManager {
         return leaguesArr
     }
 
-    // Delete a specific league
     func deleteLeague(_ league: LeagueModel) {
-        let fetchRequest: NSFetchRequest<FavLeagues> = FavLeagues.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "leagueKey == %d", league.leagueKey)
-
-        do {
-            let results = try managedContext.fetch(fetchRequest)
-            for result in results {
-                managedContext.delete(result)
-            }
-            saveContext()
-            print("League deleted successfully.")
-        } catch {
-            print("Error deleting league: \(error)")
-        }
+        deleteLeague(byKey: league.leagueKey)
     }
-    func deleteLeague(leagueKey: Int) {
+
+    func deleteLeague(byKey leagueKey: Int) {
         let fetchRequest: NSFetchRequest<FavLeagues> = FavLeagues.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "leagueKey == %d", leagueKey)
 
         do {
             let results = try managedContext.fetch(fetchRequest)
-            for result in results {
-                managedContext.delete(result)
-            }
+            results.forEach { managedContext.delete($0) }
             saveContext()
             print("League deleted successfully.")
         } catch {
@@ -114,27 +92,38 @@ class CoreDataManager {
         }
     }
 
-    // Fetch a specific league by key
     func fetchLeague(byKey leagueKey: Int) -> LeagueModel? {
         let fetchRequest: NSFetchRequest<FavLeagues> = FavLeagues.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "leagueKey == %d", leagueKey)
 
         do {
-            let results = try managedContext.fetch(fetchRequest)
-            if let managedLeague = results.first {
-                let leagueName = managedLeague.leagueName ?? ""
-                let leagueLogo = managedLeague.leagueLogo
-                let leagueYear = managedLeague.leagueYear
-                let countryKey = Int(managedLeague.countryKey)
-                let countryName = managedLeague.countryName
-                let countryLogo = managedLeague.countryLogo
-
-                return LeagueModel(leagueKey: leagueKey, leagueName: leagueName, countryKey: countryKey, countryName: countryName, leagueLogo: leagueLogo, countryLogo: countryLogo, leagueYear: leagueYear)
+            if let managedLeague = try managedContext.fetch(fetchRequest).first {
+                return LeagueModel(
+                    leagueKey: leagueKey,
+                    leagueName: managedLeague.leagueName ?? "",
+                    countryKey: Int(managedLeague.countryKey),
+                    countryName: managedLeague.countryName,
+                    leagueLogo: managedLeague.leagueLogo,
+                    countryLogo: managedLeague.countryLogo,
+                    leagueYear: managedLeague.leagueYear
+                )
             }
         } catch {
             print("Error fetching league: \(error)")
         }
         return nil
     }
-}
 
+    private func doesLeagueExist(leagueKey: Int) -> Bool {
+        let fetchRequest: NSFetchRequest<FavLeagues> = FavLeagues.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "leagueKey == %d", leagueKey)
+
+        do {
+            let count = try managedContext.count(for: fetchRequest)
+            return count > 0
+        } catch {
+            print("Error checking if league exists: \(error)")
+            return false
+        }
+    }
+}

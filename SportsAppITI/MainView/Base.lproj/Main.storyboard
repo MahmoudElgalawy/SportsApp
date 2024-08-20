@@ -112,10 +112,10 @@
             </objects>
             <point key="canvasLocation" x="-1736" y="-1358"/>
         </scene>
-        <!--League DetailsVC-->
+        <!--League Details View Controller-->
         <scene sceneID="rph-QO-Tg1">
             <objects>
-                <viewController storyboardIdentifier="LeagueDetailsVC" id="vXE-OG-0pj" customClass="LeagueDetailsVC" customModule="SportsAppITI" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LeagueDetailsVC" id="vXE-OG-0pj" customClass="LeagueDetailsViewController" customModule="SportsAppITI" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gMf-fD-jkW">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -247,17 +247,17 @@
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="312" height="184"/>
                                         <connections>
-                                            <outlet property="backImage" destination="RhH-5O-m92" id="CDf-Un-JQG"/>
-                                            <outlet property="lblDate" destination="53f-Su-qPp" id="5UX-DT-XNj"/>
-                                            <outlet property="lblResult" destination="YTv-qo-e3Q" id="lW8-Km-g5H"/>
-                                            <outlet property="lblTime" destination="NV1-aq-jqa" id="Xkk-U7-GgB"/>
-                                            <outlet property="logoTeam1" destination="BF9-Vb-KwT" id="fKw-jz-Cwd"/>
-                                            <outlet property="logoTeam2" destination="RbG-Ka-dbg" id="Zll-wA-jJy"/>
-                                            <outlet property="nameTeam1" destination="NN1-Gq-CKx" id="4Tm-WN-yTw"/>
-                                            <outlet property="nameTeam2" destination="hcX-WF-CkP" id="7AP-Th-aIy"/>
+                                            <outlet property="awayTeamLogo" destination="RbG-Ka-dbg" id="Zll-wA-jJy"/>
+                                            <outlet property="awayTeamNameLabel" destination="hcX-WF-CkP" id="7AP-Th-aIy"/>
+                                            <outlet property="backImageView" destination="RhH-5O-m92" id="CDf-Un-JQG"/>
+                                            <outlet property="dateLabel" destination="53f-Su-qPp" id="5UX-DT-XNj"/>
+                                            <outlet property="homeTeamLogo" destination="BF9-Vb-KwT" id="fKw-jz-Cwd"/>
+                                            <outlet property="homeTeamNameLabel" destination="NN1-Gq-CKx" id="4Tm-WN-yTw"/>
+                                            <outlet property="resultLabel" destination="YTv-qo-e3Q" id="lW8-Km-g5H"/>
+                                            <outlet property="timeLabel" destination="NV1-aq-jqa" id="Xkk-U7-GgB"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="TeamsCVC" id="lMs-ga-yiU" customClass="TeamsCVC" customModule="SportsAppITI" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="TeamsCVC" id="lMs-ga-yiU" customClass="TeamCollectionViewCell" customModule="SportsAppITI" customModuleProvider="target">
                                         <rect key="frame" x="43" y="244" width="328" height="259"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="na4-zC-o5g">
@@ -292,13 +292,13 @@
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="328" height="259"/>
                                         <connections>
-                                            <outlet property="imgTeams" destination="CBt-EP-W2w" id="75C-ao-pbP"/>
-                                            <outlet property="lblTeamsName" destination="nNf-Wk-Zej" id="aUz-7d-oSL"/>
                                             <outlet property="mainView" destination="na4-zC-o5g" id="btB-UR-MDD"/>
+                                            <outlet property="teamsImage" destination="CBt-EP-W2w" id="75C-ao-pbP"/>
+                                            <outlet property="teamsNamelbl" destination="nNf-Wk-Zej" id="aUz-7d-oSL"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
-                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="LeagueDSecHed" id="a6O-SK-WrQ" customClass="LeagueDSecHed" customModule="SportsAppITI" customModuleProvider="target">
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="LeagueDSecHed" id="a6O-SK-WrQ" customClass="LeagueSectionHeaderView" customModule="SportsAppITI" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
@@ -321,7 +321,7 @@
                                         <constraint firstAttribute="bottom" secondItem="hfJ-aA-M9x" secondAttribute="bottom" id="rUJ-h6-ifm"/>
                                     </constraints>
                                     <connections>
-                                        <outlet property="lblSectionHeader" destination="hfJ-aA-M9x" id="AFH-1O-FzU"/>
+                                        <outlet property="sectionHeaderTitleLabel" destination="hfJ-aA-M9x" id="AFH-1O-FzU"/>
                                     </connections>
                                 </collectionReusableView>
                                 <connections>

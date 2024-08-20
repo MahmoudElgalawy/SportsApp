@@ -6,7 +6,7 @@
 //
 
 import Foundation
-struct LeagueModelAPI: Codable {
+struct LeaguesModel: Codable {
     let success: Int
     let result: [LeagueModel]
 }

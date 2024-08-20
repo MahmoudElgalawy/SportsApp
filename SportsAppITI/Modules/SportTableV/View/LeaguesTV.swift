@@ -118,7 +118,7 @@ extension LeaguesTV: UITableViewDelegate {
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
             if segue.identifier == "goToDetails",
-               let detailsVC = segue.destination as? LeagueDetailsVC,
+               let detailsVC = segue.destination as? LeagueDetailsViewController,
                let row = sender as? Int {
                 detailsVC.viewModel.leagueID = viewModel.footballLeagues[row].leagueKey
                 detailsVC.viewModel.leagueTitle = viewModel.footballLeagues[row].leagueName

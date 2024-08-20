@@ -8,12 +8,12 @@
 import Foundation
 
 // MARK: - TeamModelApi
-struct TeamModelApi: Codable {
+struct TeamsModel: Codable {
     let success: Int
     let result: [TeamModel]
 }
 
-// MARK: - Result
+// MARK: - TeamModel
 struct TeamModel: Codable {
     let teamKey: Int?
     let teamName: String?

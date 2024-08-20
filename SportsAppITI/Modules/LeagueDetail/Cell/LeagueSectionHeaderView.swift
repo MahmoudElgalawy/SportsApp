@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LeagueDSecHed: UICollectionReusableView {
-    @IBOutlet var lblSectionHeader: UILabel!
+class LeagueSectionHeaderView: UICollectionReusableView {
+    @IBOutlet var sectionHeaderTitleLabel: UILabel!
     
 }

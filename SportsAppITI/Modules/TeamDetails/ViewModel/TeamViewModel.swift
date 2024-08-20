@@ -15,13 +15,20 @@ class TeamViewModel {
 
     func fetchTeamData() {
         guard let teamKey = teamKey else { return }
-        networkManager.fetchData(from: .getTeamDetails(teamId: teamKey), model: TeamModelApi.self) { [weak self] result, error in
-            DispatchQueue.main.async {
-                if error != nil {return}
-                guard let self = self, let result = result else { return }
-                self.teamArray = result.result
-                self.allPlayers = self.teamArray.flatMap { $0.players ?? [] }
-                self.bindTeamsDetailsVC()
+
+        networkManager.fetchData(from: .getTeamDetails(teamId: teamKey), model: TeamsModel.self) { [weak self] result in
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+
+                switch result {
+                case .success(let teamsModel):
+                    self.teamArray = teamsModel.result
+                    self.allPlayers = self.teamArray.flatMap { $0.players ?? [] }
+                    self.bindTeamsDetailsVC()
+
+                case .failure(let error):
+                    print("Error fetching team data: \(error.localizedDescription)")
+                }
             }
         }
     }
