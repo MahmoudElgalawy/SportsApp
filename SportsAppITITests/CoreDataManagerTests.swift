@@ -52,7 +52,7 @@ final class CoreDataManagerTests: XCTestCase {
         let league = LeagueModel(leagueKey: 20, leagueName: "Serie A", countryKey: 39, countryName: "Italy", leagueLogo: "logo3.png", countryLogo: "country3.png", leagueYear: "2024")
         coreDataManager.storeLeague(league)
         
-        coreDataManager.deleteLeague(leagueKey: league.leagueKey)
+        coreDataManager.deleteLeague(byKey: league.leagueKey)
         let fetchedLeagues = coreDataManager.fetchLeagues()
         XCTAssertTrue(fetchedLeagues.isEmpty, "League was not deleted")
     }

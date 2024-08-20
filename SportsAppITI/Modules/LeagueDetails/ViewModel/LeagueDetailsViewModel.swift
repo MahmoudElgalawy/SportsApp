@@ -69,7 +69,7 @@ class LeagueDetailsModel {
     }
 
     // MARK: - Data Loading Methods
-    private func loadEvents(endpoint: SportsAPI, completion: @escaping ([EventModel]?, Error?) -> Void) {
+     func loadEvents(endpoint: SportsAPI, completion: @escaping ([EventModel]?, Error?) -> Void) {
         networkManager.fetchData(from: endpoint, model: EventsModel.self) { [weak self] result in
             guard let self = self else { return }
 
@@ -94,7 +94,7 @@ class LeagueDetailsModel {
         }
     }
 
-    func loadUpcomingEvents() {
+     func loadUpcomingEvents() {
         loadEvents(endpoint: .getUpcomingEvents(leagueId: leagueID, fromDate: .now, toDate: .upcoming)) { [weak self] events, error in
             guard let self = self else { return }
             if error != nil {
@@ -105,7 +105,7 @@ class LeagueDetailsModel {
         }
     }
 
-    func loadLatestEvents() {
+     func loadLatestEvents() {
         loadEvents(endpoint: .getLatestResults(leagueId: leagueID, fromDate: .passed, toDate: .now)) { [weak self] events, error in
             guard let self = self else { return }
             if error != nil {
